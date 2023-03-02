@@ -1,0 +1,2682 @@
+﻿<Window x:Class="WinUtil.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WinUtil"
+        mc:Ignorable="d"
+        Title="🧪 Public Release 1.1.0.0" 
+        Height="750" Width="1000"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="CanMinimize"
+        Background="#111111">
+
+    <Window.Resources>
+        <Style x:Key="Default" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="#FFABAdB3"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#656565"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#656565"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                        <Condition Property="IsSelectionActive" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
+        <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
+        <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+
+
+
+        <Style x:Key="PasswordBoxStyle" TargetType="{x:Type PasswordBox}">
+            <Setter Property="PasswordChar" Value="×"/>
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="#FFABAdB3"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#656565"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="#656565"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                        <Condition Property="IsSelectionActive" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="OptionMarkFocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="14,0,0,0" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="RadioButton.Static.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="RadioButton.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="RadioButton.Static.Glyph" Color="#FF212121"/>
+        <SolidColorBrush x:Key="RadioButton.MouseOver.Background" Color="#FFF3F9FF"/>
+        <SolidColorBrush x:Key="RadioButton.MouseOver.Border" Color="#FF5593FF"/>
+        <SolidColorBrush x:Key="RadioButton.MouseOver.Glyph" Color="#FF212121"/>
+        <SolidColorBrush x:Key="RadioButton.Pressed.Background" Color="#FFD9ECFF"/>
+        <SolidColorBrush x:Key="RadioButton.Pressed.Border" Color="#FF3C77DD"/>
+        <SolidColorBrush x:Key="RadioButton.Pressed.Glyph" Color="#FF212121"/>
+        <SolidColorBrush x:Key="RadioButton.Disabled.Background" Color="#FFE6E6E6"/>
+        <SolidColorBrush x:Key="RadioButton.Disabled.Border" Color="#FFBCBCBC"/>
+        <SolidColorBrush x:Key="RadioButton.Disabled.Glyph" Color="#FF707070"/>
+        <Style x:Key="RadioButtonStyle1" TargetType="{x:Type RadioButton}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource RadioButton.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource RadioButton.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type RadioButton}">
+                        <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="33"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="radioButtonBorder" Background="#bbbbbb" BorderBrush="#181818" BorderThickness="2" CornerRadius="100" HorizontalAlignment="Center" Margin="1,1,2,1" VerticalAlignment="Center">
+                                <Grid x:Name="markGrid" Margin="2">
+                                    <Ellipse x:Name="optionMark" Fill="{StaticResource RadioButton.Static.Glyph}" MinWidth="15" MinHeight="15" Opacity="0"/>
+                                </Grid>
+                            </Border>
+                            <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasContent" Value="true">
+                                <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
+                                <Setter Property="Padding" Value="4,-1,0,0"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.MouseOver.Border}"/>
+                                <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource RadioButton.MouseOver.Glyph}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Disabled.Border}"/>
+                                <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource RadioButton.Disabled.Glyph}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Pressed.Border}"/>
+                                <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource RadioButton.Pressed.Glyph}"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter Property="Opacity" TargetName="optionMark" Value="1"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="{x:Null}">
+                                <Setter Property="Opacity" TargetName="optionMark" Value="0.56"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid UseLayoutRounding="True">
+        <TabControl BorderThickness="5" TabStripPlacement="Left" BorderBrush="#333333">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Grid Name="Panel">
+                                    <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        ContentSource="Header"
+                                        Margin="20,15"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Panel" Property="Background" Value="#333333" />
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="False">
+                                        <Setter TargetName="Panel" Property="Background" Value="#202020" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
+
+            <TabItem  Header="Appearance" Margin="-2,-2,0,2" Foreground="#dddddd" FontSize="18" FontWeight="DemiBold">
+
+                <Grid Background="#232323" Margin="-2.5,-2,-2,-2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Height="362" VerticalAlignment="Top">
+                        <Grid.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0.8">
+                                <GradientStop Color="#181818"/>
+                                <GradientStop Color="#23232323" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                    </Grid>
+
+                    <Button Content="General Settings" Margin="28,70,0,0" Foreground="#dddddd" Click="General" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="N0Telemetry" Foreground="#dddddd" Margin="28,362,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <TextBlock TextAlignment="Center">Deactivate<LineBreak/>Telemetry</TextBlock>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="ActivateNumLock" Margin="198,448,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <TextBlock TextAlignment="Center">Activate Numlock<LineBreak/>On Startup</TextBlock>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="ActivateBootSound" Margin="368,448,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <TextBlock TextAlignment="Center">Activate Windows<LineBreak/>Boot Sound</TextBlock>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="YesAppFilehistory" Foreground="#dddddd" Margin="28,448,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Activate App /<LineBreak/>File History</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="NoAppFilehistory" Foreground="#dddddd" Margin="28,510,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <TextBlock TextAlignment="Center">Deactivate App /<LineBreak/>File History</TextBlock>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="DeactivateNumLock" Margin="198,510,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Deactivate Numlock<LineBreak/>On Startup</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="DeactivateBootSound" Margin="368,510,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Deactivate Windows<LineBreak/>Boot Sound</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Content="Clear TaskBar" Click="ClearTaskBar" Foreground="#dddddd" Margin="538,70,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="SystemSettings" Foreground="#dddddd" Margin="368,605,0,0" FontSize="16" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="89">
+                        <TextBlock TextAlignment="Center">System<LineBreak/>Settings</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,0,0,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="PowerSettings" Foreground="#dddddd" Margin="198,605,0,0" FontSize="16" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="89">
+                        <TextBlock TextAlignment="Center">Power<LineBreak/>Settings</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,0,0,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="OptionalFeatures" Foreground="#dddddd" Margin="449,605,0,0" FontSize="16" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="89">
+                        <TextBlock TextAlignment="Center">Optional<LineBreak/>Features</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,3,3,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="NetworkSettings" Foreground="#dddddd" Margin="279,605,0,0" FontSize="16" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="89">
+                        <TextBlock TextAlignment="Center">Network<LineBreak/>Adapters</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,3,3,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Margin="28,605,0,0" Click="ActivateWindows" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Activate Windows /<LineBreak/>Check License</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#442726">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="BetterWT" Foreground="#dddddd" Margin="538,158,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Better WT Context<LineBreak/>Menu Integration</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="NormalWT" Foreground="#dddddd" Margin="538,220,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Reset WT Context<LineBreak/>Menu Integration</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Margin="198,158,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170" Click="DarkMode">
+                        <TextBlock TextAlignment="Center">System Dark<LineBreak/>Mode</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Margin="198,220,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170" Click="LightMode">
+                        <TextBlock TextAlignment="Center">System Light<LineBreak/>Mode</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Margin="28,158,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" Click="LegacyCmen" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Use Legacy<LineBreak/>Context Menu</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Margin="368,158,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170" Click="LegacyRibbon">
+                        <TextBlock TextAlignment="Center">Use Legacy<LineBreak/>Explorer Ribbon</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Margin="368,220,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170" Click="DefaultRibbon">
+                        <TextBlock TextAlignment="Center">Use Default<LineBreak/>Explorer Ribbon</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Margin="28,220,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170" Click="DefaultCmen">
+                        <TextBlock TextAlignment="Center">Use Default<LineBreak/>Context Menu</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="ResetUpdate" Margin="538,362,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Reset Windows<LineBreak/>Update</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#262644">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="SecurityUpdatesOnly" Margin="538,448,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Security Updates<LineBreak/>Only*</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#504f2a">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="UEFIBoot" Margin="368,362,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Restart to<LineBreak/>UEFI Firmware</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#262644">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="SafeBoot" Margin="198,362,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Restart to<LineBreak/>"Safe-Mode"</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#262644">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Content="Information" Foreground="#dddddd" Margin="538,605,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170" Click="Info">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#264426">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="DeactivateWindowsUpdate" Margin="538,510,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Disable Windows<LineBreak/>Update</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#442726">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Label Content="General - UI" HorizontalAlignment="Left" FontSize="30" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="31,16,0,0" Width="178" Height="54"/>
+
+                    <Label Content="System" HorizontalAlignment="Left" FontSize="30" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="31,302,0,0" Width="112" Height="54"/>
+
+                </Grid>
+
+            </TabItem>
+
+            <TabItem Header="Hardening / Security" Margin="-2,0,0,0" Foreground="#dddddd" FontSize="18" FontWeight="DemiBold">
+
+                <Grid Background="#232323" Margin="-2.5,-2,-2,-2">
+
+                    <Button Click="SetMaxFailedLoginAttemptsBoot" Content="Set" Margin="509,595,0,0" Foreground="#dddddd"  FontSize="17" FontWeight="DemiBold" Height="75" VerticalAlignment="Top" HorizontalAlignment="Left" Width="201">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Label Content="System Lock&#xA;Timeout in Seconds↴" HorizontalAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="275,484,0,0" Width="195" Height="56"/>
+
+                    <TextBox 
+                        Style="{DynamicResource Default}"
+                        Name="MfLan"
+                        BorderThickness="3"
+                        BorderBrush="#181818"
+                        Background="#393939"
+                        Foreground="#bbbbbb"
+                        Margin="513,540,0,0"
+                        TextWrapping="Wrap"
+                        Text="0/off; 4-99"
+                        FontSize="17"
+                        FontWeight="DemiBold"
+                        Height="34"
+                        Width="193" 
+                        VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
+
+                    <Label Content="Max. Failed Login&#xA;Attempts before reboot↴" HorizontalAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="513,484,0,0" Width="195" Height="56"/>
+
+                    <TextBox 
+                        Style="{DynamicResource Default}"
+                        Name="Timeout"
+                        BorderThickness="3"
+                        BorderBrush="#181818"
+                        Background="#393939"
+                        Foreground="#bbbbbb"
+                        Margin="275,540,0,0"
+                        TextWrapping="Wrap"
+                        Text="0/off-599940"
+                        FontSize="17"
+                        FontWeight="DemiBold"
+                        Height="34"
+                        Width="193" 
+                        VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
+
+                    <Button Click="SetScreenTimeout" Content="Set" Margin="271,595,0,0" Foreground="#dddddd"  FontSize="17" FontWeight="DemiBold" Height="75" VerticalAlignment="Top" HorizontalAlignment="Left" Width="201">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Content="Harden" Click="Harden" Margin="28,70,0,0" Foreground="#dddddd"  FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="EncryptSMB" Margin="28,158,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Encrypted SMB<LineBreak/>Server Access</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <!--Button Foreground="#dddddd" Click="ActivateApplicationGuard" Margin="28,309,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Install Windows<LineBreak/>Application-Guard</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button-->
+
+                    <Button Foreground="#dddddd" Click="DeactivateEncryptSMB" Margin="28,220,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Default SMB<LineBreak/>Server Access</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <!--Button Foreground="#dddddd" Click="DeactivateApplicationGuard" Margin="28,371,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Deinstall Windows<LineBreak/>Application-Guard</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button-->
+
+                    <Label Content="Failed Login Policy↴" HorizontalAlignment="Left" FontSize="16" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="28,482,0,0" Width="207" Height="34"/>
+
+                    <TextBox 
+                        Style="{DynamicResource Default}"
+                        Name="attempts"
+                        BorderThickness="3"
+                        BorderBrush="#181818"
+                        Background="#393939"
+                        Foreground="#bbbbbb"
+                        Margin="32,518,0,0"
+                        TextWrapping="Wrap"
+                        Text="(0/off)-999"
+                        FontSize="17"
+                        FontWeight="DemiBold"
+                        Height="34"
+                        Width="197" 
+                        VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
+
+                    <TextBox 
+                        Style="{DynamicResource Default}"
+                        Name="duration"
+                        BorderThickness="3"
+                        BorderBrush="#181818"
+                        Background="#393939"
+                        Foreground="#bbbbbb"
+                        Margin="32,557,0,0"
+                        TextWrapping="Wrap"
+                        Text="(0/manual)-99999 [min]"
+                        FontSize="17"
+                        FontWeight="DemiBold"
+                        Height="34"
+                        Width="197" 
+                        VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
+
+                    <Button Click="SystemLock" Content="Set" Margin="28,595,0,0" Foreground="#dddddd"  FontSize="17" FontWeight="DemiBold" Height="75" VerticalAlignment="Top" HorizontalAlignment="Left" Width="205">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="VerboseUAC" Margin="198,158,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">UAC Force Admin<LineBreak/>Credential Input</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <!--Button Foreground="#dddddd" Click="ActivateVBS" Margin="198,309,0,0" FontSize="15" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Activate Virtualization<LineBreak/>Based Security</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button-->
+
+                    <Button Foreground="#dddddd" Click="DefaultUAC" Margin="198,220,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Default UAC<LineBreak/>Behavior</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <!--Button Foreground="#dddddd" Click="DeactivateVBS" Margin="198,371,0,0" FontSize="14" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Deactivate Virtualization<LineBreak/>Based Security</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button-->
+
+                    <Button Foreground="#dddddd" Click="PagefileClear" Margin="368,158,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Clear Pagefile<LineBreak/>on Shutdown</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="PagefileDefault" Margin="368,220,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Default Pagefile<LineBreak/>Behavior</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Margin="538,309,0,0" Foreground="#dddddd" Click="Backgroundappsno" FontSize="13" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Deactivate<LineBreak/>Backgroundapps<LineBreak/>(Breaks Spotlight)</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Margin="538,371,0,0" Foreground="#dddddd" Click="Backgroundappsyes" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Activate<LineBreak/>Backgroundapps</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="BlockUSBCode" Margin="28,309,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Block Unsigned<LineBreak/>USB execution</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="AllowUSBCode" Margin="28,371,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Allow Unsigned<LineBreak/>USB execution</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Margin="536,70,0,0" FontSize="14" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170" Click="DefaultCMDBehavior">
+                        <TextBlock TextAlignment="Center">Set Default<LineBreak/>*.cmd / *.bat File<LineBreak/>Behaviour</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <!--Button Foreground="#dddddd" Click="ActivateCFG" Margin="538,309,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Activate<LineBreak/>Control Flow Guard</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button-->
+
+                    <!--Button Foreground="#dddddd" Click="DeactivateCFG" Margin="538,371,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Deactivate<LineBreak/>Control Flow Guard</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button-->
+
+                    <Button Foreground="#dddddd" Click="RequireCtrl" Margin="538,158,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170" Grid.ColumnSpan="2">
+                        <TextBlock TextAlignment="Center">Require "Ctrl+Alt<LineBreak/>+Del" to Log in</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="DontRequireCtrl" Margin="538,220,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170" Grid.ColumnSpan="2">
+                        <TextBlock TextAlignment="Center">Don't Require "Ctrl<LineBreak/>+Alt+Del" to Log in</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Label Content="General" HorizontalAlignment="Left" FontSize="30" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="31,16,0,0" Width="178" Height="54"/>
+
+                </Grid>
+
+            </TabItem>
+
+            <TabItem Header="Lockscreen / User Settings" Margin="-2,2,0,-3" Foreground="#dddddd" FontWeight="DemiBold" FontSize="16">
+
+                <Grid Background="#232323" Margin="-2.5,-2,-2,-2">
+
+                    <Grid Height="322" VerticalAlignment="Top">
+                        <Grid.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0.75">
+                                <GradientStop Color="#181818"/>
+                                <GradientStop Color="#23232323" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                    </Grid>
+
+                    <Label Content="Lockscreen Settings" HorizontalAlignment="Left" FontSize="30" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="31,27,0,0" Width="282" Height="54"/>
+                    <Label Content="User Settings" HorizontalAlignment="Left" FontSize="30" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="26,287,0,0" Width="195" Height="54"/>
+
+                    <Button Click="ActivateLockScreen" Margin="28,106,0,0" Foreground="#dddddd" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Enable<LineBreak/>Lockscreen</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="DeactivateLockScreen" Margin="28,168,0,0" Foreground="#dddddd" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Disable<LineBreak/>Lockscreen</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="ActivateLockScreenNotifications" Margin="198,106,0,0" Foreground="#dddddd" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock FontSize="17" TextAlignment="Center">Enable Lockscreen<LineBreak/>Notifications</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="DeactivateLockScreenNotifications" Margin="198,168,0,0" Foreground="#dddddd" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock FontSize="16" TextAlignment="Center">Disable Lockscreen<LineBreak/>Notifications</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="RequireCtrl" Margin="368,106,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Require "Ctrl+Alt<LineBreak/>+Del" to Log in</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="DontRequireCtrl" Margin="368,168,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Don't Require "Ctrl<LineBreak/>+Alt+Del" to Log in</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="YesLoginBlur" Margin="538,106,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Enable Login -<LineBreak/>screen Blur</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Click="NoLoginBlur" Margin="538,168,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Disable Login -<LineBreak/>screen Blur</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Label Content="Username↴" HorizontalAlignment="Left" FontSize="18" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="26,346.5,0,0" Width="112" Height="34"/>
+
+                    <TextBox 
+                        Style="{DynamicResource Default}"
+                        Name="Username"
+                        BorderThickness="3"
+                        BorderBrush="#181818"
+                        Background="#393939"
+                        Foreground="#bbbbbb"
+                        Margin="26,375,0,0"
+                        TextWrapping="Wrap"
+                        FontSize="18"
+                        FontWeight="DemiBold"
+                        Height="34"
+                        Width="317" 
+                        VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
+
+                    <Label Content="Password↴" HorizontalAlignment="Left" FontSize="18" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="26,440,0,0" Width="102" Height="32"/>
+                    <PasswordBox Style="{DynamicResource PasswordBoxStyle}"
+                        Name="Password"
+                        BorderThickness="3"
+                        BorderBrush="#181818"
+                        Background="#393939"
+                        Foreground="#bbbbbb"
+                        Margin="26,469,0,0"
+                        FontSize="18"
+                        FontWeight="DemiBold"
+                        Height="34"
+                        Width="317"  
+                        VerticalAlignment="Top" HorizontalAlignment="Left"  SnapsToDevicePixels="True" >
+                        <PasswordBox.Effect>
+                            <DropShadowEffect/>
+                        </PasswordBox.Effect>
+                    </PasswordBox>
+
+                    <Button Click="ActivateAutologin" Margin="22,607,0,0" Foreground="#dddddd" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="325">
+                        <TextBlock TextAlignment="Center">Set Automatic<LineBreak/>User Login</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#442726">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="ListUsers" Margin="182,523,0,0" Foreground="#dddddd" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="165">
+                        <TextBlock TextAlignment="Center">List<LineBreak/>System Users</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#264426">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="HideUser" Content="Hide User" Margin="389,607,0,0" Foreground="#dddddd" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="167">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,0,0,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#504f2a">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="ShowUser" Content="Show User" Margin="548,607,0,0" Foreground="#dddddd" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="167">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,3,3,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#504f2a">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+
+                    <Button Click="DeactivateAutologin" Margin="22,523,0,0" Foreground="#dddddd" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="162">
+                        <TextBlock TextAlignment="Center">Deactivate<LineBreak/>Auto Login</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#262644">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Label Content="Username↴" HorizontalAlignment="Left" FontSize="18" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="393,526,0,0" Width="112" Height="32"/>
+
+                    <TextBox 
+                        Style="{DynamicResource Default}"
+                        Name="hideactionusername"
+                        BorderThickness="3"
+                        BorderBrush="#181818"
+                        Background="#393939"
+                        Foreground="#bbbbbb"
+                        Margin="393,555,0,0"
+                        TextWrapping="Wrap"
+                        FontSize="18"
+                        FontWeight="DemiBold"
+                        Height="34"
+                        Width="318"
+                        VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
+                    <TextBlock HorizontalAlignment="Left" Margin="378,430,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="106" Width="284"><Run Text="❰"/><Run Text=" "/><Run Text="Set up auto login for user"/><LineBreak/><Run/><LineBreak/><Run/><LineBreak/><Run Text="&#x9;Hide user from login screen"/><LineBreak/><Run Text="&#x9;&#x9;        ᐯ"/></TextBlock>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Miscellaneous" Margin="-2,12,0,-13" Foreground="#dddddd" FontWeight="DemiBold" FontSize="16">
+                <Grid Background="#232323" Margin="-2.5,-2,-2,-2">
+
+                    <Button Click="UserAutostart" Margin="28,52,0,0" Foreground="#dddddd" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Open Current User<LineBreak/>Autostart Folder</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,0,0,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="GlobalAutostart" Margin="190,52,0,0" Foreground="#dddddd" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Open Global<LineBreak/>Autostart Folder</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,3,3,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Margin="28,159,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170" Click="LegacyBootMenuePolicy">
+                        <TextBlock TextAlignment="Center">Activate Legacy<LineBreak/>Recovery Menue</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Margin="28,221,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170" Click="StandartBootMenuePolicy">
+                        <TextBlock TextAlignment="Center">Standart<LineBreak/>Recovery Menue</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="FastWUPDATE" Margin="220,194,0,0" Foreground="#dddddd"  FontSize="16" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Set Windows Update<LineBreak/>to fast release</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="Curser" Margin="390,194,0,0" Foreground="#dddddd"  FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Use Enhanced<LineBreak/>Curser</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="NoWUDrivers" Margin="560,194,0,0" Foreground="#dddddd"  FontSize="13" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Deactivate driver<LineBreak/>updates via<LineBreak/>Windows Update</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Label Content="Import / Export WLan Profiles" FontSize="30" FontWeight="DemiBold" HorizontalAlignment="Left" Foreground="#dddddd" VerticalAlignment="Top" Margin="28,309,0,0" Width="554" Height="53"/>
+
+                    <Label Content="Save / Load Folder↴" HorizontalAlignment="Left" FontSize="18" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="32,374,0,0" Width="198" Height="34"/>
+
+                    <TextBox 
+                        Style="{DynamicResource Default}"
+                        Name="wlanconfigdir"
+                        BorderThickness="3"
+                        BorderBrush="#181818"
+                        Background="#393939"
+                        Foreground="#bbbbbb"
+                        Margin="32,408,0,0"
+                        FontSize="17"
+                        FontWeight="DemiBold"
+                        Height="34"
+                        Width="550" 
+                        VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <TextBox.Effect>
+                            <DropShadowEffect/>
+                        </TextBox.Effect>
+                    </TextBox>
+
+
+
+                    <Button Content="Select" Foreground="#dddddd" Margin="597,397,0,0" FontSize="17" FontWeight="DemiBold" Height="56" VerticalAlignment="Top" HorizontalAlignment="Left" Width="111" Click="SelectWLanDir">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#434343">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Margin="28,460,0,0" FontSize="17" FontWeight="DemiBold" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" Width="136" Click="ImportWLanConfig">
+                        <TextBlock TextAlignment="Center">Import</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Foreground="#dddddd" Margin="171,460,0,0" FontSize="17" FontWeight="DemiBold" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" Width="136" Click="ExportWLanConfig">
+                        <TextBlock TextAlignment="Center">Export</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="CheckHealth" Foreground="#dddddd" Margin="520,52,0,0" FontSize="16" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="89">
+                        <TextBlock TextAlignment="Center">1. Check-<LineBreak/>Health</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3,0,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="ScanHealth" Foreground="#dddddd" Margin="601,52,0,0" FontSize="16" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90">
+                        <TextBlock TextAlignment="Center">2. Scan-<LineBreak/>Health</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,3,0,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="RestoreHealth" Foreground="#dddddd" Margin="520,114,0,0" FontSize="15" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="89">
+                        <TextBlock TextAlignment="Center">3. Restore-<LineBreak/>Health</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,0,3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="SFCScan" Foreground="#dddddd" Margin="601,114,0,0" FontSize="16" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="90">
+                        <TextBlock TextAlignment="Center"> 4. SFC-<LineBreak/>Scan</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="0,0,3,0" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <RadioButton Style="{DynamicResource RadioButtonStyle1}" Content="All / Multiple&#xA;Profiles" Foreground="#dddddd" FontSize="17" HorizontalAlignment="Left" Margin="359,461,0,0" VerticalAlignment="Top" Height="48" Width="145" IsChecked="True" Checked="AllProfilesWLanTrue"/>
+
+                    <RadioButton Style="{DynamicResource RadioButtonStyle1}" Content="Single Profile" Foreground="#dddddd" FontSize="17" HorizontalAlignment="Left" Margin="520,468,0,0" VerticalAlignment="Top" Height="34" Width="145" Checked="AllProfilesWLanFalse"/>
+
+                </Grid>
+
+            </TabItem>
+
+            <TabItem Header="Programs / Debloat" Margin="-2,15,0,-16" Foreground="#dddddd" FontWeight="DemiBold" FontSize="18">
+
+                <Grid Background="#232323" Margin="-2.5,-2,-2,-2">
+
+                    <Grid Height="302" VerticalAlignment="Top">
+                        <Grid.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0.75">
+                                <GradientStop Color="#181818"/>
+                                <GradientStop Color="#23232323" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                    </Grid>
+
+                    <Label Content="Debloat" HorizontalAlignment="Left" FontSize="30" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="31,16,0,0" Width="178" Height="54"/>
+
+                    <Label Content="Install" HorizontalAlignment="Left" FontSize="30" FontWeight="DemiBold" Foreground="#dddddd" VerticalAlignment="Top" Margin="31,302,0,0" Width="112" Height="54"/>
+
+                    <Button Content="Remove Bloat" Click="Debloat" Foreground="#dddddd" Margin="28,70,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Content="Remove Edge" Click="RMEdge" Foreground="#dddddd" Margin="368,158,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="RemWebView" Foreground="#dddddd" Margin="538,158,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Remove<LineBreak/>EdgeWebView2</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="Firefox" Foreground="#dddddd" Margin="28,362,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <TextBlock TextAlignment="Center">Install Firefox<LineBreak/>(Preconfigured)</TextBlock>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="Codecs" Foreground="#dddddd" Margin="198,362,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <TextBlock TextAlignment="Center">Install Media<LineBreak/>Codecs</TextBlock>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="Zip7" Content="Install 7-Zip" Foreground="#dddddd" Margin="28,432,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Content="Install Nano" Click="Nano" Foreground="#dddddd" Margin="198,432,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="NotepadPlusPlus" Foreground="#dddddd" Margin="368,432,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <TextBlock TextAlignment="Center">Install Notepad++<LineBreak/>(online)</TextBlock>
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="VCRedist" Foreground="#dddddd" Margin="368,362,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <TextBlock TextAlignment="Center">Install Visual<LineBreak/>Studio Runtime</TextBlock>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Click="Java" Foreground="#dddddd" Margin="538,362,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <TextBlock TextAlignment="Center">Install Java 17<LineBreak/>(JDK)</TextBlock>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Content="Remove XBox" Click="RemoveXbox" Foreground="#dddddd" Margin="198,158,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Content="Remove OneDrive" Click="RMOneDrive" Foreground="#dddddd" Margin="28,158,0,0" FontSize="17" FontWeight="DemiBold" Height="70" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="bdr_main" CornerRadius="3" Margin="4" BorderThickness="3" BorderBrush="#161616" Background="#393939">
+                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Content" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#202020"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#434343"/>
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter TargetName="bdr_main" Property="Background" Value="#1c1c1c"/>
+                                        <Setter TargetName="bdr_main" Property="BorderBrush" Value="#6a6a6a"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                </Grid>
+
+            </TabItem>
+
+        </TabControl>
+
+        <Button Content="Restart Explorer" Margin="10,0,0,10" Click="Restart_Explorer" HorizontalAlignment="Left" FontSize="18" FontStyle="Italic" FontWeight="DemiBold" Width="212" Height="55" VerticalAlignment="Bottom">
+
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="#2e2e2e" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="Border" CornerRadius="3" Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#464646" TargetName="Border" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <Button Content="Debug" Click="Debug" Margin="50,0,0,108" HorizontalAlignment="Left" FontSize="18" FontWeight="DemiBold" Width="132" Height="56" VerticalAlignment="Bottom">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Background" Value="AliceBlue" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border x:Name="Border" CornerRadius="3" Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="red" TargetName="Border" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Button.Style>
+        </Button>
+
+    </Grid>
+
+</Window>
