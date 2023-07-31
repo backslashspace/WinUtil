@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Starter
@@ -33,7 +37,7 @@ namespace Starter
             Boolean valide = false;
             Boolean ignore = false;
 
-            if (CompareHash256("data\\WinUtil.exe", "168653fe935162387fc69f7434f8361725bd71004286765ec816322d18eefb81"))
+            if (CompareHash256("data\\WinUtil.exe", "5d1a10b6e82c351c9cf1b165ff2e30664deaa8edb5ad249cc615736ff445425f"))
             {
                 valide = true;
             }
