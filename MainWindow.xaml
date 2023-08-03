@@ -204,7 +204,7 @@
 
         <Image Source="icon.ico" Margin="9,-23,0,0" Height="14" RenderOptions.BitmapScalingMode="HighQuality"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="14"/>
 
-        <TextBlock Text="WinUtil v1.4.0.0 (DEV-5)" FontFamily="Bahnschrift" Foreground="#ccccce" Margin="30,-23,0,0" HorizontalAlignment="Left" Width="178" Height="13" VerticalAlignment="Top"/>
+        <TextBlock Text="WinUtil v2.0.0.0 (DEV-0)" FontFamily="Bahnschrift" Foreground="#ccccce" Margin="30,-23,0,0" HorizontalAlignment="Left" Width="178" Height="13" VerticalAlignment="Top"/>
 
         <!-- define window buttons -->
         <!-- dactiv foregound = 777777 -->
