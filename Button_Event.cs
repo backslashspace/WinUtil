@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Reflection;
-using System.Security.Principal;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Media;
-using NetTools;
-using SysGet;
-using Microsoft.Win32;
 using System.Windows.Threading;
-using System.Threading;
-using System.Diagnostics;
 using System.Windows.Controls;
 
 namespace WinUtil_Main

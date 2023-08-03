@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ProgramLauncher</name>
+    </assembly>
+    <members>
+        <member name="T:ProgramLauncher.Execute">
+            <summary>Launcher for executables</summary>
+        </member>
+        <member name="M:ProgramLauncher.Execute.EXE(System.String,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String,System.Boolean)">
+            <summary>Launches executables.</summary>
+            <exception cref="T:System.IO.FileLoadException"></exception>
+        </member>
+    </members>
+</doc>

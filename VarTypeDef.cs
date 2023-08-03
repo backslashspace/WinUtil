@@ -63,9 +63,13 @@ namespace WinUtil_Main
 
         private sealed class ExtResources
         {
-            public const String SysGetdll = "09b497640685e174e2bd199ad57f10ce21ad9f7345baf80d3e54b7b2cf4433db";
-            public const String NetToolsdll = "30c778b1f49df042ba9f00737612067c881f200a546045051898dec1e788b192";
-            public const String ManagedWinFormsMessageBoxdll = "df59fe8e0aa2f43a3a005420fdf451e43d3ec8200f8abc725d4f5ec605e7a8c5";
+            public const String CustomWinMessageBox = "4f383df5517addac328543b732cecd12f14aa93aa099e8a7d3cf00df45fe3805";
+            public const String HashTools = "bd1add6c98b7406b779b3f2c20942f16523ce9841639918ee4c3ad719225d019";
+            public const String PowershellHelper = "30154a0c4686bfc5e3e3efb0853f0e050db7d27ae59dffb8d54c06c9ec4f1d0c";
+            public const String ProgramLauncher = "f4c3dedddeed357421c60ef17037c7536346aae985b33674f643e6c73eb8ab22";
+            public const String RegistryTools = "0dcb3c87a8162acef6eb8c3ae5fa0ad62ebd43968ef69e0ce48d55bbc10aeb2f";
+            public const String ServiceTools = "ba4add34b1aba3e01bd38dc284b60927d3b5c81645d3f63b1a9ae70fd59c64c0";
+            public const String WinUser = "861e400ec6c99ae48ec4392cc10711f634f624cd8e8e82e829bc6d5e581c7a2f";
             
             public const String ManagedNativeWifi = "c590995858bc7f5624ae4161e7b22bfe834c17b6a6fc0c4dfd7207d1b11a3ca3";
             public const String SystemRuntimeCompilerServicesUnsafe = "37768488e8ef45729bc7d9a2677633c6450042975bb96516e186da6cb9cd0dcf";

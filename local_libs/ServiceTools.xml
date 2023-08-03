@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ServiceTools</name>
+    </assembly>
+    <members>
+        <member name="T:ServiceTools.Service">
+            <summary>Interact with Windows services</summary>
+        </member>
+        <member name="M:ServiceTools.Service.GetServiceStatus(System.String)">
+            <summary>Returns the status of a given service.</summary>
+        </member>
+        <member name="M:ServiceTools.Service.StartService(System.String,System.String)">
+            <summary>Starts a given service</summary>
+        </member>
+        <member name="M:ServiceTools.Service.StopService(System.String)">
+            <summary>Stops a given service</summary>
+        </member>
+        <member name="M:ServiceTools.Service.PauseService(System.String)">
+            <summary>Stops a given service</summary>
+        </member>
+        <member name="M:ServiceTools.Service.SetStartupType(System.String,System.ServiceProcess.ServiceStartMode)">
+            <summary>Changes the service start type</summary>
+        </member>
+    </members>
+</doc>

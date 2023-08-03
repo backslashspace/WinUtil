@@ -3,17 +3,20 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using System.Threading;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Linq;
 using System.Collections.Generic;
 using System.ServiceProcess;
 using System.Windows.Forms;
 using ManagedNativeWifi;
-using NetTools;
 using System.Windows.Media;
-using ManagedWinFormsMessageBox;
-using SysGet;
 using System.Threading.Tasks;
+//libs
+using CustomWinMessageBox;
+using ProgramLauncher;
+using static PowershellHelper.PowershellHelper;
+using RegistryTools;
+using ServiceTools;
+using WinUser;
 
 namespace WinUtil_Main
 {
@@ -48,7 +51,9 @@ namespace WinUtil_Main
 
                     RegistryIO.DeleteValues("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", new String[] { "Windows Activation Status" });
 
-                    Execute.PowerShell("$test = Get-CimInstance SoftwareLicensingProduct -Filter \"Name like 'Windows%'\" | where { $_.PartialProductKey } | select LicenseStatus; $test = $test -replace \"@{LicenseStatus=\"; $test = $test -replace \"}\"; reg add \"HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil\" /v \"Windows Activation Status\" /t reg_dword /d $test /f");
+                    
+
+                    PowerShell("$test = Get-CimInstance SoftwareLicensingProduct -Filter \"Name like 'Windows%'\" | where { $_.PartialProductKey } | select LicenseStatus; $test = $test -replace \"@{LicenseStatus=\"; $test = $test -replace \"}\"; reg add \"HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil\" /v \"Windows Activation Status\" /t reg_dword /d $test /f");
 
                     DispatchedLogBoxAdd("[Info] Updated license information\n\n", Brushes.Cyan, null);
                 }
@@ -178,7 +183,7 @@ namespace WinUtil_Main
                 Execute.EXE("cmd.exe", "/c \"setx /M MP_FORCE_USE_SANDBOX 1\"", true, false);
 
                 DispatchedLogBoxAdd("Setting VeraCrypt as Trusted Process\n", Brushes.Gray, null);
-                Execute.PowerShell("Add-MpPreference -ExclusionProcess \"C:\\Program Files\\VeraCrypt\\VeraCrypt.exe\"");
+                PowerShell("Add-MpPreference -ExclusionProcess \"C:\\Program Files\\VeraCrypt\\VeraCrypt.exe\"");
 
                 DispatchedLogBoxAdd("Properly handle Ethernet connections (IgnoreNonRoutableEthernet=1)\n", Brushes.Gray, null);
                 Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Wcmsvc", "IgnoreNonRoutableEthernet", 1, RegistryValueKind.DWord);
@@ -293,8 +298,9 @@ namespace WinUtil_Main
                 RegistryIO.DeleteSubKeyTree("HKEY_CLASSES_ROOT\\Directory", new String[] { "Background\\shell\\Powershell", "shell\\Powershell" });
 
                 DispatchedLogBoxAdd("Removing DynLinks\n", Brushes.Gray, null);
-                Execute.PowerShell("Get-ChildItem -Path \"C:\\Users\\" + UserPath + "\" -Force | Where-Object { $_.LinkType -ne $null -or $_.Attributes -match \"ReparsePoint\" } | remove-item -force -ErrorAction SilentlyContinue");
-                Execute.PowerShell("Get-ChildItem -Path \"C:\\Users\\" + UserPath + "\\documents\" -Force | Where-Object { $_.LinkType -ne $null -or $_.Attributes -match \"ReparsePoint\" } | remove-item -force -ErrorAction SilentlyContinue");
+
+                PowerShell("Get-ChildItem -Path \"C:\\Users\\" + UserPath + "\" -Force | Where-Object { $_.LinkType -ne $null -or $_.Attributes -match \"ReparsePoint\" } | remove-item -force -ErrorAction SilentlyContinue");
+                PowerShell("Get-ChildItem -Path \"C:\\Users\\" + UserPath + "\\documents\" -Force | Where-Object { $_.LinkType -ne $null -or $_.Attributes -match \"ReparsePoint\" } | remove-item -force -ErrorAction SilentlyContinue");
 
                 Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DontPrettyPath", 1, RegistryValueKind.DWord);
 
@@ -524,7 +530,7 @@ namespace WinUtil_Main
                 if (RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", "Blocked Telemetry IPs", RegistryValueKind.DWord, false) == 0 || RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", "Blocked Telemetry IPs", RegistryValueKind.DWord, false) == null)      //suiedzhfgbwuehfbzub
                 {
                     DispatchedLogBoxAdd("Excluding 'hosts' file from Windows Defender\n", Brushes.DarkGray, null);
-                    Execute.PowerShell("Add-MpPreference -ExclusionPath C:\\Windows\\System32\\drivers\\etc\\hosts");
+                    PowerShell("Add-MpPreference -ExclusionPath C:\\Windows\\System32\\drivers\\etc\\hosts");
 
                     Task.Delay(3200).Wait();
 
@@ -752,9 +758,9 @@ namespace WinUtil_Main
 
                         if (VerboseHashCheck("assets\\" + Const.VCLibsName, Const.VCLibs)[0] && VerboseHashCheck("assets\\Windows Terminal\\" + Const.WTName, Const.WT)[0] && VerboseHashCheck("assets\\Windows Terminal\\" + Const.WTLicenseName, Const.WTLicenseHash)[0])
                         {
-                            Execute.PowerShell("Add-AppxPackage -Path \"assets\\" + Const.VCLibsName + "\"");
+                            PowerShell("Add-AppxPackage -Path \"assets\\" + Const.VCLibsName + "\"");
 
-                            Execute.PowerShell("Add-ProvisionedAppPackage -Online -PackagePath \"assets\\Windows Terminal\\" + Const.WTName + "\" -LicensePath \"assets\\Windows Terminal\\" + Const.WTLicenseName + "\"");
+                            PowerShell("Add-ProvisionedAppPackage -Online -PackagePath \"assets\\Windows Terminal\\" + Const.WTName + "\" -LicensePath \"assets\\Windows Terminal\\" + Const.WTLicenseName + "\"");
 
                             DispatchedLogBoxAdd("Done\n\n", Brushes.DarkCyan, null);
                         }
@@ -869,12 +875,12 @@ namespace WinUtil_Main
                 if (result0 == System.Windows.Forms.DialogResult.Yes)
                 {
                     DispatchedLogBoxAdd("Blocking external TCP access to port 2179 & 5357 (VMRDP and WSDAPI)\n", Brushes.DarkGreen, null);
-                    Execute.PowerShell("New-NetFirewallRule -DisplayName \"Block VMRDP & WSDAPI\" -Direction Inbound -LocalPort 2179,5357 -Protocol TCP -Action Block -Description \"Blocks external access of TCP 5357 and 2179, created by WinUtil.\"");
+                    PowerShell("New-NetFirewallRule -DisplayName \"Block VMRDP & WSDAPI\" -Direction Inbound -LocalPort 2179,5357 -Protocol TCP -Action Block -Description \"Blocks external access of TCP 5357 and 2179, created by WinUtil.\"");
                 }
                 else if (result0 == System.Windows.Forms.DialogResult.No)
                 {
                     DispatchedLogBoxAdd("Blocking external TCP access to port 2179 (VMRDP)\n", Brushes.DarkGreen, null);
-                    Execute.PowerShell("New-NetFirewallRule -DisplayName \"Block VMRDP\" -Direction Inbound -LocalPort 2179 -Protocol TCP -Action Block -Description \"Blocks external access of TCP 2179, created by WinUtil.\"");
+                    PowerShell("New-NetFirewallRule -DisplayName \"Block VMRDP\" -Direction Inbound -LocalPort 2179 -Protocol TCP -Action Block -Description \"Blocks external access of TCP 2179, created by WinUtil.\"");
                 }
                 else
                 {
@@ -1221,7 +1227,7 @@ namespace WinUtil_Main
                     DispatchedLogBoxAdd("Removing " + Bloatware[i] + " | ", Brushes.DarkGray, null);
                     try
                     {
-                        Execute.PowerShell("Get-AppxPackage -Allusers -Name " + Bloatware[i] + " | Remove-AppxPackage -Allusers");
+                        PowerShell("Get-AppxPackage -Allusers -Name " + Bloatware[i] + " | Remove-AppxPackage -Allusers");
 
                         DispatchedLogBoxAdd("×\n", Brushes.Green, null);
                     }
@@ -1260,7 +1266,7 @@ namespace WinUtil_Main
                     DispatchedLogBoxAdd("Removing " + Bloatware[i] + " | ", Brushes.DarkGray, null);
                     try
                     {
-                        Execute.PowerShell("Get-AppxPackage -Allusers -Name " + Bloatware[i] + " | Remove-AppxPackage -Allusers");
+                        PowerShell("Get-AppxPackage -Allusers -Name " + Bloatware[i] + " | Remove-AppxPackage -Allusers");
 
                         DispatchedLogBoxAdd("×\n", Brushes.Green, null);
                     }
@@ -1919,9 +1925,9 @@ namespace WinUtil_Main
 
                         try
                         {
-                            Execute.PowerShell("Unregister-ScheduledTask -TaskName MicrosoftEdgeUpdateTaskMachineCore -Confirm $false");
+                            PowerShell("Unregister-ScheduledTask -TaskName MicrosoftEdgeUpdateTaskMachineCore -Confirm $false");
 
-                            Execute.PowerShell("Unregister-ScheduledTask -TaskName MicrosoftEdgeUpdateTaskMachineUA -Confirm $false");
+                            PowerShell("Unregister-ScheduledTask -TaskName MicrosoftEdgeUpdateTaskMachineUA -Confirm $false");
 
                             Execute.EXE("cacls.exe", "\"C:\\Users\\" + UserPath + "\\AppData\\Local\\Microsoft\\EdgeUpdate\" /E /g " + AdminGroupName + ":f", true, true);
                             Execute.EXE("taskkill.exe", "/f /im MicrosoftEdgeUpdate.exe", true, true);
@@ -2218,7 +2224,7 @@ namespace WinUtil_Main
                 Registry.SetValue(@"HKEY_CURRENT_USER\Control Panel\Cursors", "Scheme Source", 1, RegistryValueKind.DWord);
                 Execute.EXE("reg.exe", "import .\\temp\\temp\\" + profile + ".reg", true, true);
 
-                Execute.PowerShell("Remove-Item -Path .\\temp\\temp -Recurse -Force");
+                PowerShell("Remove-Item -Path .\\temp\\temp -Recurse -Force");
 
             }
             catch (Exception ex)
@@ -2485,7 +2491,7 @@ namespace WinUtil_Main
                     Execute.EXE("netsh.exe", "winhttp reset proxy", true, true);
 
                     DispatchedLogBoxAdd("Delete all BITS jobs\n", Brushes.Gray, null);
-                    Execute.PowerShell("Get-BitsTransfer | Remove-BitsTransfer");
+                    PowerShell("Get-BitsTransfer | Remove-BitsTransfer");
 
                     DispatchedLogBoxAdd("Attempting to install the Windows Update Agent\n", Brushes.Gray, null);
                     if (Environment.Is64BitOperatingSystem)
@@ -2628,7 +2634,7 @@ namespace WinUtil_Main
                 //    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters", "MinSMB2Dialect", 0x000000311, RegistryValueKind.DWord);
 
                 //    DispatchedLogBoxAdd("Deactivating SMB 1\n", Brushes.Gray, null);
-                //    Execute.PowerShell("Set-SmbServerConfiguration -EnableSMB1Protocol $false -Confirm:$false");
+                //    PowerShell("Set-SmbServerConfiguration -EnableSMB1Protocol $false -Confirm:$false");
 
                 //    B = true;
                 //}
@@ -2636,13 +2642,13 @@ namespace WinUtil_Main
                 //if (SMBhardenMessage.Encrypt)
                 //{
                 //    DispatchedLogBoxAdd("Enable Smb encryption\n", Brushes.Gray, null);
-                //    Execute.PowerShell("Set-SmbServerConfiguration -EncryptData $true -Confirm:$false");
-                //    Execute.PowerShell("Set-SmbServerConfiguration -DisableSmbEncryptionOnSecureConnection $false -Confirm:$false");
+                //    PowerShell("Set-SmbServerConfiguration -EncryptData $true -Confirm:$false");
+                //    PowerShell("Set-SmbServerConfiguration -DisableSmbEncryptionOnSecureConnection $false -Confirm:$false");
 
                 //    if (IsWin11Server22Complient)
                 //    {
                 //        DispatchedLogBoxAdd("Setting Encryption Ciphers to AES 256 GCM and AES_128_GCM\n", Brushes.Gray, null);
-                //        Execute.PowerShell("Set-SmbServerConfiguration -EncryptionCiphers \"AES_256_GCM, AES_128_GCM\" -Confirm:$false");
+                //        PowerShell("Set-SmbServerConfiguration -EncryptionCiphers \"AES_256_GCM, AES_128_GCM\" -Confirm:$false");
                 //    }
 
                 //    B = true;
@@ -2651,8 +2657,8 @@ namespace WinUtil_Main
                 //if (SMBhardenMessage.RejectUnencrypted)
                 //{
                 //    DispatchedLogBoxAdd("Rejecting unencrypted SMB access\n", Brushes.Gray, null);
-                //    Execute.PowerShell("Set-SmbServerConfiguration -RejectUnencryptedAccess $true -Confirm:$false");
-                //    Execute.PowerShell("Set-SmbServerConfiguration -DisableSmbEncryptionOnSecureConnection $false -Confirm:$false");
+                //    PowerShell("Set-SmbServerConfiguration -RejectUnencryptedAccess $true -Confirm:$false");
+                //    PowerShell("Set-SmbServerConfiguration -DisableSmbEncryptionOnSecureConnection $false -Confirm:$false");
 
                 //    B = true;
                 //}
@@ -2660,8 +2666,8 @@ namespace WinUtil_Main
                 //if (SMBhardenMessage.RequireSign)
                 //{
                 //    DispatchedLogBoxAdd("Require traffic signature\n", Brushes.Gray, null);
-                //    Execute.PowerShell("Set-SmbServerConfiguration -EnableSecuritySignature $true -Confirm:$false");
-                //    Execute.PowerShell("Set-SmbServerConfiguration -RequireSecuritySignature $true -Confirm:$false");
+                //    PowerShell("Set-SmbServerConfiguration -EnableSecuritySignature $true -Confirm:$false");
+                //    PowerShell("Set-SmbServerConfiguration -RequireSecuritySignature $true -Confirm:$false");
 
                 //    B = true;
                 //}
@@ -2669,8 +2675,8 @@ namespace WinUtil_Main
                 //if (SMBhardenMessage.Autoshares)
                 //{
                 //    DispatchedLogBoxAdd("Deactivating autoshares\n", Brushes.Gray, null);
-                //    Execute.PowerShell("Set-SmbServerConfiguration -AutoShareWorkstation $false -Confirm:$false");
-                //    Execute.PowerShell("Set-SmbServerConfiguration -AutoShareServer $false -Confirm:$false");
+                //    PowerShell("Set-SmbServerConfiguration -AutoShareWorkstation $false -Confirm:$false");
+                //    PowerShell("Set-SmbServerConfiguration -AutoShareServer $false -Confirm:$false");
 
                 //    B = true;
                 //}
@@ -2678,7 +2684,7 @@ namespace WinUtil_Main
                 //if (SMBhardenMessage.OnlyAES256GCM)
                 //{
                 //    DispatchedLogBoxAdd("Set Encryption to AES 256 GCM\n", Brushes.Gray, null);
-                //    Execute.PowerShell("Set-SmbServerConfiguration -EncryptionCiphers \"AES_256_GCM\" -Confirm:$false");
+                //    PowerShell("Set-SmbServerConfiguration -EncryptionCiphers \"AES_256_GCM\" -Confirm:$false");
 
                 //    B = true;
                 //}
@@ -2708,13 +2714,13 @@ namespace WinUtil_Main
                 DispatchedLogBoxAdd("Resetting SMB server config\n", Brushes.DarkGreen, null);
                 RegistryIO.DeleteValues("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\LanmanWorkstation\\Parameters", new String[] { "MinSMB2Dialect" });
 
-                Execute.PowerShell("Set-SmbServerConfiguration -EnableSMB2Protocol $true -Confirm:$false");
-                Execute.PowerShell("Set-SmbServerConfiguration -EncryptionCiphers \"AES_256_GCM, AES_128_GCM, AES_256_CCM, AES_128_CCM\" -Confirm:$false");
-                Execute.PowerShell("Set-SmbServerConfiguration -EncryptData $true -Confirm:$false");
-                Execute.PowerShell("Set-SmbServerConfiguration -RejectUnencryptedAccess $false -Confirm:$false");
-                Execute.PowerShell("Set-SmbServerConfiguration -RequireSecuritySignature $false -Confirm:$false");
-                Execute.PowerShell("Set-SmbServerConfiguration -AutoShareWorkstation $true -Confirm:$false");
-                Execute.PowerShell("Set-SmbServerConfiguration -AutoShareServer $true -Confirm:$false");
+                PowerShell("Set-SmbServerConfiguration -EnableSMB2Protocol $true -Confirm:$false");
+                PowerShell("Set-SmbServerConfiguration -EncryptionCiphers \"AES_256_GCM, AES_128_GCM, AES_256_CCM, AES_128_CCM\" -Confirm:$false");
+                PowerShell("Set-SmbServerConfiguration -EncryptData $true -Confirm:$false");
+                PowerShell("Set-SmbServerConfiguration -RejectUnencryptedAccess $false -Confirm:$false");
+                PowerShell("Set-SmbServerConfiguration -RequireSecuritySignature $false -Confirm:$false");
+                PowerShell("Set-SmbServerConfiguration -AutoShareWorkstation $true -Confirm:$false");
+                PowerShell("Set-SmbServerConfiguration -AutoShareServer $true -Confirm:$false");
             }
             catch (Exception ex)
             {
@@ -3008,7 +3014,7 @@ namespace WinUtil_Main
                     {
                         DispatchedLogBoxAdd("Installing package " + (i + 1) + "/" + allPackages.Length, Brushes.Gray, null);
 
-                        Execute.PowerShell("Add-AppPackage -path " + allPackages[i]);
+                        PowerShell("Add-AppPackage -path " + allPackages[i]);
 
                         if (allPackages.Length > (i + 1))
                         {
@@ -3291,50 +3297,50 @@ namespace WinUtil_Main
                 DispatchedLogBoxAdd("Enable UAC\n", Brushes.Gray, null);
                 Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "EnableLUA", 1, RegistryValueKind.DWord);
 
-                if (Execute.TestPSCommand("Add-MpPreference"))
+                if (TestPSCommand("Add-MpPreference"))
                 {
                     DispatchedLogBoxAdd("Preventing credential theft\n", Brushes.Gray, null);
-                    Execute.PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids 9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2 -AttackSurfaceReductionRules_Actions Enabled");
+                    PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids 9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2 -AttackSurfaceReductionRules_Actions Enabled");
 
                     DispatchedLogBoxAdd("Activating Windows Defender network protection\n", Brushes.Gray, null);
-                    Execute.PowerShell("Set-MpPreference -EnableNetworkProtection Enabled");
+                    PowerShell("Set-MpPreference -EnableNetworkProtection Enabled");
 
                     DispatchedLogBoxAdd("Activating Windows Defender Sandbox\n", Brushes.Gray, null);
                     Execute.EXE("cmd.exe", "/c \"setx /M MP_FORCE_USE_SANDBOX 1\"", true, false);
 
                     DispatchedLogBoxAdd("Making VeraCrypt a trusted process\n", Brushes.Gray, null);
-                    Execute.PowerShell("Add-MpPreference -ExclusionProcess C:\\Program Files\\VeraCrypt\\VeraCrypt.exe");
+                    PowerShell("Add-MpPreference -ExclusionProcess C:\\Program Files\\VeraCrypt\\VeraCrypt.exe");
 
                     DispatchedLogBoxAdd("Activating PUA\n", Brushes.Gray, null);
-                    Execute.PowerShell("Set-MpPreference -PUAProtection enable");
+                    PowerShell("Set-MpPreference -PUAProtection enable");
 
                     DispatchedLogBoxAdd("Preventing Office child process creation\n", Brushes.Gray, null);
-                    Execute.PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids D4F940AB-401B-4EFC-AADC-AD5F3C50688A -AttackSurfaceReductionRules_Actions Enabled");
+                    PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids D4F940AB-401B-4EFC-AADC-AD5F3C50688A -AttackSurfaceReductionRules_Actions Enabled");
 
                     DispatchedLogBoxAdd("Block Office process injection\n", Brushes.Gray, null);
-                    Execute.PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids 75668C1F-73B5-4CF0-BB93-3ECF5CB7CC84 -AttackSurfaceReductionRules_Actions Enabled");
+                    PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids 75668C1F-73B5-4CF0-BB93-3ECF5CB7CC84 -AttackSurfaceReductionRules_Actions Enabled");
 
                     DispatchedLogBoxAdd("Block Win32-API calls from Makros\n", Brushes.Gray, null);
-                    Execute.PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids 92E97FA1-2EDF-4476-BDD6-9DD0B4DDDC7B -AttackSurfaceReductionRules_Actions Enabled");
+                    PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids 92E97FA1-2EDF-4476-BDD6-9DD0B4DDDC7B -AttackSurfaceReductionRules_Actions Enabled");
 
                     DispatchedLogBoxAdd("Block Office from creating executables\n", Brushes.Gray, null);
-                    Execute.PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids 3B576869-A4EC-4529-8536-B80A7769E899 -AttackSurfaceReductionRules_Actions Enabled");
+                    PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids 3B576869-A4EC-4529-8536-B80A7769E899 -AttackSurfaceReductionRules_Actions Enabled");
 
                     DispatchedLogBoxAdd("Block potentially obfuscated scripts\n", Brushes.Gray, null);
-                    Execute.PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids 5BEB7EFE-FD9A-4556-801D-275E5FFC04CC -AttackSurfaceReductionRules_Actions Enabled");
+                    PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids 5BEB7EFE-FD9A-4556-801D-275E5FFC04CC -AttackSurfaceReductionRules_Actions Enabled");
 
                     DispatchedLogBoxAdd("Block executable content from E-Mail client and Webmail\n", Brushes.Gray, null);
-                    Execute.PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids BE9BA2D9-53EA-4CDC-84E5-9B1EEEE46550 -AttackSurfaceReductionRules_Actions Enabled");
+                    PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids BE9BA2D9-53EA-4CDC-84E5-9B1EEEE46550 -AttackSurfaceReductionRules_Actions Enabled");
 
                     DispatchedLogBoxAdd("Block execution of downloaded content via Javascript or VBSscripts\n", Brushes.Gray, null);
-                    Execute.PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids D3E037E1-3EB8-44C8-A917-57927947596D -AttackSurfaceReductionRules_Actions Enabled");
+                    PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids D3E037E1-3EB8-44C8-A917-57927947596D -AttackSurfaceReductionRules_Actions Enabled");
 
                     DispatchedLogBoxAdd("Block Adobe Reader childprocess creation\n", Brushes.Gray, null);
-                    Execute.PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids 7674ba52-37eb-4a4f-a9a1-f0f9a1619a2c -AttackSurfaceReductionRules_Actions Enabled");
+                    PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids 7674ba52-37eb-4a4f-a9a1-f0f9a1619a2c -AttackSurfaceReductionRules_Actions Enabled");
 
                     DispatchedLogBoxAdd("Prevent WMI misuse\n", Brushes.Gray, null);
-                    Execute.PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids e6db77e5-3df2-4cf1-b95a-636979351e5b -AttackSurfaceReductionRules_Actions Enabled");
-                    Execute.PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids d1e49aac-8f56-4280-b9ba-993a6d77406c -AttackSurfaceReductionRules_Actions Enabled");
+                    PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids e6db77e5-3df2-4cf1-b95a-636979351e5b -AttackSurfaceReductionRules_Actions Enabled");
+                    PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids d1e49aac-8f56-4280-b9ba-993a6d77406c -AttackSurfaceReductionRules_Actions Enabled");
                 }
                 else
                 {
@@ -3605,7 +3611,7 @@ namespace WinUtil_Main
                 return;
             }
 
-            Execute.PowerShell("Remove-MpPreference -AttackSurfaceReductionRules_Ids b2b3f03d-6a65-4f7b-a9c7-1c7ef74a9ba4");
+            PowerShell("Remove-MpPreference -AttackSurfaceReductionRules_Ids b2b3f03d-6a65-4f7b-a9c7-1c7ef74a9ba4");
 
             DispatchedLogBoxAdd("Done\n\n", Brushes.DarkCyan, null);
             ThreadIsAlive.USBExecution = false;
@@ -3628,8 +3634,8 @@ namespace WinUtil_Main
                 return;
             }
 
-            Execute.PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids b2b3f03d-6a65-4f7b-a9c7-1c7ef74a9ba4");
-            Execute.PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Actions Enabled");
+            PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Ids b2b3f03d-6a65-4f7b-a9c7-1c7ef74a9ba4");
+            PowerShell("Add-MpPreference -AttackSurfaceReductionRules_Actions Enabled");
 
             DispatchedLogBoxAdd("Done\n\n", Brushes.DarkCyan, null);
             ThreadIsAlive.USBExecution = false;

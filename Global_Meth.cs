@@ -1,14 +1,15 @@
-﻿using NetTools;
-using System;
-using System.CodeDom.Compiler;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+//libs
+using static HashTools.FileHashTools;
+using static PowershellHelper.PowershellHelper;
+using static ProgramLauncher.Execute;
 
 namespace WinUtil_Main
 {
@@ -52,7 +53,7 @@ namespace WinUtil_Main
 
             try
             {
-                if (FileHashTools.CompareHash(FilePath, IsHash, Algorithm))
+                if (CompareHash(FilePath, IsHash, Algorithm))
                 {
                     return new Boolean[] { true, true };
                 }
@@ -156,17 +157,17 @@ namespace WinUtil_Main
 
                 if (VerboseHashCheck("assets\\" + Const.VCLibsName, Const.VCLibs)[0] && VerboseHashCheck("assets\\WinGet\\" + Const.WinGetName, Const.WinGetHash)[0] && VerboseHashCheck("assets\\WinGet\\" + Const.Xaml27Name, Const.Xaml27Hash)[0] && VerboseHashCheck("assets\\WinGet\\" + Const.WinGetLicenseName, Const.WinGetLicenseHash)[0])
                 {
-                    Execute.PowerShell("Add-AppxPackage -Path \"assets\\" + Const.VCLibsName + "\"");
+                    PowerShell("Add-AppxPackage -Path \"assets\\" + Const.VCLibsName + "\"");
 
-                    Execute.PowerShell("Add-AppxPackage -Path \"assets\\WinGet\\" + Const.Xaml27Name + "\"");
+                    PowerShell("Add-AppxPackage -Path \"assets\\WinGet\\" + Const.Xaml27Name + "\"");
 
-                    Execute.PowerShell("Add-ProvisionedAppPackage -Online -PackagePath \"assets\\WinGet\\" + Const.WinGetName + "\" -LicensePath \"assets\\WinGet\\" + Const.WinGetLicenseName + "\"");
+                    PowerShell("Add-ProvisionedAppPackage -Online -PackagePath \"assets\\WinGet\\" + Const.WinGetName + "\" -LicensePath \"assets\\WinGet\\" + Const.WinGetLicenseName + "\"");
 
                     Task.Delay(5000).Wait();
 
                     try
                     {
-                        Execute.EXE("winget.exe", RunAs: true, HiddenExecute: true);
+                        EXE("winget.exe", RunAs: true, HiddenExecute: true);
 
                         DispatchedLogBoxAdd("Done\n", Brushes.DarkCyan);
 
