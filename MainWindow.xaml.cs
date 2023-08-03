@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Reflection;
-using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
-using NetTools;
-using SysGet;
 using Microsoft.Win32;
 using System.Threading;
-using System.Diagnostics;
-using System.Windows.Controls;
-using System.Windows.Shapes;
-using static System.Net.Mime.MediaTypeNames;
-using System.Collections;
-using Microsoft.VisualBasic.Devices;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+//libs
+using static PowershellHelper.PowershellHelper;
+using RegistryTools;
+using WinUser;
 
 namespace WinUtil_Main
 {
@@ -260,11 +254,7 @@ namespace WinUtil_Main
 
                 Boolean ErrorAction = false;
 
-                if (!InternalHashCalculator("SysGet.dll").Equals(ExtResources.SysGetdll, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid SysGet.dll", Brushes.OrangeRed);
-                }
+                //general
 
                 if (!InternalHashCalculator("ManagedNativeWifi.dll").Equals(ExtResources.ManagedNativeWifi, StringComparison.OrdinalIgnoreCase))
                 {
@@ -276,18 +266,6 @@ namespace WinUtil_Main
                 {
                     ErrorAction = true;
                     DispatchedLogBoxAdd("[Critical] invalid System.Runtime.CompilerServices.Unsafe.dll", Brushes.OrangeRed);
-                }
-
-                if (!InternalHashCalculator("NetTools.dll").Equals(ExtResources.NetToolsdll, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid NetTools.dll", Brushes.OrangeRed);
-                }
-
-                if (!InternalHashCalculator("ManagedWinFormsMessageBox.dll").Equals(ExtResources.ManagedWinFormsMessageBoxdll, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid ManagedWinFormsMessageBox.dll", Brushes.OrangeRed);
                 }
 
                 if (!InternalHashCalculator("System.Buffers.dll").Equals(ExtResources.SystemBuffersdll, StringComparison.OrdinalIgnoreCase))
@@ -313,6 +291,52 @@ namespace WinUtil_Main
                     ErrorAction = true;
                     DispatchedLogBoxAdd("[Critical] invalid System.Numerics.Vectors.dll", Brushes.OrangeRed);
                 }
+
+                //custom libs
+
+                if (!InternalHashCalculator("CustomWinMessageBox.dll").Equals(ExtResources.CustomWinMessageBox, StringComparison.OrdinalIgnoreCase))
+                {
+                    ErrorAction = true;
+                    DispatchedLogBoxAdd("[Critical] invalid CustomWinMessageBox.dll", Brushes.OrangeRed);
+                }
+
+                if (!InternalHashCalculator("HashTools.dll").Equals(ExtResources.HashTools, StringComparison.OrdinalIgnoreCase))
+                {
+                    ErrorAction = true;
+                    DispatchedLogBoxAdd("[Critical] invalid HashTools.dll", Brushes.OrangeRed);
+                }
+
+                if (!InternalHashCalculator("PowershellHelper.dll").Equals(ExtResources.PowershellHelper, StringComparison.OrdinalIgnoreCase))
+                {
+                    ErrorAction = true;
+                    DispatchedLogBoxAdd("[Critical] invalid PowershellHelper.dll", Brushes.OrangeRed);
+                }
+
+                if (!InternalHashCalculator("ProgramLauncher.dll").Equals(ExtResources.ProgramLauncher, StringComparison.OrdinalIgnoreCase))
+                {
+                    ErrorAction = true;
+                    DispatchedLogBoxAdd("[Critical] invalid ProgramLauncher.dll", Brushes.OrangeRed);
+                }
+
+                if (!InternalHashCalculator("RegistryTools.dll").Equals(ExtResources.RegistryTools, StringComparison.OrdinalIgnoreCase))
+                {
+                    ErrorAction = true;
+                    DispatchedLogBoxAdd("[Critical] invalid RegistryTools.dll", Brushes.OrangeRed);
+                }
+
+                if (!InternalHashCalculator("ServiceTools.dll").Equals(ExtResources.ServiceTools, StringComparison.OrdinalIgnoreCase))
+                {
+                    ErrorAction = true;
+                    DispatchedLogBoxAdd("[Critical] invalid ServiceTools.dll", Brushes.OrangeRed);
+                }
+
+                if (!InternalHashCalculator("WinUser.dll").Equals(ExtResources.WinUser, StringComparison.OrdinalIgnoreCase))
+                {
+                    ErrorAction = true;
+                    DispatchedLogBoxAdd("[Critical] invalid WinUser.dll", Brushes.OrangeRed);
+                }
+
+                //check
 
                 if (ErrorAction)
                 {
@@ -382,14 +406,14 @@ namespace WinUtil_Main
                 DispatchedLogBoxAdd("Getting Firmware type", Brushes.LightGray);
 
                 //check systemtype
-                if (Execute.PowerShell("$env:firmware_type", OutPut: true)[0].ToUpper() == "UEFI")
+                if (PowerShell("$env:firmware_type", OutPut: true)[0].ToUpper() == "UEFI")
                 {
                     ThisMachine.IsUEFI = true;
 
                     DispatchedLogBoxRemoveLine();
                     DispatchedLogBoxAdd("Getting SecureBoot status", Brushes.LightGray);
 
-                    if (Execute.PowerShell("Confirm-SecureBootUEFI", OutPut: true)[0].ToUpper() == "TRUE")
+                    if (PowerShell("Confirm-SecureBootUEFI", OutPut: true)[0].ToUpper() == "TRUE")
                     {
                         ThisMachine.SecureBootEnabled = true;
                     }
@@ -475,7 +499,7 @@ namespace WinUtil_Main
 
                         Thread.Sleep(10000);
 
-                        if (Execute.PowerShell("$test = Get-CimInstance SoftwareLicensingProduct -Filter \"Name like 'Windows%'\" | where { $_.PartialProductKey } | select LicenseStatus; $test = $test -replace \"@{LicenseStatus=\"; $test = $test -replace \"}\"; reg add \"HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil\" /v \"Windows Activation Status\" /t reg_dword /d $test /f; Write-Output $test", OutPut: true)[1] == "1")
+                        if (PowerShell("$test = Get-CimInstance SoftwareLicensingProduct -Filter \"Name like 'Windows%'\" | where { $_.PartialProductKey } | select LicenseStatus; $test = $test -replace \"@{LicenseStatus=\"; $test = $test -replace \"}\"; reg add \"HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil\" /v \"Windows Activation Status\" /t reg_dword /d $test /f; Write-Output $test", OutPut: true)[1] == "1")
                         {
                             ThisMachine.WindowsLicenseStatus = 1;
 

@@ -2,9 +2,6 @@
 using System.Windows;
 using System;
 using System.Windows.Media;
-using System.Threading;
-using System.Diagnostics;
-using Microsoft.VisualBasic;
 
 namespace WinUtil_Main
 {

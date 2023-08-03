@@ -67,11 +67,14 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CustomWinMessageBox">
+      <HintPath>local_libs\CustomWinMessageBox.dll</HintPath>
+    </Reference>
+    <Reference Include="HashTools">
+      <HintPath>local_libs\HashTools.dll</HintPath>
+    </Reference>
     <Reference Include="ManagedNativeWifi, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\ManagedNativeWifi.2.5.0\lib\netstandard2.0\ManagedNativeWifi.dll</HintPath>
-    </Reference>
-    <Reference Include="ManagedWinFormsMessageBox">
-      <HintPath>..\..\zLibs\ManagedWinFormsMessageBox.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -79,11 +82,17 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NetTools">
-      <HintPath>..\..\zLibs\NetTools.dll</HintPath>
+    <Reference Include="PowershellHelper">
+      <HintPath>local_libs\PowershellHelper.dll</HintPath>
     </Reference>
-    <Reference Include="SysGet">
-      <HintPath>..\..\zLibs\SysGet.dll</HintPath>
+    <Reference Include="ProgramLauncher">
+      <HintPath>local_libs\ProgramLauncher.dll</HintPath>
+    </Reference>
+    <Reference Include="RegistryTools">
+      <HintPath>local_libs\RegistryTools.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceTools">
+      <HintPath>local_libs\ServiceTools.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -238,6 +247,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WinUser">
+      <HintPath>local_libs\WinUser.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

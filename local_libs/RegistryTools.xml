@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>RegistryTools</name>
+    </assembly>
+    <members>
+        <member name="T:RegistryTools.RegistryIO">
+            <summary>Handles Registry access.</summary>
+        </member>
+        <member name="M:RegistryTools.RegistryIO.PathToKey(System.String)">
+            <summary>Converts Human-Readable Registry path to <see langword="RegistryKey"/> type.</summary>
+            <returns><see langword="null"/> when RegistryHive not found.</returns>
+        </member>
+        <member name="M:RegistryTools.RegistryIO.GetValue(System.String,System.String,Microsoft.Win32.RegistryValueKind,System.Boolean)">
+            <summary>Reads a value from the Registry.</summary>
+            <returns>
+            Returns data in form of specified <see langword="RegistryValueKind"/>.<br/>
+            Returns <see langword="null"/> when value is not present.<br/>
+            Returns '<c>-1</c>' when value has the wrong type and <see href="DeleteWrongType"/> is set to <see langword="false"/>.
+            </returns>
+        </member>
+        <member name="M:RegistryTools.RegistryIO.DeleteValues(System.String,System.String[],System.Boolean)">
+            <summary>Removes values from the Registry.</summary>
+            <remarks>Takes a List of values and removes them in a specified path.</remarks>
+            <returns><see langword="true"/> when at least one error occurred.</returns>
+        </member>
+        <member name="M:RegistryTools.RegistryIO.DeleteSubKeyTree(System.String,System.String[],System.Boolean)">
+            <summary>Removes Key from the Registry.</summary>
+            <remarks>Takes a List of Keys and removes them in a specified path.</remarks>
+            <returns><see langword="true"/> when at least one error occurred.</returns>
+        </member>
+        <member name="M:RegistryTools.RegistryIO.TestRegValuePresense(System.String,System.String)">
+            <summary>Tests if a value exists in the Registry.</summary>
+            <returns><see langword="false"/> if not present.</returns>
+            <returns> if not present.</returns>
+        </member>
+    </members>
+</doc>
