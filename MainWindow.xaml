@@ -564,6 +564,8 @@
 
         <!-- LogBox -->
 
+        <Rectangle Fill="#888888" Margin="638,247,43,127"/>
+
         <Border x:Name="LogBox" BorderBrush="{DynamicResource  LogPanel}" BorderThickness="4,4,0,0" CornerRadius="5,0,0,0" Height="122" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="607">
             <ScrollViewer VerticalScrollBarVisibility="Auto" x:Name="LogScroller" Margin="-1,-1,0,0" IsEnabled="True">
                 <RichTextBox

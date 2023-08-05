@@ -49,11 +49,11 @@ namespace WinUtil_Main
                 {
                     DispatchedLogBoxAdd("Re-Check Windows license status, this might take a while\n\n", Brushes.Yellow, null);
 
-                    RegistryIO.DeleteValues("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", new String[] { "Windows Activation Status" });
+                    RegistryIO.DeleteValues("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", new String[] { "Windows Activation Status" });
 
                     
 
-                    PowerShell("$test = Get-CimInstance SoftwareLicensingProduct -Filter \"Name like 'Windows%'\" | where { $_.PartialProductKey } | select LicenseStatus; $test = $test -replace \"@{LicenseStatus=\"; $test = $test -replace \"}\"; reg add \"HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil\" /v \"Windows Activation Status\" /t reg_dword /d $test /f");
+                    PowerShell("$test = Get-CimInstance SoftwareLicensingProduct -Filter \"Name like 'Windows%'\" | where { $_.PartialProductKey } | select LicenseStatus; $test = $test -replace \"@{LicenseStatus=\"; $test = $test -replace \"}\"; reg add \"HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil\" /v \"Windows Activation Status\" /t reg_dword /d $test /f");
 
                     DispatchedLogBoxAdd("[Info] Updated license information\n\n", Brushes.Cyan, null);
                 }
@@ -79,11 +79,11 @@ namespace WinUtil_Main
                         break;
                     }
 
-                    switch (RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", "Windows Activation Status", RegistryValueKind.DWord, false))
+                    switch (RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", "Windows Activation Status", RegistryValueKind.DWord, false))
                     {
                         case -1:
                             ActivationClicks++;
-                            RegistryIO.DeleteValues("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", new String[] { "Windows Activation Status" });
+                            RegistryIO.DeleteValues("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", new String[] { "Windows Activation Status" });
                             DispatchedLogBoxAdd("Couldn't get license information, Click Activate again\n\n", Brushes.Yellow, null);
                             return true;
 
@@ -99,7 +99,7 @@ namespace WinUtil_Main
                 }
 
                 ActivationClicks++;
-                RegistryIO.DeleteValues("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", new String[] { "Windows Activation Status" });
+                RegistryIO.DeleteValues("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", new String[] { "Windows Activation Status" });
                 DispatchedLogBoxAdd("Couldn't get license information, Click Activate again\n\n", Brushes.Yellow);
                 return true;
             }
@@ -140,7 +140,7 @@ namespace WinUtil_Main
 
             while (B)
             {
-                var License = RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", "Windows Activation Status", RegistryValueKind.DWord, true);
+                var License = RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", "Windows Activation Status", RegistryValueKind.DWord, true);
 
                 switch (License)
                 {
@@ -527,7 +527,7 @@ namespace WinUtil_Main
                     Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search", "SearchboxTaskbarMode", TBSB, RegistryValueKind.DWord);
                 }
 
-                if (RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", "Blocked Telemetry IPs", RegistryValueKind.DWord, false) == 0 || RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", "Blocked Telemetry IPs", RegistryValueKind.DWord, false) == null)      //suiedzhfgbwuehfbzub
+                if (RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", "Blocked Telemetry IPs", RegistryValueKind.DWord, false) == 0 || RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", "Blocked Telemetry IPs", RegistryValueKind.DWord, false) == null)      //suiedzhfgbwuehfbzub
                 {
                     DispatchedLogBoxAdd("Excluding 'hosts' file from Windows Defender\n", Brushes.DarkGray, null);
                     PowerShell("Add-MpPreference -ExclusionPath C:\\Windows\\System32\\drivers\\etc\\hosts");
@@ -4329,7 +4329,7 @@ namespace WinUtil_Main
 
             try
             {
-                if (RegistryIO.TestRegValuePresense("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", "LSASSasEFIvar"))
+                if (RegistryIO.TestRegValuePresense("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", "LSASSasEFIvar"))
                 {
                     DialogResult MSGOUT0 = System.Windows.Forms.MessageBox.Show(
                     "LSASS has previously been configured with EFI Variables, in order to deactivate the LSASS protection follow Microsoft's guide on how to remove UEFI variables.\n\nContinue to remove Registry values?",

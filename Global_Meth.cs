@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -15,36 +14,6 @@ namespace WinUtil_Main
 {
     public partial class MainWindow
     {
-        private static String InternalHashCalculator(String FilePath)
-        {
-            if (!File.Exists(FilePath))
-            {
-                return "";
-            }
-
-            using SHA256 SHA256 = SHA256.Create();
-
-            String Hash;
-
-            try
-            {
-                using FileStream Stream = File.OpenRead(FilePath);
-
-                Hash = BitConverter.ToString(SHA256.ComputeHash(Stream)).Replace("-", String.Empty);
-
-                Stream.Close();
-                Stream.Dispose();
-            }
-            catch
-            {
-                Hash = null;
-            }
-
-            SHA256.Dispose();
-
-            return Hash;
-        }
-
         ///<returns><see langword="Boolean"/><see href="[2]"/> { IsValid, IsPresent }</returns>
         protected Boolean[] VerboseHashCheck(String FilePath, String IsHash, String Algorithm = "SHA256")
         {
@@ -94,12 +63,6 @@ namespace WinUtil_Main
                 }
             }
         }
-
-        
-    
-            
-        
-    
 
         ///<summary>Tests internet connectivity.</summary>
         ///<remarks>(Attempts to resolve a hostname)</remarks>

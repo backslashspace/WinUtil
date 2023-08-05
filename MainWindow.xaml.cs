@@ -6,10 +6,14 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using Microsoft.Win32;
 using System.Threading;
+using System.Security.Cryptography;
 //libs
 using static PowershellHelper.PowershellHelper;
 using RegistryTools;
 using WinUser;
+using System.Diagnostics;
+using System.IO;
+using Microsoft.VisualBasic;
 
 namespace WinUtil_Main
 {
@@ -173,8 +177,35 @@ namespace WinUtil_Main
 
         //#######################################################################################################
 
-        //SDG_Functions
+        private static String InternalHashCalculator(String FilePath)
+        {
+            if (!File.Exists(FilePath))
+            {
+                return "";
+            }
 
+            using SHA256 SHA256 = SHA256.Create();
+
+            String Hash;
+
+            try
+            {
+                using FileStream Stream = File.OpenRead(FilePath);
+
+                Hash = BitConverter.ToString(SHA256.ComputeHash(Stream)).Replace("-", String.Empty);
+
+                Stream.Close();
+                Stream.Dispose();
+            }
+            catch
+            {
+                Hash = null;
+            }
+
+            SHA256.Dispose();
+
+            return Hash;
+        }
         private void LogBoxRemoveLine(UInt32 Lines = 1)
         {
             for (UInt32 I = 0; I < Lines; I++)
@@ -236,9 +267,9 @@ namespace WinUtil_Main
             InitializeComponent();
 
             //apply color
-            this.Resources["BackgroundColor"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(WindowControllButton));
-            this.Resources["ContentPanel"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(ContentPanel));
-            this.Resources["LogPanel"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(LogPanel));
+            Resources["BackgroundColor"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(WindowControllButton));
+            Resources["ContentPanel"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(ContentPanel));
+            Resources["LogPanel"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString(LogPanel));
 
             Init();
         }
@@ -248,109 +279,105 @@ namespace WinUtil_Main
             ActivateWorker();
 
             //verify external modules
-            await Task.Run(() =>
+            
+            LogBoxAdd("Verifying program files\n", Brushes.Gray, StayInLine: true);
+
+            Boolean ErrorAction = false;
+
+            //general
+
+            if (!InternalHashCalculator("ManagedNativeWifi.dll").Equals(ExtResources.ManagedNativeWifi, StringComparison.OrdinalIgnoreCase))
             {
-                DispatchedLogBoxAdd("Verifying program files\n", Brushes.LightGray, StayInLine: true);
+                ErrorAction = true;
+                LogBoxAdd("[Critical] invalid ManagedNativeWifi.dll", Brushes.OrangeRed);
+            }
 
-                Boolean ErrorAction = false;
+            if (!InternalHashCalculator("System.Runtime.CompilerServices.Unsafe.dll").Equals(ExtResources.SystemRuntimeCompilerServicesUnsafe, StringComparison.OrdinalIgnoreCase))
+            {
+                ErrorAction = true;
+                LogBoxAdd("[Critical] invalid System.Runtime.CompilerServices.Unsafe.dll", Brushes.OrangeRed);
+            }
 
-                //general
+            if (!InternalHashCalculator("System.Buffers.dll").Equals(ExtResources.SystemBuffersdll, StringComparison.OrdinalIgnoreCase))
+            {
+                ErrorAction = true;
+                LogBoxAdd("[Critical] invalid System.Buffers.dll", Brushes.OrangeRed);
+            }
 
-                if (!InternalHashCalculator("ManagedNativeWifi.dll").Equals(ExtResources.ManagedNativeWifi, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid ManagedNativeWifi.dll", Brushes.OrangeRed);
-                }
+            if (!InternalHashCalculator("System.Diagnostics.DiagnosticSource.dll").Equals(ExtResources.SystemDiagnosticsDiagnosticSourcedll, StringComparison.OrdinalIgnoreCase))
+            {
+                ErrorAction = true;
+                LogBoxAdd("[Critical] invalid System.Diagnostics.DiagnosticSource.dll", Brushes.OrangeRed);
+            }
+            
+            if (!InternalHashCalculator("System.Memory.dll").Equals(ExtResources.SystemMemorydll, StringComparison.OrdinalIgnoreCase))
+            {
+                ErrorAction = true;
+                LogBoxAdd("[Critical] invalid System.Memory.dll", Brushes.OrangeRed);
+            }
+            
+            if (!InternalHashCalculator("System.Numerics.Vectors.dll").Equals(ExtResources.SystemNumericsVectorsdll, StringComparison.OrdinalIgnoreCase))
+            {
+                ErrorAction = true;
+                LogBoxAdd("[Critical] invalid System.Numerics.Vectors.dll", Brushes.OrangeRed);
+            }
 
-                if (!InternalHashCalculator("System.Runtime.CompilerServices.Unsafe.dll").Equals(ExtResources.SystemRuntimeCompilerServicesUnsafe, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid System.Runtime.CompilerServices.Unsafe.dll", Brushes.OrangeRed);
-                }
+            //custom libs
 
-                if (!InternalHashCalculator("System.Buffers.dll").Equals(ExtResources.SystemBuffersdll, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid System.Buffers.dll", Brushes.OrangeRed);
-                }
+            if (!InternalHashCalculator("CustomWinMessageBox.dll").Equals(ExtResources.CustomWinMessageBox, StringComparison.OrdinalIgnoreCase))
+            {
+                ErrorAction = true;
+                LogBoxAdd("[Critical] invalid CustomWinMessageBox.dll", Brushes.OrangeRed);
+            }
 
-                if (!InternalHashCalculator("System.Diagnostics.DiagnosticSource.dll").Equals(ExtResources.SystemDiagnosticsDiagnosticSourcedll, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid System.Diagnostics.DiagnosticSource.dll", Brushes.OrangeRed);
-                }
-                
-                if (!InternalHashCalculator("System.Memory.dll").Equals(ExtResources.SystemMemorydll, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid System.Memory.dll", Brushes.OrangeRed);
-                }
-                
-                if (!InternalHashCalculator("System.Numerics.Vectors.dll").Equals(ExtResources.SystemNumericsVectorsdll, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid System.Numerics.Vectors.dll", Brushes.OrangeRed);
-                }
+            if (!InternalHashCalculator("HashTools.dll").Equals(ExtResources.HashTools, StringComparison.OrdinalIgnoreCase))
+            {
+                ErrorAction = true;
+                LogBoxAdd("[Critical] invalid HashTools.dll", Brushes.OrangeRed);
+            }
 
-                //custom libs
+            if (!InternalHashCalculator("PowershellHelper.dll").Equals(ExtResources.PowershellHelper, StringComparison.OrdinalIgnoreCase))
+            {
+                ErrorAction = true;
+                LogBoxAdd("[Critical] invalid PowershellHelper.dll", Brushes.OrangeRed);
+            }
 
-                if (!InternalHashCalculator("CustomWinMessageBox.dll").Equals(ExtResources.CustomWinMessageBox, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid CustomWinMessageBox.dll", Brushes.OrangeRed);
-                }
+            if (!InternalHashCalculator("ProgramLauncher.dll").Equals(ExtResources.ProgramLauncher, StringComparison.OrdinalIgnoreCase))
+            {
+                ErrorAction = true;
+                LogBoxAdd("[Critical] invalid ProgramLauncher.dll", Brushes.OrangeRed);
+            }
 
-                if (!InternalHashCalculator("HashTools.dll").Equals(ExtResources.HashTools, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid HashTools.dll", Brushes.OrangeRed);
-                }
+            if (!InternalHashCalculator("RegistryTools.dll").Equals(ExtResources.RegistryTools, StringComparison.OrdinalIgnoreCase))
+            {
+                ErrorAction = true;
+                LogBoxAdd("[Critical] invalid RegistryTools.dll", Brushes.OrangeRed);
+            }
 
-                if (!InternalHashCalculator("PowershellHelper.dll").Equals(ExtResources.PowershellHelper, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid PowershellHelper.dll", Brushes.OrangeRed);
-                }
+            if (!InternalHashCalculator("ServiceTools.dll").Equals(ExtResources.ServiceTools, StringComparison.OrdinalIgnoreCase))
+            {
+                ErrorAction = true;
+                LogBoxAdd("[Critical] invalid ServiceTools.dll", Brushes.OrangeRed);
+            }
 
-                if (!InternalHashCalculator("ProgramLauncher.dll").Equals(ExtResources.ProgramLauncher, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid ProgramLauncher.dll", Brushes.OrangeRed);
-                }
+            if (!InternalHashCalculator("WinUser.dll").Equals(ExtResources.WinUser, StringComparison.OrdinalIgnoreCase))
+            {
+                ErrorAction = true;
+                LogBoxAdd("[Critical] invalid WinUser.dll", Brushes.OrangeRed);
+            }
 
-                if (!InternalHashCalculator("RegistryTools.dll").Equals(ExtResources.RegistryTools, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid RegistryTools.dll", Brushes.OrangeRed);
-                }
+            //check
 
-                if (!InternalHashCalculator("ServiceTools.dll").Equals(ExtResources.ServiceTools, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid ServiceTools.dll", Brushes.OrangeRed);
-                }
+            if (ErrorAction)
+            {
+                DeactivateWorker();
 
-                if (!InternalHashCalculator("WinUser.dll").Equals(ExtResources.WinUser, StringComparison.OrdinalIgnoreCase))
-                {
-                    ErrorAction = true;
-                    DispatchedLogBoxAdd("[Critical] invalid WinUser.dll", Brushes.OrangeRed);
-                }
+                LogBoxAdd("\nTerminating application", Brushes.Red);
 
-                //check
+                await Task.Delay(7000);
 
-                if (ErrorAction)
-                {
-                    DeactivateWorker();
-
-                    DispatchedLogBoxAdd("\nTerminating application", Brushes.Red);
-
-                    Task.Delay(7000).Wait();
-
-                    Environment.Exit(1);
-                }
-
-                DispatchedLogBoxRemoveLine(2);
-            });
+                Environment.Exit(1);
+            }
 
             await Task.Run(() => Load());
 
@@ -361,33 +388,28 @@ namespace WinUtil_Main
         {
             //test for proper start
 
-            Boolean NormalStart = true;
-
             try
             {
                 if (!Environment.GetCommandLineArgs()[1].Equals("e22afd680ce7b8f23fad799fa3beef2dbce66e42e8877a9f2f0e3fd0b55619c9"))
                 {
-                    NormalStart = false;
-                    DispatchedLogBoxAdd("[Warn] Invalid launch hash: \"" + Environment.GetCommandLineArgs()[1] + "\"\n\n", Brushes.Orange, FontWeight: FontWeights.Bold, StayInLine: true);
+                    DispatchedLogBoxAdd("[Warn] Invalid launch hash: \"" + Environment.GetCommandLineArgs()[1] + "\"\n", Brushes.Orange, FontWeight: FontWeights.Bold);
                 }
             }
             catch (System.IndexOutOfRangeException)
             {
-                NormalStart = false;
-                DispatchedLogBoxAdd("[Info] Direct start\n\n", Brushes.LightBlue, FontWeight: FontWeights.Bold, StayInLine: true);
+                DispatchedLogBoxAdd("[Info] Direct start\n", Brushes.LightBlue, FontWeight: FontWeights.Bold);
             }
 
             //load info
             try
             {
-                DispatchedLogBoxAdd("Getting hostname", Brushes.LightGray);
+                DispatchedLogBoxAdd("Getting hostname", Brushes.Gray);
 
                 ThisMachine.NetBiosHostname = Environment.MachineName;
 
                 ThisMachine.Hostname = System.Environment.GetEnvironmentVariable("COMPUTERNAME");
 
-                DispatchedLogBoxRemoveLine();
-                DispatchedLogBoxAdd("Getting domain state", Brushes.LightGray);
+                DispatchedLogBoxAdd("Getting domain state", Brushes.Gray);
 
                 //get user infos
                 if (System.Net.NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().DomainName != "")
@@ -395,23 +417,20 @@ namespace WinUtil_Main
                     ThisMachine.IsInDomain = true;
                 }
 
-                DispatchedLogBoxRemoveLine();
-                DispatchedLogBoxAdd("Getting user info", Brushes.LightGray);
+                DispatchedLogBoxAdd("Getting user info", Brushes.Gray);
 
                 User = WindownsAccountInteract.GetUACUser();
 
                 UserPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile).Split('\\')[2];
 
-                DispatchedLogBoxRemoveLine();
-                DispatchedLogBoxAdd("Getting Firmware type", Brushes.LightGray);
+                DispatchedLogBoxAdd("Getting Firmware type", Brushes.Gray);
 
                 //check systemtype
                 if (PowerShell("$env:firmware_type", OutPut: true)[0].ToUpper() == "UEFI")
                 {
                     ThisMachine.IsUEFI = true;
 
-                    DispatchedLogBoxRemoveLine();
-                    DispatchedLogBoxAdd("Getting SecureBoot status", Brushes.LightGray);
+                    DispatchedLogBoxAdd("Getting SecureBoot status", Brushes.Gray);
 
                     if (PowerShell("Confirm-SecureBootUEFI", OutPut: true)[0].ToUpper() == "TRUE")
                     {
@@ -420,16 +439,14 @@ namespace WinUtil_Main
                 }
 
                 Task INSTGPO = null;
-                if (RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "EditionID", RegistryValueKind.String, false) == "Core" && (RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", "GPO Status", RegistryValueKind.DWord, true) != 2 || RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", "GPO Status", RegistryValueKind.DWord, true) != 1))
+                if (RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "EditionID", RegistryValueKind.String, false) == "Core" && (RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", "GPO Status", RegistryValueKind.DWord, true) != 2 || RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", "GPO Status", RegistryValueKind.DWord, true) != 1))
                 {
-                    DispatchedLogBoxRemoveLine();
-                    DispatchedLogBoxAdd("Detected Home edition", Brushes.LightGray);
+                    DispatchedLogBoxAdd("Detected Home edition", Brushes.Gray);
 
                     INSTGPO = Task.Run(() => new Button_Worker().InstallGPO());
                 }
 
-                DispatchedLogBoxRemoveLine();
-                DispatchedLogBoxAdd("Getting local Administrator group name", Brushes.LightGray);
+                DispatchedLogBoxAdd("Getting local Administrator group name", Brushes.Gray);
 
                 //gets local admingroup name
                 AdminGroupName = WindownsAccountInteract.GetAdminGroupName();
@@ -437,8 +454,7 @@ namespace WinUtil_Main
                 //gets exepath
                 ExePath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-                DispatchedLogBoxRemoveLine();
-                DispatchedLogBoxAdd("Getting OS version information", Brushes.LightGray);
+                DispatchedLogBoxAdd("Getting OS version information", Brushes.Gray);
                 //get OS details
                 //get version
                 try
@@ -451,8 +467,7 @@ namespace WinUtil_Main
                 }
                 catch { }
 
-                DispatchedLogBoxRemoveLine();
-                DispatchedLogBoxAdd("Getting OS edition", Brushes.LightGray);
+                DispatchedLogBoxAdd("Getting OS edition", Brushes.Gray);
                 //get type/edition
                 String IType = RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "InstallationType", RegistryValueKind.String).ToLower();
 
@@ -476,146 +491,185 @@ namespace WinUtil_Main
                         break;
                 }
 
+                //check if system is activated[set reg value]
+                DispatchedLogBoxAdd("Getting Windows license information ", Brushes.Gray);
+
+                Task WL = null;
+
+                Int32 LS;
+
+                try
+                {
+                    LS = RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", "Windows Activation Status", RegistryValueKind.DWord, true);
+
+                    if (LS == 1)
+                    {
+                        DispatchedLogBoxAdd("| found, status '1'\n", Brushes.Gray, StayInLine: true);
+
+                        ThisMachine.WindowsLicenseStatus = 1;
+                    }
+                    else
+                    {
+                        DispatchedLogBoxAdd("| refreshing license status\n", Brushes.Gray, StayInLine: true);
+
+                        ThisMachine.WindowsLicenseStatus = -1;
+
+                        GetLicense();
+                    }
+                }
+                catch
+                {
+                    DispatchedLogBoxAdd("| missing, starting license status retriever\n", Brushes.Gray, StayInLine: true);
+
+                    ThisMachine.WindowsLicenseStatus = -1;
+
+                    GetLicense();
+                }
+
+                void GetLicense()
+                {
+                    WL = Task.Run(() =>
+                    {
+                        try
+                        {
+                            //Retrieves Windows License status from the Windows Management Engine and saves it in the Registry
+                            Int32 License = Int32.Parse(PowerShell("$test = Get-CimInstance SoftwareLicensingProduct -Filter \"Name like 'Windows%'\" | where { $_.PartialProductKey } | select LicenseStatus; $test = $test -replace \"@{LicenseStatus=\"; $test = $test -replace \"}\"; reg add \"HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil\" /v \"Windows Activation Status\" /t reg_dword /d $test /f; Write-Output $test", OutPut: true)[1]);
+
+                            if (License == 1)
+                            {
+                                ThisMachine.WindowsLicenseStatus = 1;
+
+                                DispatchedLogBoxAdd("[Info] License status = 1 (activated)\n", Brushes.Gray);
+
+                                Dispatcher.Invoke(new Action(() => LicenseStatus.Text = "Licensed: 1"));
+                            }
+                            else
+                            {
+                                DispatchedLogBoxAdd($"[Info] License status = {License}\n", Brushes.Gray);
+
+                                Dispatcher.Invoke(new Action(() => LicenseStatus.Text = StatusToString(License)));
+                            }
+                        }
+                        catch
+                        {
+                            DispatchedLogBoxAdd("[Warn] Error retrieving license information\n", Brushes.Orange, FontWeight: FontWeights.Bold);
+
+                            ThisMachine.WindowsLicenseStatus = -2;
+
+                            Dispatcher.Invoke(new Action(() => LicenseStatus.Text = StatusToString(-2)));
+                        }
+                    });
+                }
+
                 //
 
                 UISetter();
 
                 //
 
-                DispatchedLogBoxRemoveLine();
-                DispatchedLogBoxAdd("Getting WUT license information", Brushes.LightGray);
+                DispatchedLogBoxAdd("Successfully loaded system information\n", Brushes.LightBlue);
 
-                Task WL = null;
-
-                //check if system is activated[set reg value]
-                if (RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil", "Windows Activation Status", RegistryValueKind.DWord, true) != 1)
-                {
-                    DispatchedLogBoxAdd("missing, starting license status retriever", Brushes.LightGray);
-
-                    //Retrieves Windows License status from the Windows Management Engine and saves it in the Registry
-                    WL = Task.Run(() =>
-                    {
-                        ActivateWorker();
-
-                        Thread.Sleep(10000);
-
-                        if (PowerShell("$test = Get-CimInstance SoftwareLicensingProduct -Filter \"Name like 'Windows%'\" | where { $_.PartialProductKey } | select LicenseStatus; $test = $test -replace \"@{LicenseStatus=\"; $test = $test -replace \"}\"; reg add \"HKEY_LOCAL_MACHINE\\SYSTEM\\WinUtil\" /v \"Windows Activation Status\" /t reg_dword /d $test /f; Write-Output $test", OutPut: true)[1] == "1")
-                        {
-                            ThisMachine.WindowsLicenseStatus = 1;
-
-                            //set active status in gui
-
-
-
-
-
-
-                        }
-                        else
-                        {
-                            //set ss status in gui
-                        }
-
-                        DeactivateWorker();
-                    });
-                }
-                else
-                {
-                    DispatchedLogBoxAdd("found, status '1'", Brushes.LightGray);
-
-                    ThisMachine.WindowsLicenseStatus = 1;
-                }
-
-                //
-
-                DispatchedLogBoxRemoveLine(2);
-
-                if (NormalStart)
-                {
-                    DispatchedLogBoxAdd("Successfully loaded system information\n", Brushes.LightBlue, StayInLine: true);
-                }
-                else
-                {
-                    DispatchedLogBoxAdd("Successfully loaded system information\n", Brushes.LightBlue);
-                }
-
-                WL!?.Wait();
-                WL!?.Dispose();
                 INSTGPO!?.Wait();
                 INSTGPO!?.Dispose();
-
+                WL!?.Wait();
+                WL!?.Dispose();
+                
                 //     🥄
             }
             catch (Exception ex)
             {
                 DispatchedLogBoxAdd(ex.Message + "\n", Brushes.Red);
             }
-        }
 
-        private void UISetter()
-        {
-            String ProductName = RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "ProductName", RegistryValueKind.String);
-
-            String OS = null;
-            String Edition = null;
-
-            String[] temp = ProductName.Split(' ');
-
-            OS = temp[0] + " ";
-
-            if (ThisMachine.OSType == OSType.Server)
+            void UISetter()
             {
-                OS += temp[1] + temp[2];
+                String OS = null;
+                String Edition = null;
 
-                
+                String DisplayVersion = null;
+                String VersionNumber = $"[{ThisMachine.OSMajorVersion}.{ThisMachine.OSMinorVersion}]";
 
+                String UEFIIsOn = $"UEFI enabled: {ThisMachine.IsUEFI}";
+                String SecureBootIsOn = $"SecureBoot enabled: {ThisMachine.SecureBootEnabled}";
 
+                String LS = null;
 
-            }
-            else
-            {
-                //win 11
-                if (ThisMachine.OSMajorVersion >= 22000)
+                //OSPType & OSPEdition
+
+                String ProductName = RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "ProductName", RegistryValueKind.String);
+
+                String[] temp = ProductName.Split(' ');
+
+                OS = temp[0] + " ";
+
+                if (ThisMachine.OSType == OSType.Server)
                 {
-                    OS += "11";
+                    OS += temp[1] + temp[2];
                 }
                 else
                 {
-                    OS += temp[1];
+                    //win 11
+                    if (ThisMachine.OSMajorVersion >= 22000)
+                    {
+                        OS += "11";
+                    }
+                    else
+                    {
+                        OS += temp[1];
+                    }
                 }
+
+                OS += "®️";
+
+                for (Int16 i = 2; i < temp.Length; ++i)
+                {
+                    Edition += temp[i];
+                }
+
+                //BaU
+
+                DisplayVersion = $"Version: {RegistryIO.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "DisplayVersion", RegistryValueKind.String)}";
+
+                //LicenseStatus
+
+                LS = StatusToString(ThisMachine.WindowsLicenseStatus);
+
+                //set
+
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    OSPType.Text = OS;
+                    OSPEdition.Text = Edition;
+
+                    WinVersion.Text = DisplayVersion;
+                    BaU.Text = VersionNumber;
+
+                    SysType.Text = UEFIIsOn;
+                    SecBoot.Text = SecureBootIsOn;
+
+                    LicenseStatus.Text = LS;
+                }));
             }
 
-            OS += "®️";
-
-            for (Int16 i = 2; i < temp.Length; ++i)
+            static String StatusToString(Int32 Status)
             {
-                Edition += temp[i];
+                return (Status) switch
+                {
+                    -2 => "Error obtaining status",
+                    -1 => "Retrieving status",
+                    0 => "Unlicensed: 0",
+                    1 => "Licensed: 1",
+                    2 => "OOBGrace: 2",
+                    3 => "OOTGrace: 3",
+                    4 => "NonGenuineGrace: 4",
+                    5 => "Notification: 5",
+                    6 => "ExtendedGrace: 6",
+                    _ => "AHHH: error",
+                };
             }
-
-
-
-
-
-
-
-
-
-            Dispatcher.Invoke(new Action(() =>
-            {
-                OSPType.Text = OS;
-                OSPEdition.Text = Edition;
-
-            }));
-            
-
-
-
-
         }
 
         //#######################################################################################################
-        //#######################################################################################################
-
 
         private static Boolean TTT = false;
 
