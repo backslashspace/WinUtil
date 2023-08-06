@@ -400,6 +400,10 @@ namespace WinUtil_Main
                 DispatchedLogBoxAdd("[Info] Direct start\n", Brushes.LightBlue, FontWeight: FontWeights.Bold);
             }
 
+            //start uptime display
+            DispatchedLogBoxAdd("Starting uptime display", Brushes.Gray);
+            Task.Run(() => SysUptimeClock());
+
             //load info
             try
             {

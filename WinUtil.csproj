@@ -42,7 +42,7 @@
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <ApplicationIcon>icon_new-tile.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -304,6 +304,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon_new-tile.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon_new.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />

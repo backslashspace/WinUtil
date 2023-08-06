@@ -2,6 +2,8 @@
 using System.Windows;
 using System;
 using System.Windows.Media;
+using System.Windows.Threading;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace WinUtil_Main
 {
@@ -13,6 +15,50 @@ namespace WinUtil_Main
         private static SByte CurrentPageAmmount = 0;
 
         private static Boolean[] Navbutton = { true, false};
+
+        private void SysUptimeClock()
+        {
+            TimeSpan uptime = TimeSpan.FromMilliseconds(Environment.TickCount);
+
+            Int32 CurrentMin = uptime.Minutes;
+
+            Exec(uptime);
+
+            while (true)
+            {
+                uptime = TimeSpan.FromMilliseconds(Environment.TickCount);
+
+                if (uptime.Minutes == CurrentMin)
+                {
+                    Task.Delay(384).Wait();
+
+                    continue;
+                }
+
+                CurrentMin = uptime.Minutes;
+
+                Exec(uptime);
+
+                Task.Delay(59500).Wait();
+            }
+
+            static String TS(TimeSpan time)
+            {
+                if (time.Days != 0)
+                {
+                    return $"Uptime: {time.Days}d.{time.Hours}h:{time.Minutes}mm";
+                }
+                else
+                {
+                    return $"Uptime: {time.Hours}h:{time.Minutes}m";
+                }
+            }
+
+            void Exec(TimeSpan time)
+            {
+                Dispatcher.Invoke(new Action(() => UptimeDisplay.Text = TS(time)));
+            }
+        }
 
         private void Rescale(Boolean RenderContenBoardOnly = false)
         {
@@ -195,31 +241,24 @@ namespace WinUtil_Main
 
                         if (ContentGridHeight > 450)
                         {
-                            SystemLable.FontSize = 36;
-
-                            WindowsArea.Height -= 15;
+                            //SystemLable.FontSize = 36;
                         }
                         else
                         {
-                            SystemLable.FontSize = 24;
+                            //SystemLable.FontSize = 24;
                         }
 
-                        //Double FontSize = WindowsArea.Height switch
-                        //{
-                            
-                        //}
+                        //Double VersionHight = WindowsArea.ActualHeight / 100 * 25;
+                        //WinVersion.Margin = new Thickness(5, VersionHight, 0, 0);
+                        //BaU.Margin = new Thickness(5, VersionHight + 14, 0, 0);
 
-                        Double VersionHight = WindowsArea.ActualHeight / 100 * 25;
-                        WinVersion.Margin = new Thickness(5, VersionHight, 0, 0);
-                        BaU.Margin = new Thickness(5, VersionHight + 14, 0, 0);
+                        //Double SysTypeHight = WindowsArea.ActualHeight / 100 * 50;
+                        //SysType.Margin = new Thickness(5, SysTypeHight, 0, 0);
+                        //SecBoot.Margin = new Thickness(5, SysTypeHight + 14, 0, 0);
 
-                        Double SysTypeHight = WindowsArea.ActualHeight / 100 * 50;
-                        SysType.Margin = new Thickness(5, SysTypeHight, 0, 0);
-                        SecBoot.Margin = new Thickness(5, SysTypeHight + 14, 0, 0);
-
-                        Double LicenseLableHight = WindowsArea.ActualHeight / 100 * 75;
-                        LicenseLable.Margin = new Thickness(5, LicenseLableHight, 0, 0);
-                        LicenseStatus.Margin = new Thickness(5, LicenseLableHight + 14, 0, 0);
+                        //Double LicenseLableHight = WindowsArea.ActualHeight / 100 * 75;
+                        //LicenseLable.Margin = new Thickness(5, LicenseLableHight, 0, 0);
+                        //LicenseStatus.Margin = new Thickness(5, LicenseLableHight + 14, 0, 0);
                     }
 
                     void AppearanceGridF()
