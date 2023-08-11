@@ -215,7 +215,7 @@ namespace WinUtil_Main
         }
         public void DispatchedLogBoxRemoveLine(UInt32 Lines = 1)
         {
-            Dispatcher.Invoke(new Action(() => { LogBoxRemoveLine(Lines); }));
+            Dispatcher.Invoke(new Action(() => LogBoxRemoveLine(Lines)));
         }
         private void LogBoxAdd(String Text = null, SolidColorBrush Foreground = null, SolidColorBrush Background = null, Boolean StayInLine = false, Boolean ScrollToEnd = true, FontWeight FontWeight = default)
         {
@@ -257,7 +257,7 @@ namespace WinUtil_Main
         }
         public void DispatchedLogBoxAdd(String Text, SolidColorBrush Foreground = null, SolidColorBrush Background = null, Boolean StayInLine = false, Boolean ScrollToEnd = true, FontWeight FontWeight = default)
         {
-            Dispatcher.Invoke(new Action(() => { LogBoxAdd(Text, Foreground, Background, StayInLine, ScrollToEnd, FontWeight); }));
+            Dispatcher.Invoke(new Action(() => LogBoxAdd(Text, Foreground, Background, StayInLine, ScrollToEnd, FontWeight)));
         }
 
         //#######################################################################################################

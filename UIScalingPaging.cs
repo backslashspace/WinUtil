@@ -236,8 +236,8 @@ namespace WinUtil_Main
                         Double WAWidth = (Double)Convert.ToInt32(Width80 / 100 * 25);
                         Double WAHeight = ContentGridHeight - 95;
 
-                        WindowsArea.Width = WAWidth;
-                        WindowsArea.Height = WAHeight;
+                        //WindowsArea.Width = WAWidth;
+                        //WindowsArea.Height = WAHeight;
 
                         if (ContentGridHeight > 450)
                         {
