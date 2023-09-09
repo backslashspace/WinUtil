@@ -1,19 +1,18 @@
-﻿<Window x:Class="WinUtil_Main.MainWindow"
+﻿<Window x:Class="WinUtil.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WinUtil_Main"
+        xmlns:local="clr-namespace:WinUtil"
         mc:Ignorable="d"
-        StateChanged="Window_StateChanged"
+        StateChanged="Frame_Changed_State"
         SizeChanged="OnRescale"
-        MinHeight="450"
-        Background="{DynamicResource  BackgroundColor}"      
+        Height="450" Width="760"
+        MinHeight="450" MinWidth="760"
         WindowStartupLocation="CenterScreen"
-        MinWidth="760"
-        Height="450" Width="760">
+        Background="{DynamicResource  MainBackgroundColor}">
 
-
+    <!--#region WindowCrome -->
     <WindowChrome.WindowChrome>
         <WindowChrome 
             CaptionHeight="31"
@@ -21,12 +20,28 @@
             NonClientFrameEdges="Bottom"
             />
     </WindowChrome.WindowChrome>
+    <!--#endregion-->
 
-
+    <!--#region Resources -->
     <Window.Resources>
 
+        <SolidColorBrush x:Key="MainBackgroundColor" Color="#202020"/>
+
+        <SolidColorBrush x:Key="MainGridBackgroundColor" Color="#aaaaaf"/>
+
+        <SolidColorBrush x:Key="WindowInteractionStrokeColor" Color="#ffffff"/>
+
+        <SolidColorBrush x:Key="WindowInteractionBackgroundColor" Color="#202020"/>
+
+        <SolidColorBrush x:Key="DefaultFontColor" Color="#eeeeee"/>
+
+
+
+
+
+
+
         <!--#region Vars -->
-        <SolidColorBrush x:Key="BackgroundColor" Color="#202020"/>
 
         <SolidColorBrush x:Key="FontColor" Color="#f0f0f0"/>
 
@@ -34,6 +49,12 @@
         <SolidColorBrush x:Key="LableBackground" Color="#323232"/>
         <SolidColorBrush x:Key="LogPanel" Color="#131317"/>
         <!--#endregion-->
+
+
+
+
+
+
 
         <!--#region FocusVisual -->
         <Style x:Key="FocusVisual">
@@ -122,7 +143,7 @@
 
         <!--#region Navigation TGButton -->
         <ControlTemplate x:Key="NavigationTGButton" TargetType="{x:Type ToggleButton}">
-            <Border x:Name="bdr_main" Background="{DynamicResource BackgroundColor}" BorderBrush="{DynamicResource BackgroundColor}" BorderThickness="0" CornerRadius="3,3,3,3" Margin="4">
+            <Border x:Name="bdr_main" Background="{DynamicResource MainBackgroundColor}" BorderBrush="{DynamicResource MainBackgroundColor}" BorderThickness="0" CornerRadius="3,3,3,3" Margin="4">
                 <ContentPresenter ContentSource="Content" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             </Border>
             <ControlTemplate.Triggers>
@@ -180,7 +201,7 @@
 
         <!--#region Pannav Button -->
         <ControlTemplate x:Key="PannavButton" TargetType="{x:Type Button}">
-            <Border x:Name="bdr_main" Background="{DynamicResource BackgroundColor}"  BorderThickness="0" CornerRadius="3,3,3,3" Margin="4">
+            <Border x:Name="bdr_main" Background="{DynamicResource MainBackgroundColor}"  BorderThickness="0" CornerRadius="3,3,3,3" Margin="4">
                 <ContentPresenter ContentSource="Content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Border>
             <ControlTemplate.Triggers>
@@ -198,120 +219,136 @@
         <!--#endregion-->
 
     </Window.Resources>
+    <!--#endregion-->
 
 
-    <Grid Background="{DynamicResource  BackgroundColor}" Margin="0,31,0,0">
-
+    <Grid Background="{DynamicResource  MainBackgroundColor}" Margin="0,31,0,0">
 
         <!--#region Window Head -->
-        <!-- Set window icon and title -->
 
-        <Image Source="/icon.ico" Margin="9,-23,0,0" Height="14" RenderOptions.BitmapScalingMode="HighQuality"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="14"/>
+        <!--#region Title -->
+        <Image
+            Source="/icon_new.ico"
+            Margin="9,-23,0,0"
+            Height="14"
+            RenderOptions.BitmapScalingMode="HighQuality" 
+            VerticalAlignment="Top" HorizontalAlignment="Left"
+            Width="14"/>
 
-        <TextBlock Text="WinUtil v2.0.0.0 (DEV-0)" FontFamily="Bahnschrift" Foreground="#ccccce" Margin="30,-23,0,0" HorizontalAlignment="Left" Width="178" Height="13" VerticalAlignment="Top"/>
+        <TextBlock
+            Text="WinUtil v2.0.0.0 (DEV-0)"
+            FontFamily="Bahnschrift"
+            Foreground="#ccccce"
+            Margin="30,-22,0,0"
+            HorizontalAlignment="Left" VerticalAlignment="Top"
+            Width="299" Height="13"/>
+        <!--#endregion-->
 
-        <!-- define window buttons -->
-        <!-- dactiv foregound = 777777 -->
+        <!--#region Minimize -->
+        <Rectangle
+            x:Name="Minimize_Button_Button_Background"
+            Fill="{DynamicResource  MainBackgroundColor}"
+            Height="31" Width="47"
+            VerticalAlignment="Top" HorizontalAlignment="Right" 
+            Margin="0,-31,93,0"/>
 
-        <Rectangle x:Name="MinimizeButtonColor" Fill="{DynamicResource  BackgroundColor}" Height="31" VerticalAlignment="Top" HorizontalAlignment="Right" Width="47" Margin="0,-31,93,0"/>
         <Path
-			Width="47"
-			Height="31"
+            x:Name="Minimize_Button_Icon_Path"
+	        Width="47"
+	        Height="31"
             Margin="0,-31,93,0"
-			Data="M 18,15.5 H 29"
-			Stroke="#ffffff"
-			StrokeThickness="1" HorizontalAlignment="Right" VerticalAlignment="Top"
-            />
+	        Data="M 18,15.5 H 29"
+	        Stroke="{DynamicResource WindowInteractionStrokeColor}"
+	        StrokeThickness="1" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+
         <Button
-            Click="Button_Minimize"
+            Click="Minimize_Button_Click"
             x:Name="Minimize_Button"
             WindowChrome.IsHitTestVisibleInChrome="True"
             Margin="0,-29,93,0"
             HorizontalAlignment="Right"
             Width="47" Height="29"
             Opacity="0"
-            MouseEnter="MinimizeButtonMouseIsOver"
-            MouseLeave="MinimizeButtonMouseIsNotOver"
-            PreviewMouseDown="MinimizeButtonMouseClick"
-            VerticalAlignment="Top">
-        </Button>
+            MouseEnter="Minimize_Button_Mouse_Is_Over"
+            MouseLeave="Minimize_Button_Mouse_Is_Not_Over"
+            PreviewMouseDown="Minimize_Button_Down"
+            VerticalAlignment="Top"/>
+        <!--#endregion-->
 
-        <!---->
+        <!--#region Normal_Window_State / Max_Window_State -->
+        <Rectangle x:Name="Window_State_Button_Background" Fill="{DynamicResource  MainBackgroundColor}" Margin="0,-31,47,0" Height="31" VerticalAlignment="Top" HorizontalAlignment="Right" Width="46"/>
 
-        <Rectangle x:Name="ChangeWindowStateColor" Fill="{DynamicResource  BackgroundColor}" Margin="0,-31,47,0" Height="31" VerticalAlignment="Top" HorizontalAlignment="Right" Width="46"/>
         <Path
-            x:Name="IconStateIsNormal"
-			Width="46"
-			Height="31"
+            x:Name="Normal_Window_State_Button_Icon_Path"
+	        Width="46"
+	        Height="31"
             Margin="0,-31,47,0"
-			Data="M 18.5,10.5 H 27.5 V 19.5 H 18.5 Z"
-			Stroke="#ffffff"
-			StrokeThickness="1" VerticalAlignment="Top" HorizontalAlignment="Right"
-            />
+	        Data="M 18.5,10.5 H 27.5 V 19.5 H 18.5 Z"
+	        Stroke="{DynamicResource WindowInteractionStrokeColor}"
+	        StrokeThickness="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+
         <Path
-            x:Name="IconStateIsMaximized"
+            x:Name="Max_Window_State_Button_Icon_Path"
             Visibility="Collapsed"
-			Width="46"
-			Height="31"
+	        Width="46"
+	        Height="31"
             Margin="0,-31,47,0"
-			Data="M 18.5,12.5 H 25.5 V 19.5 H 18.5 Z M 20.5,12.5 V 10.5 H 27.5 V 17.5 H 25.5"
-			Stroke="#ffffff"
-			StrokeThickness="1" VerticalAlignment="Top" HorizontalAlignment="Right" />
+	        Data="M 18.5,12.5 H 25.5 V 19.5 H 18.5 Z M 20.5,12.5 V 10.5 H 27.5 V 17.5 H 25.5"
+	        Stroke="{DynamicResource WindowInteractionStrokeColor}"
+	        StrokeThickness="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+
         <Button
-            x:Name="ButtonStateIsNormal"
-            Click="Button_ToggleWindowState"
+            x:Name="Window_State_Button_Toggle"
+            Click="Button_Toggle_WindowState"
             WindowChrome.IsHitTestVisibleInChrome="True"
             Margin="0, -29, 47, 0"
             HorizontalAlignment="Right"
             Opacity="0"
             Width="46" Height="29"
-            MouseEnter="ChangeWindowStateColorMouseIsOver"
-            MouseLeave="ChangeWindowStateColorMouseIsNotOver"
-            PreviewMouseDown="ChangeWindowStateColoMouseClick"
-            VerticalAlignment="Top">
-        </Button>
-        <Button
-            x:Name="ButtonStateIsMaximized"
-            Visibility="Collapsed"
-            Opacity="0"
-            Click="Button_ToggleWindowState"
-            WindowChrome.IsHitTestVisibleInChrome="True"
-            Margin="0,-32,47,0"
-            HorizontalAlignment="Right"
-            Width="46" Height="32"
-            MouseEnter="ChangeWindowStateColorMouseIsOver"
-            MouseLeave="ChangeWindowStateColorMouseIsNotOver"
-            PreviewMouseDown="ChangeWindowStateColoMouseClick"
-            VerticalAlignment="Top">
-        </Button>
+            MouseEnter="Window_State_Button_Toggle_Mouse_Is_Over"
+            MouseLeave="Window_State_Button_Toggle_Mouse_Is_Not_Over"
+            PreviewMouseDown="Window_State_Button_Toggle_Down"
+            VerticalAlignment="Top"/>
+        <!--#endregion-->
 
-        <!---->
-
-        <Rectangle x:Name="CloseButtonColor" Fill="{DynamicResource  BackgroundColor}" Margin="0,-31,0,0" Height="31" VerticalAlignment="Top" HorizontalAlignment="Right" Width="47"/>
-        <Path
-			Width="47"
-			Height="31"
+        <!--#region Close_Button -->
+        <Rectangle
+            x:Name="Close_Button_Background"
+            Fill="{DynamicResource  MainBackgroundColor}"
             Margin="0,-31,0,0"
-			Data="M 19,11 28,20 M 19,20 28,11"
-			Stroke="#ffffff"
-			StrokeThickness="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+            Height="31" Width="47"
+            VerticalAlignment="Top" HorizontalAlignment="Right"/>
+
+        <Path
+            x:Name="Close_Button_Icon_Path"
+	        Width="47"
+	        Height="31"
+            Margin="0,-31,0,0"
+	        Data="M 19,11 28,20 M 19,20 28,11"
+	        Stroke="#ffffff"
+	        StrokeThickness="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+
         <Button
-            Click="Button_Close"
+            Click="Close_Button_Click"
             x:Name="Close_Button"
             WindowChrome.IsHitTestVisibleInChrome="True"
             Margin="0,-29,2,0" HorizontalAlignment="Right"
             Width="45" Height="29"
             Opacity="0"
-            MouseEnter="CloseButtonColorMouseIsOver"
-            MouseLeave="CloseButtonColorMouseIsNotOver"
-            PreviewMouseDown="CloseButtonColorMouseClick"
-            VerticalAlignment="Top">
-        </Button>
+            MouseEnter="Close_Button_Mouse_Is_Over"
+            MouseLeave="Close_Button_Mouse_Is_Not_Over"
+            PreviewMouseDown="Close_Button_Down"
+            VerticalAlignment="Top"/>
+        <!--#endregion-->
         <!--#endregion-->
 
         <!--#region OverviewGrid -->
         <Border x:Name="OverviewGridBorder" Visibility="Visible" Background="{DynamicResource  ContentPanel}" CornerRadius="3,0,0,5" Height="276" VerticalAlignment="Top" HorizontalAlignment="Right" Width="607">
             <Grid>
+
+
+
+
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <Grid Height="400">
 
@@ -563,12 +600,9 @@
         </Border>
         <!--#endregion-->
 
-
         <!-- ####################################################### -->
 
-
         <!--#region LogBox -->
-
         <Border x:Name="LogBox" BorderBrush="{DynamicResource  LogPanel}" BorderThickness="4,4,0,0" CornerRadius="5,0,0,0" Height="122" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="607">
             <ScrollViewer VerticalScrollBarVisibility="Auto" x:Name="LogScroller" Margin="-1,-1,0,0" IsEnabled="True">
                 <RichTextBox
@@ -586,12 +620,9 @@
 
         <!--#endregion-->
 
-
         <!-- ####################################################### -->
 
-
         <!--#region Navigation Button -->
-
         <ToggleButton
             Template="{DynamicResource NavigationTGButton}"
             x:Name="Overview"
@@ -693,32 +724,15 @@
         </Viewbox>
         <!--#endregion-->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <!-- Debug -->
 
         <Button
-                Content="DDDD"
-                Template="{DynamicResource NormalButton}" 
-                Margin="68,0,0,33" Width="49" HorizontalAlignment="Left"
-                FontSize="16"
-                FontFamily="Segoe UI"
-                Foreground="{DynamicResource FontColor}" Height="45" VerticalAlignment="Bottom"
-                />
-
-
-
-        <!-- Debug -->
+            Content="DDDD"
+            Template="{DynamicResource NormalButton}" 
+            Margin="68,0,0,33" Width="49" HorizontalAlignment="Left"
+            FontSize="16"
+            FontFamily="Segoe UI"
+            Foreground="{DynamicResource FontColor}" Height="45" VerticalAlignment="Bottom"/>
 
         <Button
             Visibility="Visible"
@@ -727,8 +741,8 @@
             Margin="10,0,0,10"
             HorizontalAlignment="Left" VerticalAlignment="Bottom"
             Width="49" Height="34"
-            Template="{DynamicResource NormalButton}" 
-            />
+            Template="{DynamicResource NormalButton}"/>
 
     </Grid>
+
 </Window>

@@ -1,16 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WinUtil_Main
+namespace WinUtil
 {
     public partial class MainWindow
     {
         public static String AdminGroupName { get; set; }
+
         public static String ExePath { get; set; }
+
         public static Boolean IsActivated { get; set; }
+
         public static String User { get; set; }
 
         public static String UserPath { get; set; }
+
         public static Boolean AllProfilesWLan { get; set; }
+
         public static Int16 ActivationClicks { get; set; }
 
         public sealed class ThisMachine
@@ -70,7 +79,7 @@ namespace WinUtil_Main
             public const String RegistryTools = "0dcb3c87a8162acef6eb8c3ae5fa0ad62ebd43968ef69e0ce48d55bbc10aeb2f";
             public const String ServiceTools = "ba4add34b1aba3e01bd38dc284b60927d3b5c81645d3f63b1a9ae70fd59c64c0";
             public const String WinUser = "861e400ec6c99ae48ec4392cc10711f634f624cd8e8e82e829bc6d5e581c7a2f";
-            
+
             public const String ManagedNativeWifi = "c590995858bc7f5624ae4161e7b22bfe834c17b6a6fc0c4dfd7207d1b11a3ca3";
             public const String SystemRuntimeCompilerServicesUnsafe = "37768488e8ef45729bc7d9a2677633c6450042975bb96516e186da6cb9cd0dcf";
             public const String SystemBuffersdll = "accccfbe45d9f08ffeed9916e37b33e98c65be012cfff6e7fa7b67210ce1fefb";

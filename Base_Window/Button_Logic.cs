@@ -1,26 +1,27 @@
 ﻿using System;
-using System.Diagnostics;
-using Microsoft.Win32;
-using System.Threading;
-using System.IO;
-using System.Linq;
 using System.Collections.Generic;
-using System.ServiceProcess;
-using System.Windows.Forms;
-using ManagedNativeWifi;
-using System.Windows.Media;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Media;
 //libs
-using CustomWinMessageBox;
-using ProgramLauncher;
 using static PowershellHelper.PowershellHelper;
 using RegistryTools;
-using ServiceTools;
 using WinUser;
+using System.IO;
+using ProgramLauncher;
+using Microsoft.Win32;
+using ServiceTools;
+using System.ServiceProcess;
+using System.Diagnostics;
+using CustomWinMessageBox;
+using ManagedNativeWifi;
+using System.Threading;
 
-namespace WinUtil_Main
+namespace WinUtil
 {
-    internal class Button_Worker : MainWindow
+    public partial class MainWindow
     {
         public String[] getfileagrs = { null };
 
@@ -51,7 +52,7 @@ namespace WinUtil_Main
 
                     RegistryIO.DeleteValues("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", new String[] { "Windows Activation Status" });
 
-                    
+
 
                     PowerShell("$test = Get-CimInstance SoftwareLicensingProduct -Filter \"Name like 'Windows%'\" | where { $_.PartialProductKey } | select LicenseStatus; $test = $test -replace \"@{LicenseStatus=\"; $test = $test -replace \"}\"; reg add \"HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil\" /v \"Windows Activation Status\" /t reg_dword /d $test /f");
 
@@ -4453,27 +4454,6 @@ namespace WinUtil_Main
             }
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

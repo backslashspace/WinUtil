@@ -1,11 +1,13 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Threading;
-using static System.Net.Mime.MediaTypeNames;
+using System.Windows;
 
-namespace WinUtil_Main
+namespace WinUtil
 {
     public partial class MainWindow
     {
@@ -14,7 +16,7 @@ namespace WinUtil_Main
         private static SByte PageNumber = 0;
         private static SByte CurrentPageAmmount = 0;
 
-        private static Boolean[] Navbutton = { true, false};
+        private static Boolean[] Navbutton = { true, false };
 
         private void SysUptimeClock()
         {
@@ -66,7 +68,7 @@ namespace WinUtil_Main
             {
                 return;
             }
-            
+
             if (!RenderContenBoardOnly)
             {
                 RescaleInProgress = true;
@@ -362,7 +364,7 @@ namespace WinUtil_Main
             await Task.Run(() =>
             {
                 while (ActivityWorkerKiu > 0)
-                { 
+                {
                     Dispatcher.Invoke(new Action(() =>
                     {
                         WorkIndicator.RenderTransform = new RotateTransform(WorkerRotation += 5);
@@ -433,11 +435,11 @@ namespace WinUtil_Main
 
                         case 1:
                             throw new NotImplementedException("ChangePageVisibility > OverviewPG");
-                            //break;
+                        //break;
 
                         case 2:
                             throw new NotImplementedException("ChangePageVisibility > OverviewPG");
-                            //break;
+                        //break;
 
                         case -1:
                             break;
@@ -454,11 +456,11 @@ namespace WinUtil_Main
 
                         case 1:
                             throw new NotImplementedException("ChangePageVisibility > OverviewPG");
-                            //break;
+                        //break;
 
                         case 2:
                             throw new NotImplementedException("ChangePageVisibility > OverviewPG");
-                            //break;
+                        //break;
 
                         case -1:
                             break;
@@ -619,7 +621,6 @@ namespace WinUtil_Main
 
             PageNumber = 0;
         }
-
 
     }
 }

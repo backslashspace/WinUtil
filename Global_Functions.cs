@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media;
 //libs
-using static HashTools.FileHashTools;
 using static PowershellHelper.PowershellHelper;
-using static ProgramLauncher.Execute;
+using ProgramLauncher;
+using static HashTools.FileHashTools;
 
-namespace WinUtil_Main
+namespace WinUtil
 {
     public partial class MainWindow
     {
@@ -130,7 +132,7 @@ namespace WinUtil_Main
 
                     try
                     {
-                        EXE("winget.exe", RunAs: true, HiddenExecute: true);
+                        Execute.EXE("winget.exe", RunAs: true, HiddenExecute: true);
 
                         DispatchedLogBoxAdd("Done\n", Brushes.DarkCyan);
 
