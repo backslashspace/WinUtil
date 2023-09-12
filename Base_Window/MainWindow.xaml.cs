@@ -14,9 +14,6 @@ using System.IO;
 
 namespace WinUtil
 {
-    /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private void OnRescale(object sender, SizeChangedEventArgs e)
@@ -157,7 +154,6 @@ namespace WinUtil
                 DispatchedLogBoxAdd("[Info] Direct start\n", Brushes.LightBlue, FontWeight: FontWeights.Bold);
             }
 
-            //start uptime display
             DispatchedLogBoxAdd("Starting uptime display", Brushes.Gray);
             Task.Run(() => SysUptimeClock());
 

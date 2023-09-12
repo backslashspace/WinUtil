@@ -22,206 +22,6 @@
     </WindowChrome.WindowChrome>
     <!--#endregion-->
 
-    <!--#region Resources -->
-    <Window.Resources>
-
-        <SolidColorBrush x:Key="MainBackgroundColor" Color="#202020"/>
-
-        <SolidColorBrush x:Key="MainGridBackgroundColor" Color="#aaaaaf"/>
-
-        <SolidColorBrush x:Key="WindowInteractionStrokeColor" Color="#ffffff"/>
-
-        <SolidColorBrush x:Key="WindowInteractionBackgroundColor" Color="#202020"/>
-
-        <SolidColorBrush x:Key="DefaultFontColor" Color="#eeeeee"/>
-
-
-
-
-
-
-
-        <!--#region Vars -->
-
-        <SolidColorBrush x:Key="FontColor" Color="#f0f0f0"/>
-
-        <SolidColorBrush x:Key="ContentPanel" Color="#282828"/>
-        <SolidColorBrush x:Key="LableBackground" Color="#323232"/>
-        <SolidColorBrush x:Key="LogPanel" Color="#131317"/>
-        <!--#endregion-->
-
-
-
-
-
-
-
-        <!--#region FocusVisual -->
-        <Style x:Key="FocusVisual">
-            <Setter Property="Control.Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <!--#endregion-->
-
-        <!--#region RichTextBox -->
-        <Style x:Key="RichTextBoxStyle" TargetType="{x:Type RichTextBox}">
-            <Style.Resources>
-                <Style x:Key="{x:Type FlowDocument}" TargetType="{x:Type FlowDocument}">
-                    <Setter Property="OverridesDefaultStyle" Value="true"/>
-                </Style>
-                <Style x:Key="{x:Type Hyperlink}" BasedOn="{StaticResource {x:Type Hyperlink}}" TargetType="{x:Type Hyperlink}">
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Foreground" Value="Blue"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-                <Style TargetType="{x:Type Paragraph}">
-                    <Setter Property="Margin" Value="0"/>
-                </Style>
-            </Style.Resources>
-            <Setter Property="MinWidth" Value="10"/>
-            <Style.BasedOn>
-                <StaticResource ResourceKey="{x:Type TextBoxBase}"/>
-            </Style.BasedOn>
-        </Style>
-        <SolidColorBrush x:Key="TextBox.Static.Border1" Color="#FFABAdB3"/>
-        <SolidColorBrush x:Key="TextBox.MouseOver.Border1" Color="#FF7EB4EA"/>
-        <SolidColorBrush x:Key="TextBox.Focus.Border1" Color="#FF569DE5"/>
-        <!--#endregion-->
-
-        <!--#region ScrollViewer -->
-        <Style TargetType="{x:Type ScrollViewer}">
-            <Setter Property="OverridesDefaultStyle" Value="True"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <ScrollContentPresenter Grid.Column="0"/>
-                            <ScrollBar Grid.Column="1"
-                       Opacity="0.5"
-                       Name="PART_VerticalScrollBar"
-                       Value="{TemplateBinding VerticalOffset}"
-                       Maximum="{TemplateBinding ScrollableHeight}"
-                       ViewportSize="{TemplateBinding ViewportHeight}"
-                       Width="10"
-                       MinWidth="10"
-                       Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
-                            <ScrollBar Name="PART_HorizontalScrollBar"
-                       Opacity="0.5"
-                       Orientation="Horizontal"
-                       Grid.Row="1"
-                       Grid.Column="0"
-                       Height="10"
-                       MinHeight="10"
-                       Value="{TemplateBinding HorizontalOffset}"
-                       Maximum="{TemplateBinding ScrollableWidth}"
-                       ViewportSize="{TemplateBinding ViewportWidth}"
-                       Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <!--#endregion-->
-
-        <!--#region Navigation TGButton -->
-        <ControlTemplate x:Key="NavigationTGButton" TargetType="{x:Type ToggleButton}">
-            <Border x:Name="bdr_main" Background="{DynamicResource MainBackgroundColor}" BorderBrush="{DynamicResource MainBackgroundColor}" BorderThickness="0" CornerRadius="3,3,3,3" Margin="4">
-                <ContentPresenter ContentSource="Content" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            </Border>
-            <ControlTemplate.Triggers>
-
-                <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Background" TargetName="bdr_main" Value="#2d2d2d"/>
-                </Trigger>
-
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" TargetName="bdr_main" Value="#2d2d2d"/>
-                </Trigger>
-
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="IsMouseOver" Value="True"/>
-                        <Condition Property="IsChecked" Value="False"/>
-                    </MultiTrigger.Conditions>
-                    <MultiTrigger.Setters>
-                        <Setter Property="Background" TargetName="bdr_main" Value="#292929"/>
-                    </MultiTrigger.Setters>
-                </MultiTrigger>
-
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="IsMouseOver" Value="True"/>
-                        <Condition Property="IsChecked" Value="True"/>
-                    </MultiTrigger.Conditions>
-                    <MultiTrigger.Setters>
-                        <Setter Property="Background" TargetName="bdr_main" Value="#2d2d2d"/>
-                    </MultiTrigger.Setters>
-                </MultiTrigger>
-
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-        <!--#endregion-->
-
-        <!--#region Normal Button -->
-        <ControlTemplate x:Key="NormalButton" TargetType="{x:Type Button}">
-            <Border x:Name="bdr_main" Background="#2b2b2b" BorderBrush="#1d1d1d" BorderThickness="1" CornerRadius="3,3,3,3" Margin="4">
-                <ContentPresenter ContentSource="Content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <ControlTemplate.Triggers>
-
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" TargetName="bdr_main" Value="#323232"/>
-                </Trigger>
-
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" TargetName="bdr_main" Value="#272727"/>
-                </Trigger>
-
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-        <!--#endregion-->
-
-        <!--#region Pannav Button -->
-        <ControlTemplate x:Key="PannavButton" TargetType="{x:Type Button}">
-            <Border x:Name="bdr_main" Background="{DynamicResource MainBackgroundColor}"  BorderThickness="0" CornerRadius="3,3,3,3" Margin="4">
-                <ContentPresenter ContentSource="Content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            </Border>
-            <ControlTemplate.Triggers>
-
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" TargetName="bdr_main" Value="#323232"/>
-                </Trigger>
-
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Background" TargetName="bdr_main" Value="#272727"/>
-                </Trigger>
-
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-        <!--#endregion-->
-
-    </Window.Resources>
-    <!--#endregion-->
-
-
     <Grid Background="{DynamicResource  MainBackgroundColor}" Margin="0,31,0,0">
 
         <!--#region Window Head -->
@@ -349,7 +149,7 @@
 
 
 
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Style="{DynamicResource ScrollViewer}">
                     <Grid Height="400">
 
                         <!--#region SysInfo -->
@@ -604,7 +404,7 @@
 
         <!--#region LogBox -->
         <Border x:Name="LogBox" BorderBrush="{DynamicResource  LogPanel}" BorderThickness="4,4,0,0" CornerRadius="5,0,0,0" Height="122" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="607">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" x:Name="LogScroller" Margin="-1,-1,0,0" IsEnabled="True">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" x:Name="LogScroller" Margin="-1,-1,0,0" IsEnabled="True" Style="{DynamicResource ScrollViewer}">
                 <RichTextBox
                 Style="{DynamicResource RichTextBoxStyle}"
                 x:Name="LogTextBox"
