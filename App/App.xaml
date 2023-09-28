@@ -8,7 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
-                <ResourceDictionary Source="\Base_Dictionary.xaml"/>
+                <ResourceDictionary Source="\Generic_Dictionary.xaml"/>
                 <ResourceDictionary Source="\Base_Window\Base_Window_Dictionary.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>

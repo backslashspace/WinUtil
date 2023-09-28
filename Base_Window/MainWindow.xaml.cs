@@ -11,6 +11,13 @@ using static PowershellHelper.PowershellHelper;
 using RegistryTools;
 using WinUser;
 using System.IO;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Threading;
+using System.Threading;
+using System.Diagnostics;
+using System.Xml.Linq;
+using System.Windows.Forms;
 
 namespace WinUtil
 {
@@ -19,6 +26,66 @@ namespace WinUtil
         private void OnRescale(object sender, SizeChangedEventArgs e)
         {
             Rescale();
+        }
+
+        internal static String CurrentArea = "Overview";
+
+        //#######################################################################################################
+
+        private static Int16 ActivityWorkerKiu = 0;
+        private static Int16 WorkerRotation = 0;
+
+        internal void ActivateWorker()
+        {
+            if (ActivityWorkerKiu < 1)
+            {
+                WorkIndicator.Visibility = Visibility.Visible;
+
+                ++ActivityWorkerKiu;
+
+                ActivityWorker();
+            }
+            else
+            {
+                ++ActivityWorkerKiu;
+            }
+        }
+
+        internal void DeactivateWorker()
+        {
+            if (ActivityWorkerKiu > 0)
+            {
+                --ActivityWorkerKiu;
+            }
+        }
+
+        //
+
+        private async void ActivityWorker()
+        {
+            MainWindowIcon.Visibility = Visibility.Collapsed;
+
+            await Task.Run(() =>
+            {
+                while (ActivityWorkerKiu > 0)
+                {
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        WorkIndicator.RenderTransform = new RotateTransform(WorkerRotation += 5);
+                    }));
+
+                    Task.Delay(1).Wait();
+
+                    if (WorkerRotation == 360)
+                    {
+                        WorkerRotation = 0;
+                    }
+                }
+            });
+
+            WorkIndicator.Visibility = Visibility.Collapsed;
+
+            MainWindowIcon.Visibility = Visibility.Visible;
         }
 
         //#######################################################################################################
@@ -286,13 +353,13 @@ namespace WinUtil
 
                                 DispatchedLogBoxAdd("[Info] License status = 1 (activated)\n", Brushes.Gray);
 
-                                Dispatcher.Invoke(new Action(() => LicenseStatus.Text = "Licensed: 1"));
+                                Dispatcher.Invoke(new Action(() => OverviewGrid.LicenseStatus.Text = "Licensed: 1"));
                             }
                             else
                             {
                                 DispatchedLogBoxAdd($"[Info] License status = {License}\n", Brushes.Gray);
 
-                                Dispatcher.Invoke(new Action(() => LicenseStatus.Text = StatusToString(License)));
+                                Dispatcher.Invoke(new Action(() => OverviewGrid.LicenseStatus.Text = StatusToString(License)));
                             }
                         }
                         catch
@@ -301,7 +368,7 @@ namespace WinUtil
 
                             ThisMachine.WindowsLicenseStatus = -2;
 
-                            Dispatcher.Invoke(new Action(() => LicenseStatus.Text = StatusToString(-2)));
+                            Dispatcher.Invoke(new Action(() => OverviewGrid.LicenseStatus.Text = StatusToString(-2)));
                         }
                     });
                 }
@@ -382,16 +449,16 @@ namespace WinUtil
 
             Dispatcher.Invoke(new Action(() =>
             {
-                OSPType.Text = OS;
-                OSPEdition.Text = Edition;
+                OverviewGrid.OSPType.Text = OS;
+                OverviewGrid.OSPEdition.Text = Edition;
 
-                WinVersion.Text = DisplayVersion;
-                BaU.Text = VersionNumber;
+                OverviewGrid.WinVersion.Text = DisplayVersion;
+                OverviewGrid.BaU.Text = VersionNumber;
 
-                SysType.Text = UEFIIsOn;
-                SecBoot.Text = SecureBootIsOn;
+                OverviewGrid.SysType.Text = UEFIIsOn;
+                OverviewGrid.SecBoot.Text = SecureBootIsOn;
 
-                LicenseStatus.Text = LS;
+                OverviewGrid.LicenseStatus.Text = LS;
             }));
         }
 
@@ -501,6 +568,52 @@ namespace WinUtil
             Dispatcher.Invoke(new Action(() => LogBoxAdd(Text, Foreground, Background, StayInLine, ScrollToEnd, FontWeight)));
         }
 
+        //
+
+        private void SysUptimeClock()
+        {
+            TimeSpan uptime = TimeSpan.FromMilliseconds(Environment.TickCount);
+
+            Int32 CurrentMin = uptime.Minutes;
+
+            Exec(uptime);
+
+            while (true)
+            {
+                uptime = TimeSpan.FromMilliseconds(Environment.TickCount);
+
+                if (uptime.Minutes == CurrentMin)
+                {
+                    Task.Delay(384).Wait();
+
+                    continue;
+                }
+
+                CurrentMin = uptime.Minutes;
+
+                Exec(uptime);
+
+                Task.Delay(59500).Wait();
+            }
+
+            static String TS(TimeSpan time)
+            {
+                if (time.Days != 0)
+                {
+                    return $"Uptime: {time.Days}d.{time.Hours}h:{time.Minutes}mm";
+                }
+                else
+                {
+                    return $"Uptime: {time.Hours}h:{time.Minutes}m";
+                }
+            }
+
+            void Exec(TimeSpan time)
+            {
+                Dispatcher.Invoke(new Action(() => OverviewGrid.UptimeDisplay.Text = TS(time)));
+            }
+        }
+
         //#######################################################################################################
 
         private static Boolean TTT = false;
@@ -520,9 +633,7 @@ namespace WinUtil
                 TTT = false;
             }
 
-            LogBoxAdd(WindowsArea.ActualHeight.ToString());
-
-
+            LogBoxAdd($"{ActualWidth}, {ActualHeight}");
 
             //OSPType.Text = "Windows Server®️";
             //OSPEdition.Text = "Pro for Workstations";
@@ -540,5 +651,7 @@ namespace WinUtil
 
 
         }
+
+
     }
 }

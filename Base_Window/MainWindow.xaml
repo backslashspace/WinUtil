@@ -3,23 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WinUtil"
         mc:Ignorable="d"
         StateChanged="Frame_Changed_State"
         SizeChanged="OnRescale"
         Height="450" Width="760"
         MinHeight="450" MinWidth="760"
         WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource  MainBackgroundColor}">
+        Background="{DynamicResource  MainBackgroundColor}"
+        xmlns:controls="clr-namespace:WinUtil.Base_Window">
 
     <!--#region WindowCrome -->
+    
     <WindowChrome.WindowChrome>
         <WindowChrome 
             CaptionHeight="31"
             GlassFrameThickness="0,0,0,1"
-            NonClientFrameEdges="Bottom"
-            />
+            NonClientFrameEdges="Bottom"/>
     </WindowChrome.WindowChrome>
+    
     <!--#endregion-->
 
     <Grid Background="{DynamicResource  MainBackgroundColor}" Margin="0,31,0,0">
@@ -27,8 +28,10 @@
         <!--#region Window Head -->
 
         <!--#region Title -->
+        
         <Image
-            Source="/icon_new.ico"
+            Source="/icons/icon_new.ico"
+            x:Name="MainWindowIcon"
             Margin="9,-23,0,0"
             Height="14"
             RenderOptions.BitmapScalingMode="HighQuality" 
@@ -36,15 +39,17 @@
             Width="14"/>
 
         <TextBlock
-            Text="WinUtil v2.0.0.0 (DEV-0)"
+            Text="WinUtil v2.0.0-dev1"
             FontFamily="Bahnschrift"
             Foreground="#ccccce"
             Margin="30,-22,0,0"
             HorizontalAlignment="Left" VerticalAlignment="Top"
             Width="299" Height="13"/>
+        
         <!--#endregion-->
 
         <!--#region Minimize -->
+        
         <Rectangle
             x:Name="Minimize_Button_Button_Background"
             Fill="{DynamicResource  MainBackgroundColor}"
@@ -73,9 +78,11 @@
             MouseLeave="Minimize_Button_Mouse_Is_Not_Over"
             PreviewMouseDown="Minimize_Button_Down"
             VerticalAlignment="Top"/>
+        
         <!--#endregion-->
 
         <!--#region Normal_Window_State / Max_Window_State -->
+        
         <Rectangle x:Name="Window_State_Button_Background" Fill="{DynamicResource  MainBackgroundColor}" Margin="0,-31,47,0" Height="31" VerticalAlignment="Top" HorizontalAlignment="Right" Width="46"/>
 
         <Path
@@ -109,9 +116,11 @@
             MouseLeave="Window_State_Button_Toggle_Mouse_Is_Not_Over"
             PreviewMouseDown="Window_State_Button_Toggle_Down"
             VerticalAlignment="Top"/>
+        
         <!--#endregion-->
 
         <!--#region Close_Button -->
+        
         <Rectangle
             x:Name="Close_Button_Background"
             Fill="{DynamicResource  MainBackgroundColor}"
@@ -140,271 +149,62 @@
             PreviewMouseDown="Close_Button_Down"
             VerticalAlignment="Top"/>
         <!--#endregion-->
+
+        <!--#region Workloader -->
+        
+        <Viewbox x:Name="WorkIndicator" Visibility="Collapsed" HorizontalAlignment="Left" Width="13" RenderTransformOrigin="0.5,0.5" Margin="9,-22.5,0,0" Height="13" VerticalAlignment="Top" >
+            <Canvas Height="350" Width="350">
+                <Path Fill="#7f444444" Data="m175,350c-46.75,0-90.69-18.2-123.74-51.26C18.2,265.69,0,221.74,0,175S18.2,84.31,51.26,51.26C84.31,18.2,128.25,0,175,0s90.69,18.2,123.74,51.26c33.05,33.05,51.26,77,51.26,123.74s-18.2,90.69-51.26,123.74c-33.05,33.05-77,51.26-123.74,51.26Zm0-327.35c-39.03,0-78.06,14.86-107.78,44.57-59.43,59.43-59.43,156.12,0,215.55,59.43,59.43,156.12,59.43,215.55,0,59.43-59.43,59.43-156.13,0-215.55-29.71-29.71-68.75-44.57-107.78-44.57Z" />
+                <Path Fill="#aaaaaa" Data="m290.76,318.99c-7.22,0-14.45-2.76-19.96-8.27-11.02-11.02-11.02-28.89,0-39.92,25.59-25.59,39.68-59.61,39.68-95.8s-14.09-70.21-39.68-95.8c-11.02-11.02-11.02-28.89,0-39.92,11.02-11.02,28.89-11.02,39.92,0,74.83,74.84,74.83,196.6,0,271.44-5.51,5.51-12.74,8.27-19.96,8.27Z" />
+            </Canvas>
+        </Viewbox>
+        
         <!--#endregion-->
 
-        <!--#region OverviewGrid -->
-        <Border x:Name="OverviewGridBorder" Visibility="Visible" Background="{DynamicResource  ContentPanel}" CornerRadius="3,0,0,5" Height="276" VerticalAlignment="Top" HorizontalAlignment="Right" Width="607">
-            <Grid>
-
-
-
-
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Style="{DynamicResource ScrollViewer}">
-                    <Grid Height="400">
-
-                        <!--#region SysInfo -->
-                        <Border Visibility="Visible"
-                            x:Name="WindowsArea"
-                            Margin="0,10,10,0"
-                            BorderBrush="{DynamicResource  LableBackground}"
-                            BorderThickness="4"
-                            CornerRadius="5" Height="189"
-                            VerticalAlignment="Top" HorizontalAlignment="Right" Width="150">
-
-                            <Grid Background="{DynamicResource  LableBackground}">
-
-                                <TextBlock
-                                    Text="Windows Server®️"
-                                    TextWrapping="Wrap"
-                                    x:Name="OSPType"
-                                    FontSize="16"
-                                    Height="27" VerticalAlignment="Top" Margin="5,0,0,0"
-                                    Foreground="#ccccce"
-                                    FontFamily="Bahnschrift"
-                                    />
-
-                                <TextBlock
-                                    Text="Pro for Workstations"
-                                    TextWrapping="Wrap"
-                                    x:Name="OSPEdition"
-                                    FontSize="12"
-                                    Background="#0000"
-                                    FontFamily="Bahnschrift"
-                                    Foreground="#bbbbbb" Height="21" VerticalAlignment="Top"
-                                    Margin="5,18,0,0"
-                                    />
-
-                                <TextBlock
-                                    TextWrapping="Wrap"
-                                    x:Name="WinVersion"
-                                    Text="Version: 22H2"
-                                    FontSize="13"
-                                    Background="#0000"
-                                    FontFamily="Bahnschrift"
-                                    Foreground="#cccccc" Height="44" VerticalAlignment="Top"
-                                    Margin="5,44,0,0"
-                                    />
-
-                                <TextBlock
-                                    TextWrapping="Wrap"
-                                    x:Name="BaU"
-                                    Text="[22621.1928]"
-                                    FontSize="11"
-                                    Background="#0000"
-                                    FontFamily="Bahnschrift"
-                                    Foreground="#bbbbbb" Height="29" VerticalAlignment="Top"
-                                    Margin="5,59,0,0"
-                                    />
-
-                                <TextBlock
-                                    TextWrapping="Wrap"
-                                    x:Name="SysType"
-                                    Text="UEFI enabled: true"
-                                    FontSize="13"
-                                    Background="#0000"
-                                    FontFamily="Bahnschrift"
-                                    Foreground="#cccccc" Height="29" VerticalAlignment="Top"
-                                    Margin="5,94,0,0"
-                                    />
-
-                                <TextBlock
-                                    TextWrapping="Wrap"
-                                    x:Name="SecBoot"
-                                    Text="SecureBoot enabled: true"
-                                    FontSize="11"
-                                    Background="#0000"
-                                    FontFamily="Bahnschrift"
-                                    Foreground="#bbbbbb" Height="28" VerticalAlignment="Top"
-                                    Margin="5,108,0,0"
-                                    />
-
-                                <TextBlock
-                                    TextWrapping="Wrap"
-                                    x:Name="LicenseLable"
-                                    FontSize="13"
-                                    Background="#0000"
-                                    Text="License:"
-                                    FontFamily="Bahnschrift"
-                                    Foreground="#cccccc" Height="29" VerticalAlignment="Top"
-                                    Margin="5,144,0,0"
-                                    />
-
-                                <TextBlock
-                                    TextWrapping="Wrap"
-                                    x:Name="LicenseStatus"
-                                    Text="Activated [1]"
-                                    FontSize="11"
-                                    Background="#0000"
-                                    FontFamily="Bahnschrift"
-                                    Foreground="#bbbbbb" Height="28" VerticalAlignment="Top"
-                                    Margin="5,158,0,0"
-                                    />
-
-                            </Grid>
-                        </Border>
-                        <!--#endregion-->
-
-                        <Button Margin="38,180,279,0" Height="124" VerticalAlignment="Top"/>
-
-
-
-
-                    </Grid>
-                </ScrollViewer>
-
-                <TextBlock
-                    Text="Uptime: 0d.0h:0m"
-                    TextWrapping="Wrap"
-                    x:Name="UptimeDisplay"
-                    FontSize="16" Margin="0,0,15,0"
-                    Foreground="#ccccce"
-                    TextAlignment="Right"
-                    FontFamily="Bahnschrift" HorizontalAlignment="Right" Width="158" Height="20" VerticalAlignment="Bottom"
-                    />
-
-            </Grid>
-        </Border>
-        <!--#endregion-->
-
-        <!--#region AppearanceGrid -->
-        <Border x:Name="AppearanceBorder" Visibility="Collapsed" Background="#ffffff" CornerRadius="3,0,0,5" Height="276" VerticalAlignment="Top" HorizontalAlignment="Right" Width="607">
-            <Grid Background="{DynamicResource  ContentPanel}" Margin="2,1,0,2">
-                <Grid Background="red" x:Name="AppearanceGrid0" Visibility="Collapsed">
-
-                    <Button
-                    Content="DDDD"
-                    Template="{DynamicResource NormalButton}" 
-                    Margin="10,-5,0,0"
-                    Height="120" Width="120"
-                    VerticalAlignment="Top" HorizontalAlignment="Left"
-                    FontSize="16"
-                    FontFamily="Segoe UI"
-                    Foreground="{DynamicResource FontColor}"
-                    />
-
-                </Grid>
-
-                <!--  -->
-
-                <Grid Background="Green" x:Name="AppearanceGrid1" Visibility="Collapsed">
-
-                    <Button
-                    Content="DDDD"
-                    Template="{DynamicResource NormalButton}" 
-                    Margin="355,71,0,0"
-                    Height="120" Width="120"
-                    VerticalAlignment="Top" HorizontalAlignment="Left"
-                    FontSize="16"
-                    FontFamily="Segoe UI"
-                    Foreground="{DynamicResource FontColor}"
-                    />
-
-                </Grid>
-
-                <!--  -->
-
-                <Grid Background="Blue" x:Name="AppearanceGrid2" Visibility="Collapsed">
-
-                    <Button
-                    Content="DDDD"
-                    Template="{DynamicResource NormalButton}" 
-                    Margin="127,138,0,0"
-                    Height="120" Width="120"
-                    VerticalAlignment="Top" HorizontalAlignment="Left"
-                    FontSize="16"
-                    FontFamily="Segoe UI"
-                    Foreground="{DynamicResource FontColor}"
-                    />
-
-                </Grid>
-
-                <!--  -->
-
-                <Button
-                    Template="{DynamicResource PannavButton}" 
-                    Margin="0,0,32,0"
-                    FontSize="24"
-                    Click="PageMinus"
-                    BorderThickness="0"
-                    FontFamily="Segoe UI"
-                    Foreground="{DynamicResource FontColor}" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="32">
-                    <TextBlock Text="◂" Margin="0,-5.5,0,0"/>
-                </Button>
-
-                <Button
-                    Template="{DynamicResource PannavButton}"
-                    FontSize="24"
-                    Click="PagePlus"
-                    BorderThickness="0"
-                    FontFamily="Segoe UI"
-                    Foreground="{DynamicResource FontColor}" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="32">
-                    <TextBlock Text="▸" Margin="0,-5.5,0,0"/>
-                </Button>
-
-
-            </Grid>
-        </Border>
-        <!--#endregion-->
-
-        <!--#region BehaviorGrid -->
-        <Border x:Name="BehaviorBorder" Visibility="Collapsed" Background="#ffffff" CornerRadius="3,0,0,5" Height="276" VerticalAlignment="Top" HorizontalAlignment="Right" Width="607">
-            <Grid Background="{DynamicResource  ContentPanel}" Margin="2,1,0,2">
-
-
-
-
-            </Grid>
-        </Border>
-        <!--#endregion-->
-
-        <!--#region PrivacyGrid -->
-        <Border x:Name="PrivacyBorder" Visibility="Collapsed" Background="#ffffff" CornerRadius="3,0,0,5" Height="276" VerticalAlignment="Top" HorizontalAlignment="Right" Width="607">
-            <Grid Background="{DynamicResource  ContentPanel}" Margin="2,1,0,2">
-
-
-
-
-            </Grid>
-        </Border>
-        <!--#endregion-->
-
-        <!--#region SecurityGrid -->
-        <Border x:Name="SecurityBorder" Visibility="Collapsed" Background="#ffffff" CornerRadius="3,0,0,5" Height="276" VerticalAlignment="Top" HorizontalAlignment="Right" Width="607">
-            <Grid Background="{DynamicResource  ContentPanel}" Margin="2,1,0,2">
-
-
-
-
-            </Grid>
-        </Border>
-        <!--#endregion-->
-
-        <!--#region ProgramsGrid -->
-        <Border x:Name="ProgramsBorder" Visibility="Collapsed" Background="#ffffff" CornerRadius="3,0,0,5" Height="276" VerticalAlignment="Top" HorizontalAlignment="Right" Width="607">
-            <Grid Background="{DynamicResource  ContentPanel}" Margin="2,1,0,2">
-
-
-
-
-            </Grid>
-        </Border>
         <!--#endregion-->
 
         <!-- ####################################################### -->
 
+        <Grid x:Name="ContentArea" Height="276" VerticalAlignment="Top" HorizontalAlignment="Right" Width="607">
+
+            <controls:OverviewGrid x:Name="OverviewGrid" Visibility="Visible"/>
+
+            <controls:AppearanceGrid x:Name="AppearanceGrid" Visibility="Collapsed"/>
+
+            <controls:BehaviorGrid x:Name="BehaviorGrid" Visibility="Collapsed"/>
+
+            <controls:PrivacyGrid x:Name="PrivacyGrid" Visibility="Collapsed"/>
+
+            <controls:SecurityGrid x:Name="SecurityGrid" Visibility="Collapsed"/>
+
+            <controls:ProgramsGrid x:Name="ProgramsGrid" Visibility="Collapsed"/>
+
+        </Grid>
+        
+        <!-- ####################################################### -->
+
         <!--#region LogBox -->
-        <Border x:Name="LogBox" BorderBrush="{DynamicResource  LogPanel}" BorderThickness="4,4,0,0" CornerRadius="5,0,0,0" Height="122" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="607">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" x:Name="LogScroller" Margin="-1,-1,0,0" IsEnabled="True" Style="{DynamicResource ScrollViewer}">
+        <Border x:Name="LogBox" BorderBrush="{DynamicResource  LogPanel}" BorderThickness="4,4,0,0" CornerRadius="4,0,0,0" Height="122" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="607">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" x:Name="LogScroller" Margin="-1,-1,0,0" IsEnabled="True">
+                <ScrollViewer.Template>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                        <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Rectangle x:Name="Corner" Grid.Column="1" Fill="Transparent" Grid.Row="1"/>
+                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanHorizontallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" CanVerticallyScroll="False" Grid.Column="0" Content="{TemplateBinding Content}" CanContentScroll="{TemplateBinding CanContentScroll}" Margin="{TemplateBinding Padding}" Grid.Row="0"/>
+                            <ScrollBar Margin="0,-3,0,0" Style="{DynamicResource ScrollBarStyle}" x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="2" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                            <ScrollBar Style="{DynamicResource ScrollBarStyle}" x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="1" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </ScrollViewer.Template>
+
                 <RichTextBox
                 Style="{DynamicResource RichTextBoxStyle}"
                 x:Name="LogTextBox"
@@ -423,124 +223,165 @@
         <!-- ####################################################### -->
 
         <!--#region Navigation Button -->
+        
         <ToggleButton
             Template="{DynamicResource NavigationTGButton}"
             x:Name="Overview"
-            
-            Content="    Overview" FontSize="16" FontWeight="DemiBold" Foreground="{DynamicResource  FontColor}" FontFamily="Segoe UI"
-            
+            FontSize="15" FontWeight="DemiBold" Foreground="{DynamicResource  FontColor}" FontFamily="Segoe UI"
             Click="OverviewButton"
             Margin="5,-4,0,0"
             Height="60" 
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
             Width="143"
-            IsChecked="True"
-            />
+            IsChecked="True">
+            <Grid>
+                <TextBlock Text="        Overview"/>
+                <Image
+                    Source="/icons/shell_home.ico"
+                    x:Name="Navigation_Button_Overview_Icon"
+                    Margin="7,0,0,0"
+                    Height="18"
+                    RenderOptions.BitmapScalingMode="HighQuality" 
+                    VerticalAlignment="Center" HorizontalAlignment="Left"
+                    Width="18"/>
+            </Grid>
+        </ToggleButton>
 
         <ToggleButton
             Template="{DynamicResource NavigationTGButton}"
             x:Name="Appearance"
-            
-            Content="    Appearance" FontSize="14" Foreground="{DynamicResource  FontColor}" FontFamily="Segoe UI"
-            
+            FontSize="14" Foreground="{DynamicResource  FontColor}" FontFamily="Segoe UI"
             Click="AppearanceButton"
-            Margin="5,59,0,0"
-            Height="50" 
+            Margin="5,56,0,0"
+            Height="44" 
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
             Width="143"
-            IsChecked="False"
-            />
+            IsChecked="False">
+            <Grid>
+                <TextBlock Text="        Appearance"/>
+                <Image
+                    Source="/icons/shell_luks.ico"
+                    x:Name="Navigation_Button_Appearance_Icon"
+                    Margin="7,2,0,0"
+                    Height="18"
+                    RenderOptions.BitmapScalingMode="HighQuality" 
+                    VerticalAlignment="Center" HorizontalAlignment="Left"
+                    Width="18"/>
+            </Grid>
+        </ToggleButton>
 
         <ToggleButton
             Template="{DynamicResource NavigationTGButton}"
             x:Name="Behavior"
-            
-            Content="    Behavior" FontSize="14" Foreground="{DynamicResource  FontColor}" FontFamily="Segoe UI"
-            
+            FontSize="14" Foreground="{DynamicResource  FontColor}" FontFamily="Segoe UI"
             Click="BehaviorButton"
-            Margin="5,107,0,0"
-            Height="50" 
+            Margin="5,96,0,0"
+            Height="44" 
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
             Width="143"
-            IsChecked="False"
-            />
+            IsChecked="False">
+            <Grid>
+                <TextBlock Text="        System Behavior"/>
+                <Image
+                    Source="/icons/shell_sustem.ico"
+                    x:Name="Navigation_Button_Behavior_Icon"
+                    Margin="7,1,0,0"
+                    Height="18"
+                    RenderOptions.BitmapScalingMode="HighQuality" 
+                    VerticalAlignment="Center" HorizontalAlignment="Left"
+                    Width="18"/>
+            </Grid>
+        </ToggleButton>
 
         <ToggleButton
             Template="{DynamicResource NavigationTGButton}"
             x:Name="Privacy"
-            
-            Content="    Privacy" FontSize="14" Foreground="{DynamicResource  FontColor}" FontFamily="Segoe UI"
-            
+            FontSize="14" Foreground="{DynamicResource  FontColor}" FontFamily="Segoe UI"
             Click="PrivacyButton"
-            Margin="5,155,0,0"
-            Height="50" 
+            Margin="5,136,0,0"
+            Height="44" 
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
             Width="143"
-            IsChecked="False"
-            />
+            IsChecked="False">
+            <Grid>
+                <TextBlock Text="        Privacy"/>
+                <Image
+                    Source="/icons/shell_tele.ico"
+                    x:Name="Navigation_Button_Privacy_Icon"
+                    Margin="7,1,0,0"
+                    Height="18"
+                    RenderOptions.BitmapScalingMode="HighQuality" 
+                    VerticalAlignment="Center" HorizontalAlignment="Left"
+                    Width="18"/>
+            </Grid>
+        </ToggleButton>
 
         <ToggleButton
             Template="{DynamicResource NavigationTGButton}"
             x:Name="Security"
-            
-            Content="    Security" FontSize="14" Foreground="{DynamicResource  FontColor}" FontFamily="Segoe UI"
-            
+            FontSize="14" Foreground="{DynamicResource  FontColor}" FontFamily="Segoe UI"
             Click="SecurityButton"
-            Margin="5,203,0,0"
-            Height="50" 
+            Margin="5,176,0,0"
+            Height="44" 
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
             Width="143"
-            IsChecked="False"
-            />
+            IsChecked="False">
+            <Grid>
+                <TextBlock Text="        Security"/>
+                <Image
+                    Source="/icons/shell_key.ico"
+                    x:Name="Navigation_Button_Security_Icon"
+                    Margin="7,1,0,0"
+                    Height="18"
+                    RenderOptions.BitmapScalingMode="HighQuality" 
+                    VerticalAlignment="Center" HorizontalAlignment="Left"
+                    Width="18"/>
+            </Grid>
+        </ToggleButton>
 
         <ToggleButton
             Template="{DynamicResource NavigationTGButton}"
             x:Name="Programs"
-            
-            Content="    Programs" FontSize="14" Foreground="{DynamicResource  FontColor}" FontFamily="Segoe UI"
-            
+            FontSize="14" Foreground="{DynamicResource  FontColor}" FontFamily="Segoe UI"
             Click="ProgramsButton"
-            Margin="5,251,0,0"
-            Height="50" 
+            Margin="5,216,0,0"
+            Height="44" 
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
             Width="143"
-            IsChecked="False"
-            />
+            IsChecked="False">
+            <Grid>
+                <TextBlock Text="        Programs"/>
+                <Image
+                    Source="/icons/shell_desk.ico"
+                    x:Name="Navigation_Button_Programs_Icon"
+                    Margin="7,1,0,0"
+                    Height="18"
+                    RenderOptions.BitmapScalingMode="HighQuality" 
+                    VerticalAlignment="Center" HorizontalAlignment="Left"
+                    Width="18"/>
+            </Grid>
+        </ToggleButton>
 
         <!--#endregion-->
 
-        <!--#region Workloader -->
-        <Viewbox x:Name="WorkIndicator" Visibility="Visible" HorizontalAlignment="Right" Width="26" RenderTransformOrigin="0.5,0.5" Margin="0,0,612,8" Height="26" VerticalAlignment="Bottom">
-            <Canvas Height="350" Width="350">
-                <Path Fill="#7f444444" Data="m175,350c-46.75,0-90.69-18.2-123.74-51.26C18.2,265.69,0,221.74,0,175S18.2,84.31,51.26,51.26C84.31,18.2,128.25,0,175,0s90.69,18.2,123.74,51.26c33.05,33.05,51.26,77,51.26,123.74s-18.2,90.69-51.26,123.74c-33.05,33.05-77,51.26-123.74,51.26Zm0-327.35c-39.03,0-78.06,14.86-107.78,44.57-59.43,59.43-59.43,156.12,0,215.55,59.43,59.43,156.12,59.43,215.55,0,59.43-59.43,59.43-156.13,0-215.55-29.71-29.71-68.75-44.57-107.78-44.57Z" />
-                <Path Fill="#aaaaaa" Data="m290.76,318.99c-7.22,0-14.45-2.76-19.96-8.27-11.02-11.02-11.02-28.89,0-39.92,25.59-25.59,39.68-59.61,39.68-95.8s-14.09-70.21-39.68-95.8c-11.02-11.02-11.02-28.89,0-39.92,11.02-11.02,28.89-11.02,39.92,0,74.83,74.84,74.83,196.6,0,271.44-5.51,5.51-12.74,8.27-19.96,8.27Z" />
-            </Canvas>
-        </Viewbox>
-        <!--#endregion-->
+        <!-- ####################################################### -->
 
         <!-- Debug -->
 
         <Button
-            Content="DDDD"
-            Template="{DynamicResource NormalButton}" 
-            Margin="68,0,0,33" Width="49" HorizontalAlignment="Left"
-            FontSize="16"
-            FontFamily="Segoe UI"
-            Foreground="{DynamicResource FontColor}" Height="45" VerticalAlignment="Bottom"/>
-
-        <Button
+            Foreground="White"
             Visibility="Visible"
             Click="Debug"
             Content="Debug"
             Margin="10,0,0,10"
             HorizontalAlignment="Left" VerticalAlignment="Bottom"
-            Width="49" Height="34"
+            Width="66" Height="34"
             Template="{DynamicResource NormalButton}"/>
 
     </Grid>

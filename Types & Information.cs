@@ -8,21 +8,21 @@ namespace WinUtil
 {
     public partial class MainWindow
     {
-        public static String AdminGroupName { get; set; }
+        internal static String AdminGroupName { get; set; }
 
-        public static String ExePath { get; set; }
+        internal static String ExePath { get; set; }
 
-        public static Boolean IsActivated { get; set; }
+        internal static Boolean IsActivated { get; set; }
 
-        public static String User { get; set; }
+        internal static String User { get; set; }
 
-        public static String UserPath { get; set; }
+        internal static String UserPath { get; set; }
 
-        public static Boolean AllProfilesWLan { get; set; }
+        internal static Boolean AllProfilesWLan { get; set; }
 
-        public static Int16 ActivationClicks { get; set; }
+        internal static Int16 ActivationClicks { get; set; }
 
-        public sealed class ThisMachine
+        internal sealed class ThisMachine
         {
             public static String OSType = null;
 
@@ -46,24 +46,24 @@ namespace WinUtil
 
             public static Boolean IsInDomain = false;
 
-            public static SByte WindowsLicenseStatus = -127;
+            public static SByte WindowsLicenseStatus = SByte.MinValue;
         }
 
-        public sealed class OSType
+        internal sealed class OSType
         {
             public const String Server = "Server";
 
             public const String Client = "Client";
         }
 
-        public sealed class WindowsUIVersion
+        internal sealed class WindowsUIVersion
         {
             public const String Windows10 = "Windows_10";
 
             public const String Windows11 = "Windows_11";
         }
 
-        public sealed class WindowPlatformFeatureCompliance
+        internal sealed class WindowPlatformFeatureCompliance
         {
             public const String Windows10_or_Older = "Windows feature level:<11";
 
@@ -88,7 +88,7 @@ namespace WinUtil
             public const String SystemNumericsVectorsdll = "1d3ef8698281e7cf7371d1554afef5872b39f96c26da772210a33da041ba1183";
         }
 
-        public sealed class Const
+        internal sealed class Const
         {
             public const String FirefoxImageName = "Firefox Setup 114.0.1.exe";
             public const String FirefoxImageHash = "378e9bea3123218dbbf448a6da9b4a1d06f0e76e2a1267297f6123abf0995151";
@@ -145,7 +145,7 @@ namespace WinUtil
             public const String javaHash = "f41cfb7fd675f9f74b76217a2c0940b76f4676f053fddb62a464eacffa4a773b";
         }
 
-        public sealed class ThreadIsAlive
+        internal sealed class ThreadIsAlive
         {
             public static Boolean ActivateWindows { get; set; }
             public static Boolean BlockTCP { get; set; }

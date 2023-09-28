@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34024.191
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUtil", "WinUtil.csproj", "{FE8E9CB6-1CBB-4928-AA6E-2672C019DFFC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiSyPHuS_Win10_2022_Host_INIT", "SiSyPHuS_Win10_2022_Host_INIT\SiSyPHuS_Win10_2022_Host_INIT.csproj", "{9C1167C9-1E29-4E0D-A71F-5B399938364F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FE8E9CB6-1CBB-4928-AA6E-2672C019DFFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE8E9CB6-1CBB-4928-AA6E-2672C019DFFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE8E9CB6-1CBB-4928-AA6E-2672C019DFFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C1167C9-1E29-4E0D-A71F-5B399938364F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C1167C9-1E29-4E0D-A71F-5B399938364F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C1167C9-1E29-4E0D-A71F-5B399938364F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C1167C9-1E29-4E0D-A71F-5B399938364F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

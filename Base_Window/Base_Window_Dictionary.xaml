@@ -313,7 +313,7 @@
                         </Grid.RowDefinitions>
                         <Rectangle x:Name="Corner" Grid.Column="1" Fill="Transparent" Grid.Row="1"/>
                         <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanHorizontallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" CanVerticallyScroll="False" Grid.Column="0" Content="{TemplateBinding Content}" CanContentScroll="{TemplateBinding CanContentScroll}" Margin="{TemplateBinding Padding}" Grid.Row="0"/>
-                        <ScrollBar Style="{DynamicResource ScrollBarStyle}" x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="1" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                        <ScrollBar Style="{DynamicResource ScrollBarStyle}" x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="2" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
                         <ScrollBar Style="{DynamicResource ScrollBarStyle}" x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.Column="0" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Grid.Row="1" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
                     </Grid>
                 </ControlTemplate>
@@ -329,7 +329,7 @@
 
     <!--#region Navigation TGButton -->
     <ControlTemplate x:Key="NavigationTGButton" TargetType="{x:Type ToggleButton}">
-        <Border x:Name="bdr_main" Background="{DynamicResource MainBackgroundColor}" BorderBrush="{DynamicResource MainBackgroundColor}" BorderThickness="0" CornerRadius="3,3,3,3" Margin="4">
+        <Border x:Name="bdr_main" Background="{DynamicResource MainBackgroundColor}" BorderBrush="{DynamicResource MainBackgroundColor}" BorderThickness="0" CornerRadius="4" Margin="4">
             <ContentPresenter ContentSource="Content" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </Border>
         <ControlTemplate.Triggers>

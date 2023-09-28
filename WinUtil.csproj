@@ -39,7 +39,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <ApplicationIcon>icon_new.ico</ApplicationIcon>
+    <ApplicationIcon>icons\icon_new.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>App\app.manifest</ApplicationManifest>
@@ -87,16 +87,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Base_Window\OverviewCTL.xaml.cs">
-      <DependentUpon>OverviewCTL.xaml</DependentUpon>
+    <Compile Include="Base_Window\Grid_Tabs\2_AppearanceGrid.xaml.cs">
+      <DependentUpon>2_AppearanceGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Base_Window\Grid_Tabs\1_OverviewGrid.xaml.cs">
+      <DependentUpon>1_OverviewGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Base_Window\Grid_Tabs\3_BehaviorGrid.xaml.cs">
+      <DependentUpon>3_BehaviorGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Base_Window\Grid_Tabs\4_PrivacyGrid.xaml.cs">
+      <DependentUpon>4_PrivacyGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Base_Window\Grid_Tabs\5_SecurityGrid.xaml.cs">
+      <DependentUpon>5_SecurityGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Base_Window\Grid_Tabs\6_ProgramsGrid.xaml.cs">
+      <DependentUpon>6_ProgramsGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="Global_Functions.cs" />
     <Compile Include="Types &amp; Information.cs" />
-    <Page Include="Base_Dictionary.xaml">
+    <Page Include="Generic_Dictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Base_Window\Base_Window_Dictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Base_Window\Grid_Tabs\2_AppearanceGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -108,14 +127,30 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Base_Window\Button_Handler.cs" />
+    <Compile Include="Base_Window\Navigation_Buttons.cs" />
     <Compile Include="Base_Window\Button_Logic.cs" />
     <Compile Include="Base_Window\Window_Frame.cs" />
     <Compile Include="Base_Window\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Base_Window\OverviewCTL.xaml">
+    <Page Include="Base_Window\Grid_Tabs\1_OverviewGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Base_Window\Grid_Tabs\3_BehaviorGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Base_Window\Grid_Tabs\4_PrivacyGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Base_Window\Grid_Tabs\5_SecurityGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Base_Window\Grid_Tabs\6_ProgramsGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -178,10 +213,31 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icon_new.ico" />
+    <Resource Include="icons\icon_new.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="notes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\shell_home.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\shell_sustem.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\shell_tele.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\shell_key.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\shell_youser.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\shell_luks.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icons\shell_desk.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

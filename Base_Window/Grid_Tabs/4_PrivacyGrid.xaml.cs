@@ -15,12 +15,9 @@ using System.Windows.Shapes;
 
 namespace WinUtil.Base_Window
 {
-    /// <summary>
-    /// Interaktionslogik für OverviewCTL.xaml
-    /// </summary>
-    public partial class OverviewCTL : UserControl
+    public partial class PrivacyGrid : UserControl
     {
-        public OverviewCTL()
+        public PrivacyGrid()
         {
             InitializeComponent();
         }

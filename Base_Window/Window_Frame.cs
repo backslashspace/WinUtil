@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Media;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace WinUtil
 {
@@ -30,7 +31,9 @@ namespace WinUtil
         //# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
         #region Window Head Button Logic
+
         #region Minimize_Window
+
         private void Minimize_Button_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
@@ -57,9 +60,11 @@ namespace WinUtil
         {
             Minimize_Button_Button_Background.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(NewHexColor));
         }
+
         #endregion
 
         #region Window_Toggle_State
+
         //trigger via button
         private void Button_Toggle_WindowState(object sender, RoutedEventArgs e)
         {
@@ -136,12 +141,14 @@ namespace WinUtil
         {
             Window_State_Button_Background.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(NewHexColor));
         }
+
         #endregion
 
         #region Close_Button
+
         private void Close_Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            ConfirmClose();
         }
 
         private void Close_Button_Mouse_Is_Over(object sender, System.Windows.Input.MouseEventArgs e)
@@ -165,7 +172,30 @@ namespace WinUtil
         {
             Close_Button_Background.Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(NewHexColor));
         }
+
+        //
+
+        private void ConfirmClose()
+        {
+            if (ActivityWorkerKiu > 0)
+            {
+                DialogResult R = System.Windows.Forms.MessageBox.Show(
+                    "sdply profid dfo user?",
+                    "Cose",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (R != System.Windows.Forms.DialogResult.No)
+                {
+                    return;
+                }
+            }
+
+            Environment.Exit(0);
+        }
+
         #endregion
+
         #endregion
     }
 }
