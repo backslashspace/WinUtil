@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media;
-//libs
 using static PowershellHelper.PowershellHelper;
 using RegistryTools;
 using WinUser;

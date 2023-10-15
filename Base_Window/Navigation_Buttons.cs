@@ -11,7 +11,16 @@ namespace WinUtil
 { 
     public partial class MainWindow
     {
-        //Navigation Controll
+
+
+
+
+
+
+
+
+
+
         private void OverviewButton(object sender, RoutedEventArgs e)
         {
             String OldArea = CurrentArea;
@@ -95,6 +104,24 @@ namespace WinUtil
 
             ManageNavigationButtons(CurrentArea, OldArea);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

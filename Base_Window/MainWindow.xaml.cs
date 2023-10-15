@@ -11,183 +11,114 @@ using static PowershellHelper.PowershellHelper;
 using RegistryTools;
 using WinUser;
 using System.IO;
-using System.ComponentModel;
-using System.Linq;
 using System.Windows.Threading;
-using System.Threading;
-using System.Diagnostics;
-using System.Xml.Linq;
-using System.Windows.Forms;
 
 namespace WinUtil
 {
     public partial class MainWindow : Window
     {
-        private void OnRescale(object sender, SizeChangedEventArgs e)
-        {
-            Rescale();
-        }
-
-        internal static String CurrentArea = "Overview";
-
-        //#######################################################################################################
-
-        private static Int16 ActivityWorkerKiu = 0;
-        private static Int16 WorkerRotation = 0;
-
-        internal void ActivateWorker()
-        {
-            if (ActivityWorkerKiu < 1)
-            {
-                WorkIndicator.Visibility = Visibility.Visible;
-
-                ++ActivityWorkerKiu;
-
-                ActivityWorker();
-            }
-            else
-            {
-                ++ActivityWorkerKiu;
-            }
-        }
-
-        internal void DeactivateWorker()
-        {
-            if (ActivityWorkerKiu > 0)
-            {
-                --ActivityWorkerKiu;
-            }
-        }
-
-        //
-
-        private async void ActivityWorker()
-        {
-            MainWindowIcon.Visibility = Visibility.Collapsed;
-
-            await Task.Run(() =>
-            {
-                while (ActivityWorkerKiu > 0)
-                {
-                    Dispatcher.Invoke(new Action(() =>
-                    {
-                        WorkIndicator.RenderTransform = new RotateTransform(WorkerRotation += 5);
-                    }));
-
-                    Task.Delay(1).Wait();
-
-                    if (WorkerRotation == 360)
-                    {
-                        WorkerRotation = 0;
-                    }
-                }
-            });
-
-            WorkIndicator.Visibility = Visibility.Collapsed;
-
-            MainWindowIcon.Visibility = Visibility.Visible;
-        }
-
-        //#######################################################################################################
-
+        #region Window Builder
         public MainWindow()
         {
             InitializeComponent();
+
+            #region Register usercontrols
+            OverviewGrid.Commit_Log += External_LogBoxAdd;
+            OverviewGrid.Remove_Log_Line += External_LogBoxRemoveLine;
+            #endregion
 
             Init();
         }
 
         private async void Init()
         {
-            ActivateWorker();
+            #region HashMake
+            static String InitialValidator(String FilePath)
+            {
+                if (!File.Exists(FilePath))
+                {
+                    return "";
+                }
 
-            //verify external modules
+                using SHA256 SHA256 = SHA256.Create();
+
+                String Hash;
+
+                try
+                {
+                    using FileStream Stream = File.OpenRead(FilePath);
+
+                    Hash = BitConverter.ToString(SHA256.ComputeHash(Stream)).Replace("-", String.Empty);
+
+                    Stream.Close();
+                    Stream.Dispose();
+                }
+                catch
+                {
+                    Hash = null;
+                }
+
+                SHA256.Dispose();
+
+                return Hash;
+            }
+            #endregion
+
+            ActivateWorker();
 
             LogBoxAdd("Verifying program files\n", Brushes.Gray, StayInLine: true);
 
             Boolean ErrorAction = false;
 
-            //if (!InternalHashCalculator("System.Runtime.CompilerServices.Unsafe.dll").Equals(ExtResources.SystemRuntimeCompilerServicesUnsafe, StringComparison.OrdinalIgnoreCase))
-            //{
-            //    ErrorAction = true;
-            //    LogBoxAdd("[Critical] invalid System.Runtime.CompilerServices.Unsafe.dll", Brushes.OrangeRed);
-            //}
-
-            //if (!InternalHashCalculator("System.Buffers.dll").Equals(ExtResources.SystemBuffersdll, StringComparison.OrdinalIgnoreCase))
-            //{
-            //    ErrorAction = true;
-            //    LogBoxAdd("[Critical] invalid System.Buffers.dll", Brushes.OrangeRed);
-            //}
-
-            //if (!InternalHashCalculator("System.Diagnostics.DiagnosticSource.dll").Equals(ExtResources.SystemDiagnosticsDiagnosticSourcedll, StringComparison.OrdinalIgnoreCase))
-            //{
-            //    ErrorAction = true;
-            //    LogBoxAdd("[Critical] invalid System.Diagnostics.DiagnosticSource.dll", Brushes.OrangeRed);
-            //}
-
-            //if (!InternalHashCalculator("System.Memory.dll").Equals(ExtResources.SystemMemorydll, StringComparison.OrdinalIgnoreCase))
-            //{
-            //    ErrorAction = true;
-            //    LogBoxAdd("[Critical] invalid System.Memory.dll", Brushes.OrangeRed);
-            //}
-
-            //if (!InternalHashCalculator("System.Numerics.Vectors.dll").Equals(ExtResources.SystemNumericsVectorsdll, StringComparison.OrdinalIgnoreCase))
-            //{
-            //    ErrorAction = true;
-            //    LogBoxAdd("[Critical] invalid System.Numerics.Vectors.dll", Brushes.OrangeRed);
-            //}
-
-            //custom libs
-
-            if (!InternalHashCalculator("ManagedNativeWifi.dll").Equals(ExtResources.ManagedNativeWifi, StringComparison.OrdinalIgnoreCase))
+            if (!InitialValidator("ManagedNativeWifi.dll").Equals(ExtResources.ManagedNativeWifi, StringComparison.OrdinalIgnoreCase))
             {
                 ErrorAction = true;
                 LogBoxAdd("[Critical] invalid ManagedNativeWifi.dll", Brushes.OrangeRed);
             }
 
-            if (!InternalHashCalculator("CustomWinMessageBox.dll").Equals(ExtResources.CustomWinMessageBox, StringComparison.OrdinalIgnoreCase))
+            if (!InitialValidator("CustomWinMessageBox.dll").Equals(ExtResources.CustomWinMessageBox, StringComparison.OrdinalIgnoreCase))
             {
                 ErrorAction = true;
                 LogBoxAdd("[Critical] invalid CustomWinMessageBox.dll", Brushes.OrangeRed);
             }
 
-            if (!InternalHashCalculator("HashTools.dll").Equals(ExtResources.HashTools, StringComparison.OrdinalIgnoreCase))
+            if (!InitialValidator("HashTools.dll").Equals(ExtResources.HashTools, StringComparison.OrdinalIgnoreCase))
             {
                 ErrorAction = true;
                 LogBoxAdd("[Critical] invalid HashTools.dll", Brushes.OrangeRed);
             }
 
-            if (!InternalHashCalculator("PowershellHelper.dll").Equals(ExtResources.PowershellHelper, StringComparison.OrdinalIgnoreCase))
+            if (!InitialValidator("PowershellHelper.dll").Equals(ExtResources.PowershellHelper, StringComparison.OrdinalIgnoreCase))
             {
                 ErrorAction = true;
                 LogBoxAdd("[Critical] invalid PowershellHelper.dll", Brushes.OrangeRed);
             }
 
-            if (!InternalHashCalculator("ProgramLauncher.dll").Equals(ExtResources.ProgramLauncher, StringComparison.OrdinalIgnoreCase))
+            if (!InitialValidator("ProgramLauncher.dll").Equals(ExtResources.ProgramLauncher, StringComparison.OrdinalIgnoreCase))
             {
                 ErrorAction = true;
                 LogBoxAdd("[Critical] invalid ProgramLauncher.dll", Brushes.OrangeRed);
             }
 
-            if (!InternalHashCalculator("RegistryTools.dll").Equals(ExtResources.RegistryTools, StringComparison.OrdinalIgnoreCase))
+            if (!InitialValidator("RegistryTools.dll").Equals(ExtResources.RegistryTools, StringComparison.OrdinalIgnoreCase))
             {
                 ErrorAction = true;
                 LogBoxAdd("[Critical] invalid RegistryTools.dll", Brushes.OrangeRed);
             }
 
-            if (!InternalHashCalculator("ServiceTools.dll").Equals(ExtResources.ServiceTools, StringComparison.OrdinalIgnoreCase))
+            if (!InitialValidator("ServiceTools.dll").Equals(ExtResources.ServiceTools, StringComparison.OrdinalIgnoreCase))
             {
                 ErrorAction = true;
                 LogBoxAdd("[Critical] invalid ServiceTools.dll", Brushes.OrangeRed);
             }
 
-            if (!InternalHashCalculator("WinUser.dll").Equals(ExtResources.WinUser, StringComparison.OrdinalIgnoreCase))
+            if (!InitialValidator("WinUser.dll").Equals(ExtResources.WinUser, StringComparison.OrdinalIgnoreCase))
             {
                 ErrorAction = true;
                 LogBoxAdd("[Critical] invalid WinUser.dll", Brushes.OrangeRed);
             }
 
-            //check
+            //
 
             if (ErrorAction)
             {
@@ -218,11 +149,8 @@ namespace WinUtil
             }
             catch (System.IndexOutOfRangeException)
             {
-                DispatchedLogBoxAdd("[Info] Direct start\n", Brushes.LightBlue, FontWeight: FontWeights.Bold);
+                Dispatcher.Invoke(new Action(() => Window_Title.Text += " - Direct start"));
             }
-
-            DispatchedLogBoxAdd("Starting uptime display", Brushes.Gray);
-            Task.Run(() => SysUptimeClock());
 
             //load info
             try
@@ -478,52 +406,20 @@ namespace WinUtil
                 _ => "AHHH: error",
             };
         }
+        #endregion
 
         //#######################################################################################################
 
-        private static String InternalHashCalculator(String FilePath)
+        internal static String CurrentArea = "Overview";
+
+        private void OnRescale(object sender, SizeChangedEventArgs e)
         {
-            if (!File.Exists(FilePath))
-            {
-                return "";
-            }
-
-            using SHA256 SHA256 = SHA256.Create();
-
-            String Hash;
-
-            try
-            {
-                using FileStream Stream = File.OpenRead(FilePath);
-
-                Hash = BitConverter.ToString(SHA256.ComputeHash(Stream)).Replace("-", String.Empty);
-
-                Stream.Close();
-                Stream.Dispose();
-            }
-            catch
-            {
-                Hash = null;
-            }
-
-            SHA256.Dispose();
-
-            return Hash;
+            Rescale();
         }
 
-        private void LogBoxRemoveLine(UInt32 Lines = 1)
-        {
-            for (UInt32 I = 0; I < Lines; I++)
-            {
-                LogTextBox.Document.Blocks.Remove(LogTextBox.Document.Blocks.LastBlock);
-            }
-        }
+        //#######################################################################################################
 
-        public void DispatchedLogBoxRemoveLine(UInt32 Lines = 1)
-        {
-            Dispatcher.Invoke(new Action(() => LogBoxRemoveLine(Lines)));
-        }
-
+        #region LogBoxAdd
         private void LogBoxAdd(String Text = null, SolidColorBrush Foreground = null, SolidColorBrush Background = null, Boolean StayInLine = false, Boolean ScrollToEnd = true, FontWeight FontWeight = default)
         {
             Foreground ??= Brushes.LightGray;
@@ -563,56 +459,36 @@ namespace WinUtil
             }
         }
 
-        public void DispatchedLogBoxAdd(String Text, SolidColorBrush Foreground = null, SolidColorBrush Background = null, Boolean StayInLine = false, Boolean ScrollToEnd = true, FontWeight FontWeight = default)
+        internal void DispatchedLogBoxAdd(String Text = null, SolidColorBrush Foreground = null, SolidColorBrush Background = null, Boolean StayInLine = false, Boolean ScrollToEnd = true, FontWeight FontWeight = default)
         {
             Dispatcher.Invoke(new Action(() => LogBoxAdd(Text, Foreground, Background, StayInLine, ScrollToEnd, FontWeight)));
         }
 
-        //
-
-        private void SysUptimeClock()
+        private void External_LogBoxAdd(String Text, SolidColorBrush Foreground, SolidColorBrush Background, Boolean StayInLine, Boolean ScrollToEnd, FontWeight FontWeight)
         {
-            TimeSpan uptime = TimeSpan.FromMilliseconds(Environment.TickCount);
+            LogBoxAdd(Text, Foreground, Background, StayInLine, ScrollToEnd, FontWeight);
+        }
+        #endregion
 
-            Int32 CurrentMin = uptime.Minutes;
-
-            Exec(uptime);
-
-            while (true)
+        #region LogBoxRemoveLine
+        private void LogBoxRemoveLine(UInt32 Lines = 1)
+        {
+            for (UInt32 I = 0; I < Lines; I++)
             {
-                uptime = TimeSpan.FromMilliseconds(Environment.TickCount);
-
-                if (uptime.Minutes == CurrentMin)
-                {
-                    Task.Delay(384).Wait();
-
-                    continue;
-                }
-
-                CurrentMin = uptime.Minutes;
-
-                Exec(uptime);
-
-                Task.Delay(59500).Wait();
-            }
-
-            static String TS(TimeSpan time)
-            {
-                if (time.Days != 0)
-                {
-                    return $"Uptime: {time.Days}d.{time.Hours}h:{time.Minutes}mm";
-                }
-                else
-                {
-                    return $"Uptime: {time.Hours}h:{time.Minutes}m";
-                }
-            }
-
-            void Exec(TimeSpan time)
-            {
-                Dispatcher.Invoke(new Action(() => OverviewGrid.UptimeDisplay.Text = TS(time)));
+                LogTextBox.Document.Blocks.Remove(LogTextBox.Document.Blocks.LastBlock);
             }
         }
+
+        internal void DispatchedLogBoxRemoveLine(UInt32 Lines = 1)
+        {
+            Dispatcher.Invoke(new Action(() => LogBoxRemoveLine(Lines)));
+        }
+
+        private void External_LogBoxRemoveLine(UInt32 Lines)
+        {
+            LogBoxRemoveLine(Lines);
+        }
+        #endregion
 
         //#######################################################################################################
 
@@ -633,7 +509,8 @@ namespace WinUtil
                 TTT = false;
             }
 
-            LogBoxAdd($"{ActualWidth}, {ActualHeight}");
+            LogBoxAdd($"{ActualWidth}");
+            LogBoxAdd($"{Navigation_Column.Width}");
 
             //OSPType.Text = "Windows Server®️";
             //OSPEdition.Text = "Pro for Workstations";
@@ -651,7 +528,5 @@ namespace WinUtil
 
 
         }
-
-
     }
 }

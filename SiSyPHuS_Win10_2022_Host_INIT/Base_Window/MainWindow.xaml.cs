@@ -12,7 +12,7 @@ namespace SiSyPHuS_Win10_2022_Host_INIT
 
         public MainWindow(App.ApplicationMode AppMode)
         {
-            //this will be used only on crashes (i hope)
+            //this will only be used on crashes (i hope)
             Environment.ExitCode = -2;
 
             switch (AppMode)

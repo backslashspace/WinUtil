@@ -6,7 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="276" d:DesignWidth="607"
-             
+             Background="white"
              SizeChanged="Area_Size_Changed">
 
     <Grid>
@@ -137,7 +137,8 @@
             Width="158" Height="20" VerticalAlignment="Bottom"
             />
 
-        <TextBlock/>
+
+
 
     </Grid>
     

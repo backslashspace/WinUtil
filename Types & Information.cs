@@ -1,13 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WinUtil
 {
     public partial class MainWindow
     {
+        #region Types
+
+        internal enum OSType
+        {
+            Server = 0,
+
+            Client = 1,
+        }
+
+        internal enum WindowsUIVersion
+        {
+            Windows10 = 0,
+
+            Windows11 = 1,
+        }
+
+        internal enum WindowPlatformFeatureCompliance
+        {
+            Windows10_or_Older = 0,
+
+            Windows11_Server2022 = 1,
+        }
+
+        #endregion
+
+        #region AppVars
+
         internal static String AdminGroupName { get; set; }
 
         internal static String ExePath { get; set; }
@@ -24,7 +47,7 @@ namespace WinUtil
 
         internal sealed class ThisMachine
         {
-            public static String OSType = null;
+            public static OSType OSType;
 
             public static String OSEdition = null;
 
@@ -32,13 +55,13 @@ namespace WinUtil
 
             public static Int32 OSMinorVersion = 0;
 
-            public static String WindowPlatformFeatureCompliance = null;
+            public static WindowPlatformFeatureCompliance WindowPlatformFeatureCompliance;
 
             public static String NetBiosHostname = null;
 
             public static String Hostname = null;
 
-            public static String UIVersion = null;
+            public static WindowsUIVersion UIVersion;
 
             public static Boolean IsUEFI = false;
 
@@ -49,26 +72,9 @@ namespace WinUtil
             public static SByte WindowsLicenseStatus = SByte.MinValue;
         }
 
-        internal sealed class OSType
-        {
-            public const String Server = "Server";
+        #endregion
 
-            public const String Client = "Client";
-        }
-
-        internal sealed class WindowsUIVersion
-        {
-            public const String Windows10 = "Windows_10";
-
-            public const String Windows11 = "Windows_11";
-        }
-
-        internal sealed class WindowPlatformFeatureCompliance
-        {
-            public const String Windows10_or_Older = "Windows feature level:<11";
-
-            public const String Windows11_Server2022 = "Windows feature level:11/svr22";
-        }
+        #region External Resources
 
         private sealed class ExtResources
         {
@@ -144,6 +150,19 @@ namespace WinUtil
             public const String javaName = "jdk-17.0.7_windows-x64_bin.exe";
             public const String javaHash = "f41cfb7fd675f9f74b76217a2c0940b76f4676f053fddb62a464eacffa4a773b";
         }
+
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
 
         internal sealed class ThreadIsAlive
         {

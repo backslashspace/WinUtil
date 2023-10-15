@@ -6,7 +6,6 @@
     <SolidColorBrush x:Key="MainGridBackgroundColor" Color="#aaaaaf"/>
     <SolidColorBrush x:Key="WindowInteractionStrokeColor" Color="#ffffff"/>
     <SolidColorBrush x:Key="WindowInteractionBackgroundColor" Color="#202020"/>
-    <SolidColorBrush x:Key="DefaultFontColor" Color="#eeeeee"/>
     <SolidColorBrush x:Key="FontColor" Color="#f0f0f0"/>
     <SolidColorBrush x:Key="ContentPanel" Color="#282828"/>
     <SolidColorBrush x:Key="LableBackground" Color="#323232"/>
@@ -14,11 +13,11 @@
     <!--#endregion-->
 
     <!--#region FocusVisual -->
-    <Style x:Key="FocusVisual">
+    <Style x:Key="Default_FocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    <Border BorderBrush="#ffffff" BorderThickness="2" CornerRadius="4" Margin="-3" SnapsToDevicePixels="True"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -56,6 +55,8 @@
     <!--#endregion-->
 
     <!--#region ScrollBar + ScrollViewer -->
+    
+    <!--#region ScrollBar -->
     <SolidColorBrush x:Key="ScrollBar.Static.Background" Color="#2d2d2d"/>
     <SolidColorBrush x:Key="ScrollBar.Static.Border" Color="#2d2d2d"/>
     <SolidColorBrush x:Key="ScrollBar.Static.Glyph" Color="#a0a0a0"/>
@@ -90,7 +91,7 @@
     </Style>
 
     <Style x:Key="ScrollBarButton" TargetType="{x:Type RepeatButton}">
-        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="FocusVisualStyle" Value="{StaticResource Default_FocusVisual}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -297,6 +298,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    <!--#endregion-->
 
     <Style x:Key="ScrollViewer" TargetType="{x:Type ScrollViewer}">
         <Setter Property="Template">
@@ -328,61 +330,106 @@
     <!--#endregion-->
 
     <!--#region Navigation TGButton -->
-    <ControlTemplate x:Key="NavigationTGButton" TargetType="{x:Type ToggleButton}">
-        <Border x:Name="bdr_main" Background="{DynamicResource MainBackgroundColor}" BorderBrush="{DynamicResource MainBackgroundColor}" BorderThickness="0" CornerRadius="4" Margin="4">
-            <ContentPresenter ContentSource="Content" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        </Border>
-        <ControlTemplate.Triggers>
+    <Style x:Key="Navigation_ToggleButton" TargetType="{x:Type ToggleButton}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource Default_FocusVisual}"/>
+        <Setter Property="Background" Value="{DynamicResource MainBackgroundColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MainBackgroundColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border x:Name="border" CornerRadius="4" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
 
-            <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Background" TargetName="bdr_main" Value="#2d2d2d"/>
-            </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#2d2d2d"/>
+                        </Trigger>
 
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" TargetName="bdr_main" Value="#2d2d2d"/>
-            </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border" Value="#2d2d2d"/>
+                        </Trigger>
 
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="True"/>
-                    <Condition Property="IsChecked" Value="False"/>
-                </MultiTrigger.Conditions>
-                <MultiTrigger.Setters>
-                    <Setter Property="Background" TargetName="bdr_main" Value="#292929"/>
-                </MultiTrigger.Setters>
-            </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsChecked" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Background" TargetName="border" Value="#292929"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
 
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="True"/>
-                    <Condition Property="IsChecked" Value="True"/>
-                </MultiTrigger.Conditions>
-                <MultiTrigger.Setters>
-                    <Setter Property="Background" TargetName="bdr_main" Value="#2d2d2d"/>
-                </MultiTrigger.Setters>
-            </MultiTrigger>
-
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsChecked" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Background" TargetName="border" Value="#2d2d2d"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <!--#endregion-->
 
-    <!--#region Pannav Button -->
-    <ControlTemplate x:Key="PannavButton" TargetType="{x:Type Button}">
-        <Border x:Name="bdr_main" Background="{DynamicResource MainBackgroundColor}"  BorderThickness="0" CornerRadius="3,3,3,3" Margin="4">
-            <ContentPresenter ContentSource="Content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        </Border>
-        <ControlTemplate.Triggers>
+    <!--#region Panel navigation button -->
+    <Style x:Key="Panel_Navigation_Button" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Default_FocusVisual}"/>
+        <Setter Property="Background" Value="#2d2d2d"/>
+        <Setter Property="BorderBrush" Value="#2d2d2d"/>
+        <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
 
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" TargetName="bdr_main" Value="#323232"/>
-            </Trigger>
+                    <Border x:Name="border" CornerRadius="3" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
 
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" TargetName="bdr_main" Value="#272727"/>
-            </Trigger>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="#313131"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#313131"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" TargetName="border" Value="#262626"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#2f2f2f"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="border" Value="#505050"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#2d2d2d"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#909090"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
 
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <!--#endregion-->
+
+
+
+
+
+
+
+
+
+
 
 </ResourceDictionary>

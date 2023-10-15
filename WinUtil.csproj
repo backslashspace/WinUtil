@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FE8E9CB6-1CBB-4928-AA6E-2672C019DFFC}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>WinUtil</RootNamespace>
     <AssemblyName>WinUtil</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -43,6 +43,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>App\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CustomWinMessageBox">
@@ -105,13 +108,14 @@
     <Compile Include="Base_Window\Grid_Tabs\6_ProgramsGrid.xaml.cs">
       <DependentUpon>6_ProgramsGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Base_Window\Work_Indicator.cs" />
     <Compile Include="Global_Functions.cs" />
     <Compile Include="Types &amp; Information.cs" />
     <Page Include="Generic_Dictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Base_Window\Base_Window_Dictionary.xaml">
+    <Page Include="Base_Window\src_Dictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -129,7 +133,7 @@
     </Compile>
     <Compile Include="Base_Window\Navigation_Buttons.cs" />
     <Compile Include="Base_Window\Button_Logic.cs" />
-    <Compile Include="Base_Window\Window_Frame.cs" />
+    <Compile Include="Base_Window\Frame_Controll\Frame_Controll.cs" />
     <Compile Include="Base_Window\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -216,7 +220,7 @@
     <Resource Include="icons\icon_new.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="notes.txt" />
+    <None Include="notes.txt" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icons\shell_home.ico" />

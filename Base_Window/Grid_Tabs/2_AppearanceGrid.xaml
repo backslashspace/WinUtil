@@ -8,9 +8,9 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
-        
+
         <!--#region G0 -->
-        
+
         <Grid Background="red" x:Name="AppearanceGrid0" Visibility="Visible">
 
             <Button
@@ -25,11 +25,11 @@
                 />
 
         </Grid>
-        
+
         <!--#endregion-->
 
         <!--#region G1 -->
-        
+
         <Grid Background="#00ff00" x:Name="AppearanceGrid1" Visibility="Collapsed">
 
             <Button
@@ -44,11 +44,11 @@
                 />
 
         </Grid>
-        
+
         <!--#endregion-->
 
         <!--#region G2 -->
-        
+
         <Grid Background="Blue" x:Name="AppearanceGrid2" Visibility="Collapsed">
 
             <Button
@@ -63,32 +63,29 @@
                 />
 
         </Grid>
-        
+
         <!--#endregion-->
 
         <!--#region GridSelector -->
-        
         <Button
-            Template="{DynamicResource PannavButton}" 
-            Margin="0,0,32,0"
+            Style="{DynamicResource Panel_Navigation_Button}" 
+            Margin="0,0,38,6"
             FontSize="24"
             Click="PageMinus"
-            BorderThickness="0"
-            FontFamily="Segoe UI"
-            Foreground="{DynamicResource FontColor}" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="32">
-            <TextBlock Text="◂" Margin="0,-5.5,0,0"/>
+            Height="26"  Width="26"
+            VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <TextBlock Text="◂" VerticalAlignment="Center" Height="35"/>
         </Button>
 
         <Button
-            Template="{DynamicResource PannavButton}"
+            Style="{DynamicResource Panel_Navigation_Button}"
+            Margin="0,0,6,6"
             FontSize="24"
             Click="PagePlus"
-            BorderThickness="0"
-            FontFamily="Segoe UI"
-            Foreground="{DynamicResource FontColor}" Height="32" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="32">
-            <TextBlock Text="▸" Margin="0,-5.5,0,0"/>
+            Height="26"  Width="26"
+            VerticalAlignment="Bottom" HorizontalAlignment="Right">
+            <TextBlock Text="▸" VerticalAlignment="Center" Height="35"/>
         </Button>
-        
         <!--#endregion-->
 
     </Grid>
