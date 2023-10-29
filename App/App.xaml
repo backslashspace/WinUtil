@@ -2,14 +2,14 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WinUtil"
-             StartupUri="\Base_Window\MainWindow.xaml">
+             StartupUri="\WND_!Main\MainWindow.xaml">
 
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
                 <ResourceDictionary Source="\Generic_Dictionary.xaml"/>
-                <ResourceDictionary Source="\Base_Window\src_Dictionary.xaml"/>
+                <ResourceDictionary Source="\WND_!Main\src_Dictionary.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

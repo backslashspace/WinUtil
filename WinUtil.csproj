@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FE8E9CB6-1CBB-4928-AA6E-2672C019DFFC}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>WinUtil</RootNamespace>
     <AssemblyName>WinUtil</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -15,6 +15,21 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -29,7 +44,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>
@@ -48,13 +63,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CustomWinMessageBox">
-      <HintPath>local_libs\CustomWinMessageBox.dll</HintPath>
-    </Reference>
     <Reference Include="HashTools">
       <HintPath>local_libs\HashTools.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="PowershellHelper">
       <HintPath>local_libs\PowershellHelper.dll</HintPath>
     </Reference>
@@ -70,13 +81,15 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Win32Tools">
+      <HintPath>..\..\3. ClassLibs\Win32Tools\bin\Release\Win32Tools.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -90,40 +103,55 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Base_Window\Grid_Tabs\2_AppearanceGrid.xaml.cs">
+    <Compile Include="Ext_Resource_Assets.cs" />
+    <Compile Include="Machine_Info.cs" />
+    <Compile Include="WND_!Main\Grid_Tabs\2_AppearanceGrid.xaml.cs">
       <DependentUpon>2_AppearanceGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Base_Window\Grid_Tabs\1_OverviewGrid.xaml.cs">
+    <Compile Include="WND_!Main\Grid_Tabs\1_OverviewGrid.xaml.cs">
       <DependentUpon>1_OverviewGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Base_Window\Grid_Tabs\3_BehaviorGrid.xaml.cs">
+    <Compile Include="WND_!Main\Grid_Tabs\3_BehaviorGrid.xaml.cs">
       <DependentUpon>3_BehaviorGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Base_Window\Grid_Tabs\4_PrivacyGrid.xaml.cs">
+    <Compile Include="WND_!Main\Grid_Tabs\4_PrivacyGrid.xaml.cs">
       <DependentUpon>4_PrivacyGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Base_Window\Grid_Tabs\5_SecurityGrid.xaml.cs">
+    <Compile Include="WND_!Main\Grid_Tabs\5_SecurityGrid.xaml.cs">
       <DependentUpon>5_SecurityGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Base_Window\Grid_Tabs\6_ProgramsGrid.xaml.cs">
+    <Compile Include="WND_!Main\Grid_Tabs\6_ProgramsGrid.xaml.cs">
       <DependentUpon>6_ProgramsGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Base_Window\Work_Indicator.cs" />
+    <Compile Include="WND_!Main\MainWindow_internal_assets.cs" />
+    <Compile Include="WND_!Main\MainWindow_user_intractable.cs" />
+    <Compile Include="WND_!Main\temp.cs" />
+    <Compile Include="WND_Dialogue\Dialogue.xaml.cs">
+      <DependentUpon>Dialogue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Global_Functions.cs" />
-    <Compile Include="Types &amp; Information.cs" />
+    <Compile Include="WND_Selection\Dynamic_Select.xaml.cs">
+      <DependentUpon>Dynamic_Select.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WND_Selection\Frame_Controll.cs" />
+    <Compile Include="zTest-Debug\Test_Debug.cs" />
+    <Page Include="WND_Dialogue\Dialogue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Generic_Dictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Base_Window\src_Dictionary.xaml">
+    <Page Include="WND_!Main\src_Dictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Base_Window\Grid_Tabs\2_AppearanceGrid.xaml">
+    <Page Include="WND_!Main\Grid_Tabs\2_AppearanceGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Base_Window\MainWindow.xaml">
+    <Page Include="WND_!Main\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -131,36 +159,37 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Base_Window\Navigation_Buttons.cs" />
-    <Compile Include="Base_Window\Button_Logic.cs" />
-    <Compile Include="Base_Window\Frame_Controll\Frame_Controll.cs" />
-    <Compile Include="Base_Window\MainWindow.xaml.cs">
+    <Compile Include="WND_!Main\Frame_Controll.cs" />
+    <Compile Include="WND_!Main\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Base_Window\Grid_Tabs\1_OverviewGrid.xaml">
+    <Page Include="WND_!Main\Grid_Tabs\1_OverviewGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Base_Window\Grid_Tabs\3_BehaviorGrid.xaml">
+    <Page Include="WND_!Main\Grid_Tabs\3_BehaviorGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Base_Window\Grid_Tabs\4_PrivacyGrid.xaml">
+    <Page Include="WND_!Main\Grid_Tabs\4_PrivacyGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Base_Window\Grid_Tabs\5_SecurityGrid.xaml">
+    <Page Include="WND_!Main\Grid_Tabs\5_SecurityGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Base_Window\Grid_Tabs\6_ProgramsGrid.xaml">
+    <Page Include="WND_!Main\Grid_Tabs\6_ProgramsGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WND_Selection\Dynamic_Select.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base_Window\Scaling.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -196,6 +225,9 @@
     </PackageReference>
     <PackageReference Include="System.IO">
       <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Management">
+      <Version>7.0.2</Version>
     </PackageReference>
     <PackageReference Include="System.Net.Http">
       <Version>4.3.4</Version>
@@ -243,5 +275,34 @@
   <ItemGroup>
     <Resource Include="icons\shell_desk.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="WND_Dialogue\Icons\imageres_104.ico" />
+    <Resource Include="WND_Dialogue\Icons\imageres_105.ico" />
+    <Resource Include="WND_Dialogue\Icons\imageres_106.ico" />
+    <Resource Include="WND_Dialogue\Icons\imageres_107.ico" />
+    <Resource Include="WND_Dialogue\Icons\imageres_114.ico" />
+    <Resource Include="WND_Dialogue\Icons\imageres_150.ico" />
+    <Resource Include="WND_Dialogue\Icons\imageres_78.ico" />
+    <Resource Include="WND_Dialogue\Icons\imageres_84.ico" />
+    <Resource Include="WND_Dialogue\Icons\imageres_98.ico" />
+    <Resource Include="WND_Dialogue\Icons\imageres_99.ico" />
+    <Resource Include="WND_Dialogue\Icons\shell32_14.ico" />
+    <Resource Include="WND_Dialogue\Icons\shell32_16826.ico" />
+    <Resource Include="WND_Dialogue\Icons\shell32_1_16802.ico" />
+    <Resource Include="WND_Dialogue\Icons\shell32_48.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 und x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -120,13 +120,13 @@ namespace WinUtil
             {
                 DispatchedLogBoxAdd("Installing WinGet..", Brushes.DarkGreen);
 
-                if (VerboseHashCheck("assets\\" + Const.VCLibsName, Const.VCLibs)[0] && VerboseHashCheck("assets\\WinGet\\" + Const.WinGetName, Const.WinGetHash)[0] && VerboseHashCheck("assets\\WinGet\\" + Const.Xaml27Name, Const.Xaml27Hash)[0] && VerboseHashCheck("assets\\WinGet\\" + Const.WinGetLicenseName, Const.WinGetLicenseHash)[0])
+                if (VerboseHashCheck("assets\\" + Resource_Assets.VCLibsName, Resource_Assets.VCLibs)[0] && VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.WinGetName, Resource_Assets.WinGetHash)[0] && VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.Xaml27Name, Resource_Assets.Xaml27Hash)[0] && VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.WinGetLicenseName, Resource_Assets.WinGetLicenseHash)[0])
                 {
-                    PowerShell("Add-AppxPackage -Path \"assets\\" + Const.VCLibsName + "\"");
+                    PowerShell("Add-AppxPackage -Path \"assets\\" + Resource_Assets.VCLibsName + "\"");
 
-                    PowerShell("Add-AppxPackage -Path \"assets\\WinGet\\" + Const.Xaml27Name + "\"");
+                    PowerShell("Add-AppxPackage -Path \"assets\\WinGet\\" + Resource_Assets.Xaml27Name + "\"");
 
-                    PowerShell("Add-ProvisionedAppPackage -Online -PackagePath \"assets\\WinGet\\" + Const.WinGetName + "\" -LicensePath \"assets\\WinGet\\" + Const.WinGetLicenseName + "\"");
+                    PowerShell("Add-ProvisionedAppPackage -Online -PackagePath \"assets\\WinGet\\" + Resource_Assets.WinGetName + "\" -LicensePath \"assets\\WinGet\\" + Resource_Assets.WinGetLicenseName + "\"");
 
                     Task.Delay(5000).Wait();
 
