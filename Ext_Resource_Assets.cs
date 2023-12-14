@@ -4,19 +4,27 @@ namespace WinUtil
 {
     internal readonly struct EXT_DLL
     {
-        internal const String Win32Tools = "9a69fbadd3d81654c5667084e41e876f8002859828c4bd5c674dc886338425af";
-        internal const String HashTools = "bd1add6c98b7406b779b3f2c20942f16523ce9841639918ee4c3ad719225d019";
-        internal const String PowershellHelper = "30154a0c4686bfc5e3e3efb0853f0e050db7d27ae59dffb8d54c06c9ec4f1d0c";
-        internal const String ProgramLauncher = "f4c3dedddeed357421c60ef17037c7536346aae985b33674f643e6c73eb8ab22";
-        internal const String RegistryTools = "0dcb3c87a8162acef6eb8c3ae5fa0ad62ebd43968ef69e0ce48d55bbc10aeb2f";
-        internal const String ServiceTools = "ba4add34b1aba3e01bd38dc284b60927d3b5c81645d3f63b1a9ae70fd59c64c0";
-        internal const String WinUser = "861e400ec6c99ae48ec4392cc10711f634f624cd8e8e82e829bc6d5e581c7a2f";
+        internal const String WinX64_System = "126b055ea93b7e53e9ffcc6017741b424c969dc65be29e51b0546b0f00905f1d";
+        internal const String WinX64_HashTools = "eea04a55e13e3bd42983fc0219d57acc6bbb4976e8a2dd7a1e729cefbb279454";
+        internal const String WinX64_Launcher = "3c8faebecedce6964b75e49dcdb8110ed620dc626bc9a2d91ccf4d4160b2eec0";
 
         internal const String ManagedNativeWifi = "c590995858bc7f5624ae4161e7b22bfe834c17b6a6fc0c4dfd7207d1b11a3ca3";
+        internal const String CodeDom = "d4047cdc0c372b06afc9cbed39b717fac18dced723e5851806a19f1bf42de1a3";
     }
 
     internal readonly struct Resource_Assets
     {
+        internal const String HyperKey_UnReg_PathName = "assets\\ProgramFiles\\HyperKey_UnReg.exe";
+        internal const String HyperKey_UnReg_Hash = "b760560389144be165c249a7dd8dbd4fa68f7623653b16f9ed695238068bc532";
+
+        internal const String SetACL_Hash = "4efc87b7e585fcbe4eaed656d3dbadaec88beca7f92ca7f0089583b428a6b221";
+        internal const String SetACL_PathName = "assets\\SetACL.exe";
+
+
+
+
+
+
         internal const String FirefoxImageName = "Firefox Setup 114.0.1.exe";
         internal const String FirefoxImageHash = "378e9bea3123218dbbf448a6da9b4a1d06f0e76e2a1267297f6123abf0995151";
         internal const String FSH41 = "6ebaa64f760ab886ca21436c96d7ec1e8e8fda87de787d625a733af147946ff2";
@@ -54,8 +62,6 @@ namespace WinUtil
         internal const String su10exeHash = "22d3a45792b749e70b908088e95c19abae0707b248fcb83744b23bc6f662425b";
         internal const String su10settings = "Settings-v1.9.1435.cfg";
         internal const String su10settingsHash = "1a2792ac835df3cd2a3f6097bdb8abefce3200eb87afbf6f2e1a44b4f0685220";
-
-        internal const String ACLHash = "4efc87b7e585fcbe4eaed656d3dbadaec88beca7f92ca7f0089583b428a6b221";
 
         internal const String Nano = "8b31e1e10f3383ff6ca49e4f65e738805015351984ad67517448e3e7c53c43a2";
 

@@ -205,7 +205,7 @@
 
         <Grid x:Name="Grid" Background="#202020" Grid.Row="2">
 
-            <Button  Style="{DynamicResource FButton}"
+            <Button  Style="{DynamicResource Focused_Button}"
                 Grid.Row="2"
                 Content="Continue"
                 Click="Return"

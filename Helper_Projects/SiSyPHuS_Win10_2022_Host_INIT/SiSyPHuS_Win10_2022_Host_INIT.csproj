@@ -65,7 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Base_Window\Frame_Controll\Frame_Controll.cs" />
+    <Compile Include="Base_Window\Frame_Control\Frame_Control.cs" />
     <Compile Include="Base_Window\Window_CTL.cs" />
     <Compile Include="Base_Window\Hostfile_Inter.cs" />
     <Page Include="Base_Window\MainWindow.xaml">

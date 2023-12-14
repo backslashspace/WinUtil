@@ -9,65 +9,15 @@
 
     <UserControl.Resources>
 
-
-
-
-
-        <Style x:Key="Setting_Button" TargetType="{x:Type Button}">
-            <Setter Property="FocusVisualStyle" Value="{DynamicResource Default_FocusVisual}"/>
-            <Setter Property="Background" Value="#2b2b2b"/>
-            <Setter Property="BorderBrush" Value="#1d1d1d"/>
-            <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3" SnapsToDevicePixels="true">
-                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="#323232"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="#1d1d1d"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="Background" TargetName="border" Value="#272727"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="#1d1d1d"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" TargetName="border" Value="#383838"/>
-                                <Setter Property="BorderBrush" TargetName="border" Value="#343434"/>
-                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#909090"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-
-
     </UserControl.Resources>
 
     <Grid>
 
-
-
-
-
-
-
-
-
         <Button Style="{DynamicResource Setting_Button}"
                 Margin="0,120,25,0"
                 Height="84"
-                VerticalAlignment="Top" Click="Button_Click" 
-            
-            />
+                VerticalAlignment="Top"
+                Click="Button_Click"/>
 
 
 

@@ -54,7 +54,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <ApplicationIcon>icons\icon_new.ico</ApplicationIcon>
+    <ApplicationIcon>WND_!Main\icons\icon_new.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>App\app.manifest</ApplicationManifest>
@@ -63,21 +63,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HashTools">
-      <HintPath>local_libs\HashTools.dll</HintPath>
-    </Reference>
-    <Reference Include="PowershellHelper">
-      <HintPath>local_libs\PowershellHelper.dll</HintPath>
-    </Reference>
-    <Reference Include="ProgramLauncher">
-      <HintPath>local_libs\ProgramLauncher.dll</HintPath>
-    </Reference>
-    <Reference Include="RegistryTools">
-      <HintPath>local_libs\RegistryTools.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceTools">
-      <HintPath>local_libs\ServiceTools.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceProcess" />
@@ -88,14 +73,18 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Win32Tools">
-      <HintPath>..\..\3. ClassLibs\Win32Tools\bin\Release\Win32Tools.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WinUser">
-      <HintPath>local_libs\WinUser.dll</HintPath>
+    <Reference Include="WinX64_HashTools">
+      <HintPath>local_libs\WinX64_HashTools.dll</HintPath>
+    </Reference>
+    <Reference Include="WinX64_Launcher">
+      <HintPath>local_libs\WinX64_Launcher.dll</HintPath>
+    </Reference>
+    <Reference Include="WinX64_System, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>local_libs\WinX64_System.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -103,8 +92,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Debug.cs" />
     <Compile Include="Ext_Resource_Assets.cs" />
     <Compile Include="Machine_Info.cs" />
+    <Compile Include="WND_!Main\Grid_Tabs\!Control_Events.cs" />
     <Compile Include="WND_!Main\Grid_Tabs\2_AppearanceGrid.xaml.cs">
       <DependentUpon>2_AppearanceGrid.xaml</DependentUpon>
     </Compile>
@@ -133,8 +124,7 @@
     <Compile Include="WND_Selection\Dynamic_Select.xaml.cs">
       <DependentUpon>Dynamic_Select.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WND_Selection\Frame_Controll.cs" />
-    <Compile Include="zTest-Debug\Test_Debug.cs" />
+    <Compile Include="WND_Selection\Frame_Control.cs" />
     <Page Include="WND_Dialogue\Dialogue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -159,7 +149,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WND_!Main\Frame_Controll.cs" />
+    <Compile Include="WND_!Main\Frame_Control.cs" />
     <Compile Include="WND_!Main\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -249,31 +239,31 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\icon_new.ico" />
+    <Resource Include="WND_!Main\icons\icon_new.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="notes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\shell_home.ico" />
+    <Resource Include="WND_!Main\icons\shell_home.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\shell_sustem.ico" />
+    <Resource Include="WND_!Main\icons\shell_sustem.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\shell_tele.ico" />
+    <Resource Include="WND_!Main\icons\shell_tele.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\shell_key.ico" />
+    <Resource Include="WND_!Main\icons\shell_key.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\shell_youser.ico" />
+    <Resource Include="WND_!Main\icons\shell_youser.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\shell_luks.ico" />
+    <Resource Include="WND_!Main\icons\shell_luks.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="icons\shell_desk.ico" />
+    <Resource Include="WND_!Main\icons\shell_desk.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="WND_Dialogue\Icons\imageres_104.ico" />
@@ -303,6 +293,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="WND_!Main\icons\small_keyboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="WND_!Main\icons\small_taskbar.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

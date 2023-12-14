@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using RegistryTools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,83 +10,80 @@ using System.Management;
 
 namespace WinUtil
 {
-    internal static class WorkerAssets
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    internal static class WorkerThreads
     {
-        
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    internal sealed class ThreadIsAlive
-    {
-        public static Boolean ActivateWindows { get; set; }
-        public static Boolean BlockTCP { get; set; }
-        public static Boolean LoginBlur { get; set; }
-        public static Boolean General { get; set; }
-        public static Boolean N0Telemetry { get; set; }
-        public static Boolean Curser { get; set; }
-        public static Boolean SystemTheme { get; set; }
-        public static Boolean Restart_Explorer { get; set; }
-        public static Boolean WT { get; set; }
-        public static Boolean Debloat { get; set; }
-        public static Boolean ClearTaskBar { get; set; }
-        public static Boolean RemoveXbox { get; set; }
-        public static Boolean RMOneDrive { get; set; }
-        public static Boolean AppFilehistory { get; set; }
-        public static Boolean Cmen { get; set; }
-        public static Boolean Ribbon { get; set; }
-        public static Boolean Nano { get; set; }
-        public static Boolean RMEdge { get; set; }
-        public static Boolean BootStuff { get; set; }
-        public static Boolean NumLock { get; set; }
-        public static Boolean BootSound { get; set; }
-        public static Boolean Install { get; set; }
-        public static Boolean SMB { get; set; }
-        public static Boolean LockScreen { get; set; }
-        public static Boolean LockScreenNotifications { get; set; }
-        public static Boolean UAC { get; set; }
-        public static Boolean Pagefile { get; set; }
-        public static Boolean RequireCtrl { get; set; }
-        public static Boolean AutoLogin { get; set; }
-        public static Boolean Harden { get; set; }
-        public static Boolean ApplicationGuard { get; set; }
-        public static Boolean VBS { get; set; }
-        public static Boolean USBExecution { get; set; }
-        public static Boolean CFG { get; set; }
-        public static Boolean BMP { get; set; }
-        public static Boolean MaxFailedLoginAttempts { get; set; }
-        public static Boolean ScreenTimeOut { get; set; }
-        public static Boolean SystemLock { get; set; }
-        public static Boolean SystemCheck { get; set; }
-        public static Boolean IOWLanConfig { get; set; }
-        public static Boolean WebView { get; set; }
-        public static Boolean WGetAction { get; set; }
-        public static Boolean Backgroundapps { get; set; }
-        public static Boolean WindowsUpdate { get; set; }
-        public static Boolean NoWUDrivers { get; set; }
-        public static Boolean LSASS { get; set; }
-        public static Boolean TCPTune { get; set; }
+        internal static Boolean ActivateWindows { get; set; }
+        internal static Boolean BlockTCP { get; set; }
+        internal static Boolean LoginBlur { get; set; }
+        internal static Boolean General { get; set; }
+        internal static Boolean N0Telemetry { get; set; }
+        internal static Boolean Curser { get; set; }
+        internal static Boolean SystemTheme { get; set; }
+        internal static Boolean Restart_Explorer { get; set; }
+        internal static Boolean WT { get; set; }
+        internal static Boolean Debloat { get; set; }
+        internal static Boolean ClearTaskBar { get; set; }
+        internal static Boolean RemoveXbox { get; set; }
+        internal static Boolean RMOneDrive { get; set; }
+        internal static Boolean AppFilehistory { get; set; }
+        internal static Boolean Cmen { get; set; }
+        internal static Boolean Ribbon { get; set; }
+        internal static Boolean Nano { get; set; }
+        internal static Boolean RMEdge { get; set; }
+        internal static Boolean BootStuff { get; set; }
+        internal static Boolean NumLock { get; set; }
+        internal static Boolean BootSound { get; set; }
+        internal static Boolean Install { get; set; }
+        internal static Boolean SMB { get; set; }
+        internal static Boolean LockScreen { get; set; }
+        internal static Boolean LockScreenNotifications { get; set; }
+        internal static Boolean UAC { get; set; }
+        internal static Boolean Pagefile { get; set; }
+        internal static Boolean RequireCtrl { get; set; }
+        internal static Boolean AutoLogin { get; set; }
+        internal static Boolean Harden { get; set; }
+        internal static Boolean ApplicationGuard { get; set; }
+        internal static Boolean VBS { get; set; }
+        internal static Boolean USBExecution { get; set; }
+        internal static Boolean CFG { get; set; }
+        internal static Boolean BMP { get; set; }
+        internal static Boolean MaxFailedLoginAttempts { get; set; }
+        internal static Boolean ScreenTimeOut { get; set; }
+        internal static Boolean SystemLock { get; set; }
+        internal static Boolean SystemCheck { get; set; }
+        internal static Boolean IOWLanConfig { get; set; }
+        internal static Boolean WebView { get; set; }
+        internal static Boolean WGetAction { get; set; }
+        internal static Boolean Backgroundapps { get; set; }
+        internal static Boolean WindowsUpdate { get; set; }
+        internal static Boolean NoWUDrivers { get; set; }
+        internal static Boolean LSASS { get; set; }
+        internal static Boolean TCPTune { get; set; }
     }
 
 }

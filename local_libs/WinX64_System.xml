@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WinX64_System</name>
+    </assembly>
+    <members>
+        <member name="T:EXT.System.Firmware.xFirmware">
+            <summary></summary>
+        </member>
+        <member name="T:EXT.System.Firmware.xFirmware.FirmwareType">
+            <summary></summary>
+        </member>
+        <member name="F:EXT.System.Firmware.xFirmware.FirmwareType.UEFI">
+            <summary></summary>
+        </member>
+        <member name="F:EXT.System.Firmware.xFirmware.FirmwareType.Legacy_BIOS">
+            <summary></summary>
+        </member>
+        <member name="M:EXT.System.Firmware.xFirmware.GetFWType">
+            <summary>Checks if the System is running on UEFI or legacy BIOS</summary>
+        </member>
+        <member name="M:EXT.System.Firmware.xFirmware.SecureBoot_IsEnabled">
+            <summary>Checks if Secure Boot is enabled on the system</summary>
+        </member>
+        <member name="M:EXT.System.Group.xWindowsGroup.GetAdminGroupName">
+            <summary>Gets local Administrator group name</summary>
+        </member>
+        <member name="T:EXT.System.License.xWinLicense">
+            <summary></summary>
+        </member>
+        <member name="M:EXT.System.License.xWinLicense.GetStatus(System.String@)">
+            <summary>Retrieves the Windows activation status using WMI</summary>
+        </member>
+        <member name="M:EXT.System.License.xWinLicense.LicenseStatusToString(System.Byte)">
+            <summary>Maps the WMI license status to its representative string</summary>
+        </member>
+        <member name="M:EXT.System.License.xWinLicense.QueryStatus">
+            <summary>Retrieves the Windows activation status as byte using WMI</summary>
+        </member>
+        <member name="T:EXT.System.Registry.xRegistry">
+            <summary>Handles Registry access.</summary>
+        </member>
+        <member name="T:EXT.System.Registry.xRegistry.Get">
+            <summary></summary>
+        </member>
+        <member name="M:EXT.System.Registry.xRegistry.Get.Value(System.String,System.String,Microsoft.Win32.RegistryValueKind,System.Boolean)">
+            <summary>Reads a value from the Registry.</summary>
+            <returns>
+            Returns data in form of specified <typeparamref name="RegistryValueKind"/>.<br/>
+            Returns <see langword="null"/> when value is not present.<br/>
+            Returns '<c>-1</c>' when value has the wrong type and <paramref name="DeleteWrongType"/> is set to <see langword="false"/>.
+            </returns>
+        </member>
+        <member name="M:EXT.System.Registry.xRegistry.Get.SubKeys(System.String)">
+            <summary>Returns all subkeys.</summary>
+        </member>
+        <member name="T:EXT.System.Registry.xRegistry.Delete">
+            <summary></summary>
+        </member>
+        <member name="M:EXT.System.Registry.xRegistry.Delete.DeleteValues(System.String,System.String[],System.Boolean)">
+            <summary>Removes values from the Registry.</summary>
+            <remarks>Takes a List of values and removes them in a specified path.</remarks>
+            <returns><see langword="true"/> when at least one error occurred.</returns>
+        </member>
+        <member name="M:EXT.System.Registry.xRegistry.Delete.DeleteSubKeyTree(System.String,System.String[],System.Boolean)">
+            <summary>Removes Key from the Registry.</summary>
+            <remarks>Takes a List of Keys and removes them in a specified path.</remarks>
+            <returns><see langword="true"/> when at least one error occurred.</returns>
+        </member>
+        <member name="M:EXT.System.Registry.xRegistry.TestRegValuePresense(System.String,System.String)">
+            <summary>Tests if a value exists in the Registry.</summary>
+            <returns><see langword="false"/> if not present.</returns>
+            <returns> if not present.</returns>
+        </member>
+        <member name="M:EXT.System.Registry.xRegistry.PathToKey(System.String)">
+            <summary>Humane path to Key</summary>
+        </member>
+        <member name="T:EXT.System.Service.xService">
+            <summary>Interact with Windows services</summary>
+        </member>
+        <member name="M:EXT.System.Service.xService.GetStatusString(System.String)">
+            <summary>Returns the status of a given service.</summary>
+        </member>
+        <member name="M:EXT.System.Service.xService.GetStatusEnum(System.String)">
+            <summary>Returns the status of a given service.</summary>
+        </member>
+        <member name="M:EXT.System.Service.xService.Start(System.String,System.String)">
+            <summary>Starts a given service</summary>
+        </member>
+        <member name="M:EXT.System.Service.xService.Stop(System.String)">
+            <summary>Stops a given service</summary>
+        </member>
+        <member name="M:EXT.System.Service.xService.Pause(System.String)">
+            <summary>Stops a given service</summary>
+        </member>
+        <member name="M:EXT.System.Service.xService.SetStartupType(System.String,System.ServiceProcess.ServiceStartMode)">
+            <summary>Changes the service start type</summary>
+        </member>
+        <member name="T:EXT.System.User.xWindowsUser">
+            <summary>minteractions</summary>
+        </member>
+        <member name="M:EXT.System.User.xWindowsUser.GetSystemUserList(System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>Retrieves</summary>
+        </member>
+        <member name="M:EXT.System.User.xWindowsUser.GetUACUser">
+            <summary>Gets the current UAC user</summary>
+        </member>
+    </members>
+</doc>

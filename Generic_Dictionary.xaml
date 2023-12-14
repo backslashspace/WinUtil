@@ -26,7 +26,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" CornerRadius="3" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                    <Border x:Name="border" CornerRadius="5" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
                         <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -39,9 +39,9 @@
                             <Setter Property="BorderBrush" TargetName="border" Value="#2f2f2f"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="border" Value="#383838"/>
-                            <Setter Property="BorderBrush" TargetName="border" Value="#343434"/>
-                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#909090"/>
+                            <Setter Property="Background" TargetName="border" Value="#343434"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#3a3a3a"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#747474"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
 
@@ -64,7 +64,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="4" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
                         <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -78,9 +78,9 @@
                             <Setter Property="Foreground" Value="#00497c"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="border" Value="#505050"/>
-                            <Setter Property="BorderBrush" TargetName="border" Value="#2d2d2d"/>
-                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#909090"/>
+                            <Setter Property="Background" TargetName="border" Value="#343434"/>
+                            <Setter Property="BorderBrush" TargetName="border" Value="#3a3a3a"/>
+                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#747474"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

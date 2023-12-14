@@ -40,7 +40,7 @@
 
         <!--#region Title -->
         <Image x:Name="MainWindowIcon"
-            Source="/icons/icon_new.ico"
+            Source="/WND_!Main/icons/icon_new.ico"
             Margin="9,-24,0,0"
             Height="16" Width="16"
             Visibility="Visible"
@@ -60,7 +60,7 @@
         </Viewbox>
 
         <TextBlock x:Name="Window_Title"
-            Text="WinUtil v2.0.0-dev2"
+            Text="WinUtil v2.0.0-dev3"
             Foreground="#aaaaaa"
             Margin="30,-24,0,0"
             HorizontalAlignment="Left" VerticalAlignment="Top"
@@ -189,7 +189,7 @@
                 <Grid>
                     <TextBlock Text="        Overview"/>
                     <Image
-                        Source="/icons/shell_home.ico"
+                        Source="/WND_!Main/icons/shell_home.ico"
                         x:Name="Navigation_Button_Overview_Icon"
                         Margin="7,0,0,0"
                         Height="18"
@@ -209,7 +209,7 @@
                 <Grid>
                     <TextBlock Text="        Appearance"/>
                     <Image
-                        Source="/icons/shell_luks.ico"
+                        Source="/WND_!Main/icons/shell_luks.ico"
                         x:Name="Navigation_Button_Appearance_Icon"
                         Margin="7,2,0,0"
                         Height="18"
@@ -229,7 +229,7 @@
                 <Grid>
                     <TextBlock Text="        System Behavior"/>
                     <Image x:Name="Navigation_Button_Behavior_Icon"
-                        Source="/icons/shell_sustem.ico"
+                        Source="/WND_!Main/icons/shell_sustem.ico"
                         Margin="7,1,0,0"
                         Height="18"
                         RenderOptions.BitmapScalingMode="HighQuality" 
@@ -248,7 +248,7 @@
                 <Grid>
                     <TextBlock Text="        Privacy"/>
                     <Image x:Name="Navigation_Button_Privacy_Icon"
-                        Source="/icons/shell_tele.ico"
+                        Source="/WND_!Main/icons/shell_tele.ico"
                         Margin="7,1,0,0"
                         Height="18"
                         RenderOptions.BitmapScalingMode="HighQuality" 
@@ -267,7 +267,7 @@
                 <Grid>
                     <TextBlock Text="        Security"/>
                     <Image x:Name="Navigation_Button_Security_Icon"
-                        Source="/icons/shell_key.ico"
+                        Source="/WND_!Main/icons/shell_key.ico"
                         Margin="7,1,0,0"
                         Height="18"
                         RenderOptions.BitmapScalingMode="HighQuality" 
@@ -286,7 +286,7 @@
                 <Grid>
                     <TextBlock Text="        Programs"/>
                     <Image x:Name="Navigation_Button_Programs_Icon"
-                        Source="/icons/shell_desk.ico"
+                        Source="/WND_!Main/icons/shell_desk.ico"
                         Margin="7,1,0,0"
                         Height="18"
                         RenderOptions.BitmapScalingMode="HighQuality" 
@@ -303,7 +303,7 @@
 
             <controls:OverviewGrid x:Name="OverviewGrid" Visibility="Visible"/>
 
-            <controls:AppearanceGrid x:Name="AppearanceGrid" Visibility="Collapsed"/>
+            <controls:AppearanceGrid x:Name="AppearanceGrid" Visibility="Hidden"/>
 
             <controls:BehaviorGrid x:Name="BehaviorGrid" Visibility="Collapsed"/>
 
@@ -360,16 +360,22 @@
         </Border>
         <!--#endregion-->
 
+        <Button 
+            Click="Restart_Explorer"
+            Content="Restart Explorer"
+            Margin="10,0,10,13" VerticalAlignment="Bottom" Height="34"
+            Grid.Row="1"/>
+
         <!-- ####################################################### -->
 
         <!-- Debug -->
 
-        <Button 
-            Visibility="Visible"
-            IsEnabled="True"
-            Click="Debug"
+        <Button x:Name="Debug_Button"
+            Visibility="Collapsed"
+            IsEnabled="False"
+            Click="Button_Debug"
             Content="Debug"
-            Margin="10,0,10,13" VerticalAlignment="Bottom" Height="34"
+            Margin="10,0,10,51" VerticalAlignment="Bottom" Height="34"
             Grid.Row="1"/>
 
     </Grid>

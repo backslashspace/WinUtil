@@ -60,7 +60,7 @@ namespace WinUtil
 
             if (IconPath != null)
             {
-                WND_Icon.Source = new BitmapImage(new Uri(IconPath, UriKind.Relative));
+                WND_Icon.Source = new BitmapImage(new Uri(IconPath, UriKind.RelativeOrAbsolute));
             }
         }
 

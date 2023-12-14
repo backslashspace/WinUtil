@@ -4,89 +4,118 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"
-             SizeChanged="Area_Size_Changed"
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
 
-        <!--#region G0 -->
+        <ScrollViewer x:Name="Log_ScrollViewer" Style="{DynamicResource ScrollViewer}"
+            VerticalScrollBarVisibility="Auto">
+            <Grid>
 
-        <Grid Background="red" x:Name="AppearanceGrid0" Visibility="Visible">
 
-            <Button
-                Content="DDDD"
-                Template="{DynamicResource NormalButton}" 
-                Margin="10,16,0,0"
-                Height="120" Width="120"
-                VerticalAlignment="Top" HorizontalAlignment="Left"
-                FontSize="16"
-                FontFamily="Segoe UI"
-                Foreground="{DynamicResource FontColor}"
-                />
+                <TextBlock
+                    FontSize="36"
+                    Foreground="{DynamicResource FontColor}"
+                    Margin="0,25,0,0" Height="66" VerticalAlignment="Top" HorizontalAlignment="Left" Width="615"><Run Text="Eächpjick Hjeadlain"/><Run Text=" Wau"/><Run Language="de-de" Text=" "/><Run Text="Zuai"/></TextBlock>
 
-        </Grid>
 
-        <!--#endregion-->
+                <ToggleButton x:Name="Bright_Mode_Switch" Style="{DynamicResource Sys_Dark-Light}"
+                    Margin="0,38,95,0"
+                    Height="40" Width="78"
+                    VerticalAlignment="Top" HorizontalAlignment="Right"
+                    Unchecked="Set_System_Dark_Mode"
+                    Checked="Set_System_Light_Mode"/>
 
-        <!--#region G1 -->
 
-        <Grid Background="#00ff00" x:Name="AppearanceGrid1" Visibility="Collapsed">
 
-            <Button
-                Content="DDDD"
-                Template="{DynamicResource NormalButton}" 
-                Margin="355,71,0,0"
-                Height="120" Width="120"
-                VerticalAlignment="Top" HorizontalAlignment="Left"
-                FontSize="16"
-                FontFamily="Segoe UI"
-                Foreground="{DynamicResource FontColor}"
-                />
 
-        </Grid>
 
-        <!--#endregion-->
 
-        <!--#region G2 -->
 
-        <Grid Background="Blue" x:Name="AppearanceGrid2" Visibility="Collapsed">
 
-            <Button
-                Content="DDDD"
-                Template="{DynamicResource NormalButton}" 
-                Margin="127,138,0,0"
-                Height="120" Width="120"
-                VerticalAlignment="Top" HorizontalAlignment="Left"
-                FontSize="16"
-                FontFamily="Segoe UI"
-                Foreground="{DynamicResource FontColor}"
-                />
 
-        </Grid>
 
-        <!--#endregion-->
 
-        <!--#region GridSelector -->
-        <Button
-            Style="{DynamicResource Panel_Navigation_Button}" 
-            Margin="0,0,38,6"
-            FontSize="24"
-            Click="PageMinus"
-            Height="26"  Width="26"
-            VerticalAlignment="Bottom" HorizontalAlignment="Right">
-            <TextBlock Text="◂" VerticalAlignment="Center" Height="35"/>
-        </Button>
 
-        <Button
-            Style="{DynamicResource Panel_Navigation_Button}"
-            Margin="0,0,6,6"
-            FontSize="24"
-            Click="PagePlus"
-            Height="26"  Width="26"
-            VerticalAlignment="Bottom" HorizontalAlignment="Right">
-            <TextBlock Text="▸" VerticalAlignment="Center" Height="35"/>
-        </Button>
-        <!--#endregion-->
+                <Button x:Name="Testss" Style="{DynamicResource Setting_Button}"
+                    Margin="0,120,25,0"
+                    Height="69"
+                    IsEnabled="False"
+                    VerticalAlignment="Top"
+                    >
+                    <Grid>
+                        <Image
+                            Source="/WND_!Main/icons/small_taskbar.png"
+                            Margin="18,10,0,0"
+                            Height="16"
+                            RenderOptions.BitmapScalingMode="NearestNeighbor" 
+                            VerticalAlignment="Top" HorizontalAlignment="Left"
+                            Width="20"/>
+
+                        <TextBlock
+                            Text="User Experience Settings"
+                            Margin="58,0,0,0"
+                            FontSize="14"/>
+
+                        <TextBlock
+                            Text="Remove advertising, stability improvements and make Windows less annoying"
+                            Foreground="#cfcfcf"
+                            Margin="58,20,0,0"
+                            FontWeight="DemiBold"
+                            FontSize="11"/>
+                    </Grid>
+                </Button>
+
+                <Button Style="{DynamicResource Setting_Button}"
+                    Margin="0,192,25,0"
+                    Height="69"
+                    VerticalAlignment="Top" 
+                    Click="Button_Click">
+                    <Grid>
+                        <Image
+                            Source="/WND_!Main/icons/small_keyboard.png"
+                            Margin="18,10,0,0"
+                            Height="15"
+                            RenderOptions.BitmapScalingMode="NearestNeighbor" 
+                            VerticalAlignment="Top" HorizontalAlignment="Left"
+                            Width="20"/>
+
+                        <TextBlock
+                            Text="Deactivate Office Hyper keys"
+                            Margin="58,0,0,0"
+                            FontSize="14"/>
+
+                        <TextBlock
+                            Text="Office keys and Windows-Teams integration"
+                            Foreground="#cfcfcf"
+                            Margin="58,20,0,0"
+                            FontWeight="DemiBold"
+                            FontSize="11"/>
+                    </Grid>
+                </Button>
+
+
+
+
+
+
+
+
+
+
+
+                <Button Style="{DynamicResource Setting_Button}"
+                    Margin="0,507,25,0"
+                    Height="69"
+                    Content="Test"
+                    VerticalAlignment="Top"
+                    />
+
+
+
+
+            </Grid>
+        </ScrollViewer>
 
     </Grid>
 </UserControl>

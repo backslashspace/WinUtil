@@ -1,18 +1,98 @@
 ﻿using Microsoft.Win32;
-using ProgramLauncher;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+//
+using EXT.Launcher.Process;
+using EXT.System.Registry;
+using System.CodeDom.Compiler;
+using System.Threading.Tasks;
 
 namespace WinUtil
 {
-    public partial class MainWindow
+    /// <summary>This will not be used in release mode</summary>
+    internal static class Debug
     {
-        private String GetButtonTag(object sender)
+        #region Kernel32
+        private static Thread ConsoleThread;
+
+        [Conditional("DEBUG")]
+        internal static void SpawnConsole()
+        {
+            if (ConsoleThread != null)
+            {
+                return;
+            }
+
+            ConsoleThread = new(Console);
+            ConsoleThread.Start();
+
+            static void Console()
+            {
+                AllocConsole();
+
+                while (true)
+                {
+                    Thread.Sleep(1000000);
+                }
+            }
+
+            [DllImport("Kernel32")]
+            static extern void AllocConsole();
+        }
+
+        [Conditional("DEBUG")]
+        [DllImport("Kernel32")]
+        static extern void FreeConsole();
+        #endregion
+
+        //################################################################################
+
+        [Conditional("DEBUG")]
+        internal static void Write(object Input)
+        {
+            Console.Write(Input);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+
+        internal static String GetButtonTag(object sender)
         {
             try
             {
@@ -23,37 +103,31 @@ namespace WinUtil
                 return null;
             }
         }
+    }
 
-        //#######################################################################################################
+    public partial class MainWindow
+    {
+        [Conditional("DEBUG")]
+        private void EnableDebug()
+        {
+            Debug.SpawnConsole();
+
+            Debug_Button.IsEnabled = true;
+            Debug_Button.Visibility = Visibility.Visible;
+        }
 
         private static Boolean TTT = false;
 
-        private void Debug(object sender, RoutedEventArgs e)
+        private void Button_Debug(object sender, RoutedEventArgs e)
         {
 
-            if (!TTT)
-            {
-                ActivateWorker();
 
-                TTT = true;
-            }
-            else
-            {
-                DeactivateWorker();
-
-                TTT = false;
-            }
-
-            return;
+            
 
 
 
-
-
-
-
-
-            Dialogue d = new
+            #region WARN
+            Dialogue DBG = new
                 ("WinUtil: Debug",
                 "Execute offensive debug?",
                 Dialogue.Icons.Shield_Exclamation_Mark,
@@ -61,26 +135,74 @@ namespace WinUtil
                 "Act",
                 0);
 
-            d.ShowDialog();
+            DBG.ShowDialog();
 
-            if (d.Result != 1)
+            if (DBG.Result != 1)
             {
-                DispatchedLogBoxAdd("[i] Cancled debug", Brushes.DarkGoldenrod);
+                DispatchedLogBoxAdd("[i] Cancled debug", Brushes.Orange);
 
                 return;
             }
+            #endregion
 
-            //
+            
 
-
-
-
-
+            
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            return;
 
             if (Directory.Exists("C:\\Program Files\\Notepad++"))
             {
@@ -129,7 +251,7 @@ namespace WinUtil
 
             //
 
-            Execute.EXE("assets\\Program\\Notepad++\\npp.8.5.8.Installer.x64.exe", "/S", WaitForExit: true);
+            xProcess.Run("assets\\Program\\Notepad++\\npp.8.5.8.Installer.x64.exe", "/S", WaitForExit: true);
             DispatchedLogBoxAdd("Installed Notepad++", Brushes.DarkGray);
 
             if (CustomInstall)
@@ -153,14 +275,14 @@ namespace WinUtil
                     DispatchedLogBoxAdd("Registered font", Brushes.DarkGray);
                 }
 
-                Execute.EXE("assets\\7z.exe", $"x \"assets\\Program\\Notepad++\\NPP(NoLogVS-Config).zip\" -o\"C:\\Users\\{Environment.UserName}\\AppData\\Roaming\\Notepad++\" -y", HiddenExecute: true, WaitForExit: true);
+                xProcess.Run("assets\\7z.exe", $"x \"assets\\Program\\Notepad++\\NPP(NoLogVS-Config).zip\" -o\"C:\\Users\\{Environment.UserName}\\AppData\\Roaming\\Notepad++\" -y", HiddenExecute: true, WaitForExit: true);
 
                 if (Directory.Exists("C:\\Program Files\\Notepad++"))
                 {
                     Directory.Delete("C:\\Program Files\\Notepad++", true);
                 }
 
-                Execute.EXE("assets\\7z.exe", $"x \"assets\\Program\\Notepad++\\exe.zip\" -o\"C:\\Program Files\\Notepad++\" -y", HiddenExecute: true, WaitForExit: true);
+                xProcess.Run("assets\\7z.exe", $"x \"assets\\Program\\Notepad++\\exe.zip\" -o\"C:\\Program Files\\Notepad++\" -y", HiddenExecute: true, WaitForExit: true);
                 DispatchedLogBoxAdd("Copied program files", Brushes.DarkGray);
 
                 Registry.SetValue(@"HKEY_CLASSES_ROOT\Applications\notepad++.exe\DefaultIcon", "", "C:\\Windows\\System32\\imageres.dll,97", RegistryValueKind.String);

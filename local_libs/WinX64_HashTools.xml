@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>HashTools</name>
+        <name>WinX64_HashTools</name>
     </assembly>
     <members>
-        <member name="T:HashTools.FileHashTools">
-            <summary>Functions to work with file hashes</summary>
+        <member name="T:EXT.HashTools.xHash">
+            <summary>Computes and compares file hashes</summary>
         </member>
-        <member name="M:HashTools.FileHashTools.GetFileHash(System.String,System.String)">
-            <summary>Returns the Hash-Value of a given file.</summary>
+        <member name="M:EXT.HashTools.xHash.GetFileHash(System.String,EXT.HashTools.xHash.Algorithm)">
+            <summary>Returns the Hash-Value of a given file in lower-case</summary>
             <param name="FilePath">File to check</param>
             <param name="Algorithm">Valid arguments:<br/><br/>
             MD5<br/>
@@ -21,7 +21,7 @@
             <returns><see langword="null"/> when file not found</returns>
             <exception cref="T:System.IO.FileLoadException"></exception>
         </member>
-        <member name="M:HashTools.FileHashTools.CompareHash(System.String,System.String,System.String)">
+        <member name="M:EXT.HashTools.xHash.CompareHash(System.String,System.String,EXT.HashTools.xHash.Algorithm)">
             <summary>Checks if a given file has a given hash.</summary>
             <param name="Algorithm">Valid arguments:<br/><br/>
             MD5<br/>

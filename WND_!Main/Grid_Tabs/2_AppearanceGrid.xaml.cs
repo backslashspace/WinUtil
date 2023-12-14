@@ -1,143 +1,56 @@
-﻿using System;
+﻿using EXT.System.Registry;
+using Microsoft.Win32;
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace WinUtil.Grid_Tabs
 {
     public partial class AppearanceGrid : UserControl
     {
+        private void InitThemeButton()
+        {
+            Int32 V0 = xRegistry.Get.Value("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "SystemUsesLightTheme", RegistryValueKind.DWord);
+            Int32 V1 = xRegistry.Get.Value("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "AppsUseLightTheme", RegistryValueKind.DWord);
+
+            if ((V0 == 1) || (V1 == 1))
+            {
+                Bright_Mode_Switch.Checked -= Set_System_Light_Mode;
+                Bright_Mode_Switch.IsChecked = true;
+                Bright_Mode_Switch.Checked += Set_System_Light_Mode;
+            }
+        }
+
         public AppearanceGrid()
         {
             InitializeComponent();
+
+            MainWindow.Sys_Theme_Switch_Setter += InitThemeButton;
         }
 
-        private static SByte CurrentPageAmmount = 3;
+        //#######################################################################################################
 
-        private void PageMinus(object sender, RoutedEventArgs e)
+        private void Set_System_Dark_Mode(object sender, RoutedEventArgs e)
         {
-            if (PageNumber == 0)
-            {
-                return;
-            }
-
-            SByte OldPageNumber = PageNumber;
-
-            PageNumber--;
-
-            ChangePageVisibility(PageNumber, OldPageNumber);
-
-           //Dispatcher.BeginInvoke(new Action(() => MainWindow.Rescale()), System.Windows.Threading.DispatcherPriority.DataBind, null);
-
-            
+            MainWindow.LogBoxAdd("Setting system to dark mode\n", Brushes.LightBlue);
+            Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", 0, RegistryValueKind.DWord);
+            Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 0, RegistryValueKind.DWord);
+            MainWindow.LogBoxAdd("Done\n", Brushes.MediumSeaGreen);
         }
-
-        private void PagePlus(object sender, RoutedEventArgs e)
+        private void Set_System_Light_Mode(object sender, RoutedEventArgs e)
         {
-            if (PageNumber == CurrentPageAmmount - 1)
-            {
-                return;
-            }
-
-            SByte OldPageNumber = PageNumber;
-
-            PageNumber++;
-
-            ChangePageVisibility(PageNumber, OldPageNumber);
-
-            //Rescale();
+            MainWindow.LogBoxAdd("Setting system to light mode\n", Brushes.LightBlue);
+            Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", 1, RegistryValueKind.DWord);
+            Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1, RegistryValueKind.DWord);
+            MainWindow.LogBoxAdd("Done\n", Brushes.MediumSeaGreen);
         }
 
-        //# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-        private static SByte PageNumber = 0;
-
-        protected void ChangePageVisibility(SByte ActivatePageNumber, SByte DeactivatePageNumber)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-
-
-
-
-
-            //show new page
-            switch (ActivatePageNumber)
-            {
-                case 0:
-                    AppearanceGrid0.Visibility = Visibility.Visible;
-                    break;
-
-                case 1:
-                    AppearanceGrid1.Visibility = Visibility.Visible;
-                    break;
-
-                case 2:
-                    AppearanceGrid2.Visibility = Visibility.Visible;
-                    break;
-
-
-                default:
-                    throw new NotImplementedException("ChangePageVisibility > AppearancePG");
-            }
-
-            switch (DeactivatePageNumber)
-            {
-                case 0:
-                    AppearanceGrid0.Visibility = Visibility.Collapsed;
-                    break;
-
-                case 1:
-                    AppearanceGrid1.Visibility = Visibility.Collapsed;
-                    break;
-
-                case 2:
-                    AppearanceGrid2.Visibility = Visibility.Collapsed;
-                    break;
-
-                default:
-                    throw new NotImplementedException("ChangePageVisibility > AppearancePG");
-            }
-
+            Debug.Write(Bright_Mode_Switch.IsEnabled);
         }
-
-
-        private void Area_Size_Changed(object sender, System.Windows.SizeChangedEventArgs e)
-        {
-            if (MainWindow.CurrentArea != MainWindow.Navigation_Areas.Appearance) return;
-
-            //Double WAWidth = (Double)Convert.ToInt32(ActualWidth / 100 * 25);
-            //Double WAHeight = ActualHeight - 95;
-
-            //AppearanceBorder.Width = WAWidth;
-            //AppearanceBorder.Height = WAHeight;
-
-            //if (ActualHeight > 450)
-            //{
-            //    //SystemLable.FontSize = 36;
-            //}
-            //else
-            //{
-            //    //SystemLable.FontSize = 24;
-            //}
-
-            //Double VersionHight = WindowsArea.ActualHeight / 100 * 25;
-            //WinVersion.Margin = new Thickness(5, VersionHight, 0, 0);
-            //BaU.Margin = new Thickness(5, VersionHight + 14, 0, 0);
-
-            //Double SysTypeHight = WindowsArea.ActualHeight / 100 * 50;
-            //SysType.Margin = new Thickness(5, SysTypeHight, 0, 0);
-            //SecBoot.Margin = new Thickness(5, SysTypeHight + 14, 0, 0);
-
-            //Double LicenseLableHight = WindowsArea.ActualHeight / 100 * 75;
-            //LicenseLable.Margin = new Thickness(5, LicenseLableHight, 0, 0);
-            //LicenseStatus.Margin = new Thickness(5, LicenseLableHight + 14, 0, 0);
-        }
-
-
-
-
-
-
-
-
     }
 }
