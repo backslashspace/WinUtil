@@ -1,7 +1,11 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
+using System.Security.Principal;
 using System.Threading;
 
 namespace HyperKey_UnReg
@@ -26,11 +30,37 @@ namespace HyperKey_UnReg
 
             Process("explorer.exe", ProcessAction.Kill);
 
+            String Path = "C:\\Windows\\HelpPane.exe";
+
+            Process("takeown.exe", $"/F {Path}");
+            Process("icacls.exe", $"{Path} /grant 'S-1-5-32-544':(F)");
+
+            //explorer F1
+            FileInfo file = new("C:\\Windows\\HelpPane.exe");
+            AuthorizationRuleCollection accessRules = file.GetAccessControl().GetAccessRules(true, true, typeof(SecurityIdentifier));
+
+            FileSecurity fileSecurity = file.GetAccessControl();
+            IList<FileSystemAccessRule> existsList = new List<FileSystemAccessRule>();
+
+            foreach (FileSystemAccessRule rule in accessRules)
+            {
+                existsList.Add(rule);
+            }
+
+            foreach (FileSystemAccessRule rule in existsList)
+            {
+                fileSecurity.RemoveAccessRuleAll(rule);
+            }
+
+            file.SetAccessControl(fileSecurity);
+
+            //office keys
             for (Byte b = 0; b < 10; b++)
             {
                 RegisterHotKey(IntPtr.Zero, b, 0x1 + 0x2 + 0x4 + 0x8 | 0x4000, KeysToUnregister[b]);
             }
 
+            //teams
             RegisterHotKey(IntPtr.Zero, 10, 0x8 | 0x4000, vKEY_C);
 
             Process("C:\\Windows\\explorer.exe", ProcessAction.Start);
@@ -78,6 +108,20 @@ namespace HyperKey_UnReg
 
                 process.Start();
             }
+        }
+
+        private static void Process(String Path, String Args)
+        {
+            Process process = new();
+
+            process.StartInfo.FileName = Path;
+            process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process.StartInfo.CreateNoWindow = true;
+
+            process.StartInfo.Arguments = Args;
+
+            process.Start();
+            process.WaitForExit();
         }
     }
 }

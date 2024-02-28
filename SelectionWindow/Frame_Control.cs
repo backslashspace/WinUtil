@@ -9,7 +9,7 @@ namespace WinUtil
         #region Close_Button
         private void Close_Button_Click(object sender, RoutedEventArgs e)
         {
-            Was_Cancled = true;
+            Was_Canceled = true;
 
             this.Close();
         }

@@ -9,20 +9,62 @@ using System.Windows.Media;
 using EXT.HashTools;
 using EXT.Launcher.Powershell;
 using EXT.Launcher.Process;
+using Microsoft.Win32;
 
 namespace WinUtil
 {
     internal static class Global
     {
+        /*
+        internal static void Prepare_DEFAULTUSER_Edit()
+        {
+            if (ApplicationState.TargetNewUsers)
+            {
+                if (ApplicationState.DEFAULT_USER_Edit_In_Progress)
+                {
+                    while (ApplicationState.DEFAULT_USER_Edit_In_Progress)
+                    {
+                        Task.Delay(100).Wait();
+                    }
+                }
+
+                LogBox.Add("Creating backup of NTUSER.DAT", Brushes.DarkOrange);
+            }
+        }
+
+        internal static void Load_DEFAULTUSER_Hive()
+        {
+            ApplicationState.DEFAULT_USER_Edit_In_Progress = true;
+
+            xProcess.Run("C:\\Windows\\System32\\reg.exe", $"load {ApplicationState.DEFAULT_USER_Edit_WorkingDirectory} C:\\Users\\Default\\NTUSER.DAT", WaitForExit: true, HiddenExecute: true);    
+        }
+
+        internal static void Unload_DEFAULTUSER_Hive()
+        {
+            xProcess.Run("C:\\Windows\\System32\\taskkill.exe", "/im regedit.exe /f", WaitForExit: true, HiddenExecute: true);
+
+            GC.Collect();
+
+            xProcess.Run("C:\\Windows\\System32\\reg.exe", $"unload {ApplicationState.DEFAULT_USER_Edit_WorkingDirectory}", WaitForExit: true, HiddenExecute: true);
+
+            ApplicationState.DEFAULT_USER_Edit_In_Progress = false;
+        }
+        */
+
+
+
+
+
+
         ///<returns><see langword="Boolean"/>[2] { IsValid, IsPresent }</returns>
-        internal static Boolean[] VerboseHashCheck(String FilePath, String IsHash, xHash.Algorithm Algorithm = xHash.Algorithm.SHA256)
+        internal static Boolean[] VerboseHashCheck(String filePath, String IsHash, xHash.Algorithm algorithm = xHash.Algorithm.SHA256)
         {
             String efile;
             String rpath;
 
             try
             {
-                if (xHash.CompareHash(FilePath, IsHash, Algorithm))
+                if (xHash.CompareHash(filePath, IsHash, algorithm))
                 {
                     return new Boolean[] { true, true };
                 }
@@ -30,10 +72,10 @@ namespace WinUtil
                 {
                     CreatePathString();
 
-                    MainWindow.DispatchedLogBoxAdd(rpath, Brushes.Gray);
-                    MainWindow.DispatchedLogBoxAdd(efile, Brushes.OrangeRed, StayInLine: true);
-                    MainWindow.DispatchedLogBoxAdd(" ── ", Brushes.Gray, StayInLine: true);
-                    MainWindow.DispatchedLogBoxAdd("Invalide Hash", Brushes.Red, StayInLine: true);
+                    LogBox.Add(rpath, Brushes.Gray);
+                    LogBox.Add(efile, Brushes.OrangeRed, StayInLine: true);
+                    LogBox.Add(" ── ", Brushes.Gray, StayInLine: true);
+                    LogBox.Add("Invalide Hash", Brushes.Red, StayInLine: true);
 
                     return new Boolean[] { false, true };
                 }
@@ -42,22 +84,22 @@ namespace WinUtil
             {
                 CreatePathString();
 
-                MainWindow.DispatchedLogBoxAdd(rpath, Brushes.Gray);
-                MainWindow.DispatchedLogBoxAdd(efile, Brushes.OrangeRed, StayInLine: true);
-                MainWindow.DispatchedLogBoxAdd(" ── ", Brushes.Gray, StayInLine: true);
-                MainWindow.DispatchedLogBoxAdd("File missing", Brushes.Red, StayInLine: true);
+                LogBox.Add(rpath, Brushes.Gray);
+                LogBox.Add(efile, Brushes.OrangeRed, StayInLine: true);
+                LogBox.Add(" ── ", Brushes.Gray, StayInLine: true);
+                LogBox.Add("File missing", Brushes.Red, StayInLine: true);
 
                 return new Boolean[] { false, false };
             }
 
             void CreatePathString()
             {
-                String[] temp = FilePath.Split('\\');
+                String[] temp = filePath.Split('\\');
                 efile = temp[temp.Length - 1];
                 temp = temp.Skip(0).Take((temp.Length) - 1).ToArray();
                 rpath = String.Join("\\", temp);
 
-                if (FilePath.Contains('\\'))
+                if (filePath.Contains('\\'))
                 {
                     rpath += "\\";
                 }
@@ -70,7 +112,7 @@ namespace WinUtil
         {
             try
             {
-                IPAddress[] theaddress = Dns.GetHostAddresses("1dot1dot1dot1.cloudflare-dns.com");
+                _ = Dns.GetHostAddresses("1dot1dot1dot1.cloudflare-dns.com");
             }
             catch (Exception)
             {
@@ -86,7 +128,7 @@ namespace WinUtil
         ///<c>1</c> = usable (ready or after install)<br/>
         ///<c>2</c> = install failed
         ///</returns>
-        internal static Int32 WinGetIsInstalled(Boolean InstallOnMissing = false)
+        internal static Int32 WinGetIsInstalled(Boolean installOnMissing = false)
         {
             String[] Folders = Directory.EnumerateDirectories("C:\\Program Files\\WindowsApps").ToArray();
 
@@ -114,13 +156,13 @@ namespace WinUtil
                 }
             }
 
-            if (InstallOnMissing)
+            if (installOnMissing)
             {
-                MainWindow.DispatchedLogBoxAdd("Installing WinGet..", Brushes.DarkGreen);
+                LogBox.Add("Installing WinGet..", Brushes.DarkGreen);
 
-                if (VerboseHashCheck("assets\\" + Resource_Assets.VCLibsName, Resource_Assets.VCLibs)[0] && VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.WinGetName, Resource_Assets.WinGetHash)[0] && VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.Xaml27Name, Resource_Assets.Xaml27Hash)[0] && VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.WinGetLicenseName, Resource_Assets.WinGetLicenseHash)[0])
+                if (VerboseHashCheck("assets\\" + Resource_Assets.VCLibs_PathName, Resource_Assets.VCLibs_Hash)[0] && VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.WinGetName, Resource_Assets.WinGetHash)[0] && VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.Xaml27Name, Resource_Assets.Xaml27Hash)[0] && VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.WinGetLicenseName, Resource_Assets.WinGetLicenseHash)[0])
                 {
-                    xPowershell.Run("Add-AppxPackage -Path \"assets\\" + Resource_Assets.VCLibsName + "\"");
+                    xPowershell.Run($"Add-AppxPackage -Path \"assets\\{Resource_Assets.VCLibs_PathName}\"");
 
                     xPowershell.Run("Add-AppxPackage -Path \"assets\\WinGet\\" + Resource_Assets.Xaml27Name + "\"");
 
@@ -132,20 +174,20 @@ namespace WinUtil
                     {
                         xProcess.Run("winget.exe", RunAs: true, HiddenExecute: true);
 
-                        MainWindow.DispatchedLogBoxAdd("Done\n", Brushes.DarkCyan);
+                        LogBox.Add("Done\n", Brushes.DarkCyan);
 
                         return 1;
                     }
                     catch (Exception ex)
                     {
-                        MainWindow.DispatchedLogBoxAdd("[ERR] " + ex.ToString() + "\n", Brushes.Red);
+                        LogBox.Add("[ERR] " + ex.ToString() + "\n", Brushes.Red);
 
                         return 2;
                     }
                 }
                 else
                 {
-                    MainWindow.DispatchedLogBoxAdd("[WARN] Nothing changed, skipping\n", Brushes.OrangeRed);
+                    LogBox.Add("[WARN] Nothing changed, skipping\n", Brushes.OrangeRed);
 
                     return 2;
                 }
@@ -155,20 +197,5 @@ namespace WinUtil
                 return 0;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

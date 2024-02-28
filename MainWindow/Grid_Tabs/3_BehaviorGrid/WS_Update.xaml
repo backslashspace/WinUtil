@@ -1,0 +1,118 @@
+﻿<Window x:Class="WinUtil.Grid_Tabs.WS_Update"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        
+        Title="Update Settings"
+        Height="228" Width="756"
+        Background="{DynamicResource MainBackgroundColor}"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <!--#region WindowCrome -->
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            CaptionHeight="31"
+            GlassFrameThickness="0,0,0,1"
+            NonClientFrameEdges="Bottom"/>
+    </WindowChrome.WindowChrome>
+    <!--#endregion-->
+
+    <Grid Margin="0,31,0,0" Background="{DynamicResource MainBackgroundColor}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--#region Window Head -->
+
+        <!--#region Title -->
+        <Image
+            Source="\WND_!Main\icons\small_lsettings.png"
+            Margin="9,-24,0,0"
+            Height="16" Width="16"
+            RenderOptions.BitmapScalingMode="HighQuality" 
+            VerticalAlignment="Top" HorizontalAlignment="Left"
+            Grid.ColumnSpan="4"/>
+
+        <TextBlock x:Name="Window_Title"
+            Text="Windows Update Settings v1"
+            Foreground="#ccccce"
+            Margin="30,-24,0,0"
+            HorizontalAlignment="Left" VerticalAlignment="Top"
+            Width="299" Height="21"
+            Grid.ColumnSpan="4"/>
+        <!--#endregion-->
+
+        <!--#region Close_Button -->
+        <Rectangle x:Name="Close_Button_Background"
+            Fill="{DynamicResource  MainBackgroundColor}"
+            Margin="0,-31,0,0"
+            Height="31" Width="31"
+            VerticalAlignment="Top" HorizontalAlignment="Right"
+            Grid.ColumnSpan="4"/>
+
+        <Path x:Name="Close_Button_Icon_Path"
+	        Width="31" Height="31"
+            Margin="0,-31,0,0"
+	        Data="M 10.5,10.5 20.5,20.5 M 10.5,20.5 20.5,10.5"
+	        Stroke="{DynamicResource WindowInteractionStrokeColor}"
+	        StrokeThickness="1"
+            VerticalAlignment="Top" HorizontalAlignment="Right"
+            Grid.ColumnSpan="4"/>
+
+        <Button x:Name="Close_Button"
+            Focusable="False"
+            Click="Close_Button_Click"
+            WindowChrome.IsHitTestVisibleInChrome="True"
+            Margin="0,-31,0,0" HorizontalAlignment="Right"
+            Width="31" Height="31"
+            Opacity="0"
+            MouseEnter="Close_Button_Mouse_Is_Over"
+            MouseLeave="Close_Button_Mouse_Is_Not_Over"
+            PreviewMouseDown="Close_Button_Down"
+            VerticalAlignment="Top"
+            Grid.ColumnSpan="4"/>
+        <!--#endregion-->
+
+        <!--#endregion-->
+
+        <Button
+            Click="NoDriver"
+            VerticalContentAlignment="Center"
+            HorizontalContentAlignment="Center"
+            Width="162" Height="65"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            Grid.RowSpan="2">
+            <TextBlock FontSize="15" TextAlignment="Center">Deactivate Windows<LineBreak/>Update driver offering</TextBlock>
+        </Button>
+
+        <Button
+            Click="SecurityOnly"
+            Width="162" Height="65"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            Grid.Column="1">
+            <TextBlock FontSize="15" TextAlignment="Center">Security<LineBreak/>Updates only</TextBlock>
+        </Button>
+
+        <Button
+            Click="NoUpdates"
+            Width="162" Height="65"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            Grid.Column="2">
+            <TextBlock FontSize="15" TextAlignment="Center">Deactivate<LineBreak/>Updates</TextBlock>
+        </Button>
+        <Button
+            Click="ResetUpdateService"
+            Width="162" Height="65"
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            Grid.Column="3">
+            <TextBlock FontSize="15" TextAlignment="Center">Reset<LineBreak/>Update Service</TextBlock>
+        </Button>
+
+    </Grid>
+</Window>

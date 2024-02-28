@@ -15,7 +15,7 @@
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" Style="{DynamicResource ScrollViewer}">
 
-            <Grid Height="400">
+            <Grid Margin="3,0,0,0" Height="400">
 
                 <!--#region SysInfo -->
                 <Border

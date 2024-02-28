@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>WinUtil</RootNamespace>
     <AssemblyName>WinUtil</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <LangVersion>10.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -30,6 +30,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -54,7 +55,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <ApplicationIcon>WND_!Main\icons\icon_new.ico</ApplicationIcon>
+    <ApplicationIcon>MainWindow\icons\icon_new.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>App\app.manifest</ApplicationManifest>
@@ -95,37 +96,44 @@
     <Compile Include="Debug.cs" />
     <Compile Include="Ext_Resource_Assets.cs" />
     <Compile Include="Machine_Info.cs" />
-    <Compile Include="WND_!Main\Grid_Tabs\!Control_Events.cs" />
-    <Compile Include="WND_!Main\Grid_Tabs\2_AppearanceGrid.xaml.cs">
+    <Compile Include="MainWindow\Grid_Tabs\2_AppearanceGrid.xaml.cs">
       <DependentUpon>2_AppearanceGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WND_!Main\Grid_Tabs\1_OverviewGrid.xaml.cs">
+    <Compile Include="MainWindow\Grid_Tabs\1_OverviewGrid.xaml.cs">
       <DependentUpon>1_OverviewGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WND_!Main\Grid_Tabs\3_BehaviorGrid.xaml.cs">
+    <Compile Include="MainWindow\Grid_Tabs\3_BehaviorGrid\3_BehaviorGrid.xaml.cs">
       <DependentUpon>3_BehaviorGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WND_!Main\Grid_Tabs\4_PrivacyGrid.xaml.cs">
+    <Compile Include="MainWindow\Grid_Tabs\3_BehaviorGrid\WS_Update.xaml.cs">
+      <DependentUpon>WS_Update.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow\Grid_Tabs\4_PrivacyGrid.xaml.cs">
       <DependentUpon>4_PrivacyGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WND_!Main\Grid_Tabs\5_SecurityGrid.xaml.cs">
+    <Compile Include="MainWindow\Grid_Tabs\5_SecurityGrid.xaml.cs">
       <DependentUpon>5_SecurityGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WND_!Main\Grid_Tabs\6_ProgramsGrid.xaml.cs">
+    <Compile Include="MainWindow\Grid_Tabs\6_ProgramsGrid.xaml.cs">
       <DependentUpon>6_ProgramsGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WND_!Main\MainWindow_internal_assets.cs" />
-    <Compile Include="WND_!Main\MainWindow_user_intractable.cs" />
-    <Compile Include="WND_!Main\temp.cs" />
-    <Compile Include="WND_Dialogue\Dialogue.xaml.cs">
+    <Compile Include="MainWindow\LogBox.cs" />
+    <Compile Include="MainWindow\WorkerIconControl.cs" />
+    <Compile Include="MainWindow\MainWindow_user_intractable.cs" />
+    <Compile Include="MainWindow\Scaling_Main.cs" />
+    <Compile Include="DialogueWindow\Dialogue.xaml.cs">
       <DependentUpon>Dialogue.xaml</DependentUpon>
     </Compile>
     <Compile Include="Global_Functions.cs" />
-    <Compile Include="WND_Selection\Dynamic_Select.xaml.cs">
+    <Compile Include="SelectionWindow\Dynamic_Select.xaml.cs">
       <DependentUpon>Dynamic_Select.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WND_Selection\Frame_Control.cs" />
-    <Page Include="WND_Dialogue\Dialogue.xaml">
+    <Compile Include="SelectionWindow\Frame_Control.cs" />
+    <Page Include="MainWindow\Grid_Tabs\3_BehaviorGrid\WS_Update.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DialogueWindow\Dialogue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -133,15 +141,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WND_!Main\src_Dictionary.xaml">
+    <Page Include="MainWindow\src_Dictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WND_!Main\Grid_Tabs\2_AppearanceGrid.xaml">
+    <Page Include="MainWindow\Grid_Tabs\2_AppearanceGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WND_!Main\MainWindow.xaml">
+    <Page Include="MainWindow\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -149,32 +157,32 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="WND_!Main\Frame_Control.cs" />
-    <Compile Include="WND_!Main\MainWindow.xaml.cs">
+    <Compile Include="MainWindow\Frame_Control.cs" />
+    <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="WND_!Main\Grid_Tabs\1_OverviewGrid.xaml">
+    <Page Include="MainWindow\Grid_Tabs\1_OverviewGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WND_!Main\Grid_Tabs\3_BehaviorGrid.xaml">
+    <Page Include="MainWindow\Grid_Tabs\3_BehaviorGrid\3_BehaviorGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WND_!Main\Grid_Tabs\4_PrivacyGrid.xaml">
+    <Page Include="MainWindow\Grid_Tabs\4_PrivacyGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WND_!Main\Grid_Tabs\5_SecurityGrid.xaml">
+    <Page Include="MainWindow\Grid_Tabs\5_SecurityGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WND_!Main\Grid_Tabs\6_ProgramsGrid.xaml">
+    <Page Include="MainWindow\Grid_Tabs\6_ProgramsGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WND_Selection\Dynamic_Select.xaml">
+    <Page Include="SelectionWindow\Dynamic_Select.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -197,6 +205,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="App\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -239,47 +248,47 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="WND_!Main\icons\icon_new.ico" />
+    <Resource Include="MainWindow\icons\icon_new.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="notes.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="WND_!Main\icons\shell_home.ico" />
+    <Resource Include="MainWindow\icons\shell_home.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="WND_!Main\icons\shell_sustem.ico" />
+    <Resource Include="MainWindow\icons\shell_sustem.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="WND_!Main\icons\shell_tele.ico" />
+    <Resource Include="MainWindow\icons\shell_tele.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="WND_!Main\icons\shell_key.ico" />
+    <Resource Include="MainWindow\icons\shell_key.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="WND_!Main\icons\shell_youser.ico" />
+    <Resource Include="MainWindow\icons\shell_youser.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="WND_!Main\icons\shell_luks.ico" />
+    <Resource Include="MainWindow\icons\shell_luks.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="WND_!Main\icons\shell_desk.ico" />
+    <Resource Include="MainWindow\icons\shell_desk.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="WND_Dialogue\Icons\imageres_104.ico" />
-    <Resource Include="WND_Dialogue\Icons\imageres_105.ico" />
-    <Resource Include="WND_Dialogue\Icons\imageres_106.ico" />
-    <Resource Include="WND_Dialogue\Icons\imageres_107.ico" />
-    <Resource Include="WND_Dialogue\Icons\imageres_114.ico" />
-    <Resource Include="WND_Dialogue\Icons\imageres_150.ico" />
-    <Resource Include="WND_Dialogue\Icons\imageres_78.ico" />
-    <Resource Include="WND_Dialogue\Icons\imageres_84.ico" />
-    <Resource Include="WND_Dialogue\Icons\imageres_98.ico" />
-    <Resource Include="WND_Dialogue\Icons\imageres_99.ico" />
-    <Resource Include="WND_Dialogue\Icons\shell32_14.ico" />
-    <Resource Include="WND_Dialogue\Icons\shell32_16826.ico" />
-    <Resource Include="WND_Dialogue\Icons\shell32_1_16802.ico" />
-    <Resource Include="WND_Dialogue\Icons\shell32_48.ico" />
+    <Resource Include="DialogueWindow\Icons\imageres_104.ico" />
+    <Resource Include="DialogueWindow\Icons\imageres_105.ico" />
+    <Resource Include="DialogueWindow\Icons\imageres_106.ico" />
+    <Resource Include="DialogueWindow\Icons\imageres_107.ico" />
+    <Resource Include="DialogueWindow\Icons\imageres_114.ico" />
+    <Resource Include="DialogueWindow\Icons\imageres_150.ico" />
+    <Resource Include="DialogueWindow\Icons\imageres_78.ico" />
+    <Resource Include="DialogueWindow\Icons\imageres_84.ico" />
+    <Resource Include="DialogueWindow\Icons\imageres_98.ico" />
+    <Resource Include="DialogueWindow\Icons\imageres_99.ico" />
+    <Resource Include="DialogueWindow\Icons\shell32_14.ico" />
+    <Resource Include="DialogueWindow\Icons\shell32_16826.ico" />
+    <Resource Include="DialogueWindow\Icons\shell32_1_16802.ico" />
+    <Resource Include="DialogueWindow\Icons\shell32_48.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
@@ -294,10 +303,34 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="WND_!Main\icons\small_keyboard.png" />
+    <Resource Include="MainWindow\icons\small_keyboard.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="WND_!Main\icons\small_taskbar.png" />
+    <Resource Include="MainWindow\icons\small_taskbar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MainWindow\icons\small_gamebar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MainWindow\icons\small_wrench.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MainWindow\icons\small_window_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MainWindow\icons\small_lsettings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MainWindow\icons\small_menuas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MainWindow\icons\small_stat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MainWindow\icons\small_invertedkeyboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="MainWindow\icons\small_sac.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

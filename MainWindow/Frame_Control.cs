@@ -79,7 +79,7 @@ namespace WinUtil
 
                 //
 
-                LogScrollViewer_Static.Margin = new Thickness(-1, -1, 0, 0);
+                LogScrollViewer_Static.Margin = new Thickness(-3, -1, 0, 0);
             }
             else
             {
@@ -97,7 +97,7 @@ namespace WinUtil
 
                 //
 
-                LogScrollViewer_Static.Margin = new Thickness(-1, -1, 0, 4);
+                LogScrollViewer_Static.Margin = new Thickness(-3, -1, 0, 4);
             }
         }
 

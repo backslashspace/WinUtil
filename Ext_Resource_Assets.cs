@@ -15,10 +15,36 @@ namespace WinUtil
     internal readonly struct Resource_Assets
     {
         internal const String HyperKey_UnReg_PathName = "assets\\ProgramFiles\\HyperKey_UnReg.exe";
-        internal const String HyperKey_UnReg_Hash = "b760560389144be165c249a7dd8dbd4fa68f7623653b16f9ed695238068bc532";
+        internal const String HyperKey_UnReg_Hash = "793e54de6182aa63f92470797641e934d4d2d2f2708db8b3cc6dd85540181df6";
 
         internal const String SetACL_Hash = "4efc87b7e585fcbe4eaed656d3dbadaec88beca7f92ca7f0089583b428a6b221";
         internal const String SetACL_PathName = "assets\\SetACL.exe";
+
+        internal const String VCLibs_PathName = "assets\\ProgramFiles\\Microsoft.VCLibs.140.00.appx";
+        internal const String VCLibs_Hash = "9bfde6cfcc530ef073ab4bc9c4817575f63be1251dd75aaa58cb89299697a569";
+
+        internal const String WT_Hash = "ba6fc6854e713094b4009cf2021e8b4887cff737ab4b9c4f9390462dd2708298";
+        internal const String WT_PathName = "assets\\ProgramFiles\\Windows_Terminal\\efc17b22f5144899a8ae73644add609f.msixbundle";
+        internal const String WT_License_PathName = "assets\\ProgramFiles\\Windows_Terminal\\efc17b22f5144899a8ae73644add609f_License1.xml";
+        internal const String WT_License_Hash = "f42e88d519acb2e4e15f929d5fd1fd07acb6ba4e2fe797501a329a33a5564675";
+
+        internal const String su10exe = "assets\\Resources\\O&O\\OOSU10-v1.9.1436.exe";
+        internal const String su10exeHash = "7335914d30d8ede5431c4ba32f56a79a397a6f38bfd44e90f62324f63afeda65";
+        internal const String su10settings = "assets\\Resources\\O&O\\ooshutup10-v1.9.1436.cfg";
+        internal const String su10settingsHash = "37a5bd4b757f0811934eb73915ace63374fd94925e0ce8c41072772f1425a6fb";
+
+        internal const String Host_INIT_PathName = "assets\\Resources\\SiSyPHuS_Win10_2022_Host_INIT.exe";
+        internal const String Host_INIT_Hash = "3ed088f33f93d58941dacff5020a878865b8993d811ea037b0a217db7f1b18ee";
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -43,13 +69,10 @@ namespace WinUtil
         internal const String CurDefMono = "612e141b508c50831230118bb310fa22ab3624842c6bd0ac799f1c210ca4225a";
         internal const String CurDefHybrid = "6e845c04e853967a0f3c71c7853bd7a5f7b6e74feb9769e340e0147708d751ce";
 
-        internal const String VCLibs = "9bfde6cfcc530ef073ab4bc9c4817575f63be1251dd75aaa58cb89299697a569";
-        internal const String VCLibsName = "Microsoft.VCLibs.140.00.appx";
 
-        internal const String WT = "ba6fc6854e713094b4009cf2021e8b4887cff737ab4b9c4f9390462dd2708298";
-        internal const String WTName = "efc17b22f5144899a8ae73644add609f.msixbundle";
-        internal const String WTLicenseName = "efc17b22f5144899a8ae73644add609f_License1.xml";
-        internal const String WTLicenseHash = "f42e88d519acb2e4e15f929d5fd1fd07acb6ba4e2fe797501a329a33a5564675";
+
+        
+        
 
         internal const String WinGetName = "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle";
         internal const String WinGetHash = "060cf918cd11feea62a25b8c594c81def5f35e4f53aa3c92a3ef1806e902a2e8";
@@ -58,10 +81,7 @@ namespace WinUtil
         internal const String Xaml27Name = "Microsoft.UI.Xaml.2.7_7.2208.15002.0_x64__8wekyb3d8bbwe.appx";
         internal const String Xaml27Hash = "efa0b1396a134a654c41bd9f4b9f084a5dfe19ad6d492cd99313b0b898a0767f";
 
-        internal const String su10exe = "OOSU10-v1.9.1435.exe";
-        internal const String su10exeHash = "22d3a45792b749e70b908088e95c19abae0707b248fcb83744b23bc6f662425b";
-        internal const String su10settings = "Settings-v1.9.1435.cfg";
-        internal const String su10settingsHash = "1a2792ac835df3cd2a3f6097bdb8abefce3200eb87afbf6f2e1a44b4f0685220";
+        
 
         internal const String Nano = "8b31e1e10f3383ff6ca49e4f65e738805015351984ad67517448e3e7c53c43a2";
 

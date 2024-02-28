@@ -215,7 +215,7 @@
 
             <Button
                 Grid.Row="2"
-                Content="Cancle"
+                Content="Cancel"
                 Click="Close_Button_Click"
                 Margin="0,24,132,28"
                 Width="95" Height="32"

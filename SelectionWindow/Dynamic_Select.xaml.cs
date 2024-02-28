@@ -13,7 +13,7 @@ namespace WinUtil
         internal Boolean[] Result;
 
         /// <summary><see langword="null"/> until window was closed via 'close', 'cancel' or 'continue'</summary>
-        internal Boolean? Was_Cancled = null;
+        internal Boolean? Was_Canceled = null;
 
         //# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -31,7 +31,7 @@ namespace WinUtil
         /// </remarks>
         ///
         /// <returns><see langword="bool"/>[] <paramref name="Result"/> = (input order = output order)<br/>
-        /// <see langword="bool"/>? <paramref name="Was_Cancled"/> = (<see langword="null"/> until window was closed via 'close', 'cancel' or 'continue')</returns>
+        /// <see langword="bool"/>? <paramref name="Was_Canceled"/> = (<see langword="null"/> until window was closed via 'close', 'cancel' or 'continue')</returns>
         ///
         /// <exception cref="ArgumentException"></exception>
         public Dynamic_Select(String Title, String IconPath, String Head, String Body, Object[,] Fields)
@@ -299,7 +299,7 @@ namespace WinUtil
                 Result[I] = (Boolean)CheckBoxes[I].IsChecked;
             }
 
-            Was_Cancled = false;
+            Was_Canceled = false;
 
             Close();
         }

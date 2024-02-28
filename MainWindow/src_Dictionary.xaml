@@ -429,13 +429,26 @@
                             <Setter Property="Background" TargetName="border" Value="#272727"/>
                             <Setter Property="BorderBrush" TargetName="border" Value="#1d1d1d"/>
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="border" Value="#1d1d1d"/>
-                            <Setter Property="BorderBrush" TargetName="border" Value="#101010"/>
-                            <Setter Property="BorderThickness" TargetName="border" Value="5"/>
-                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="#747474"/>
-                        </Trigger>
                     </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Setting_Button_NoClick" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource Default_FocusVisual}"/>
+        <Setter Property="Background" Value="#2b2b2b"/>
+        <Setter Property="BorderBrush" Value="#1d1d1d"/>
+        <Setter Property="Foreground" Value="{DynamicResource FontColor}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" SnapsToDevicePixels="true">
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -465,13 +478,13 @@
                                     </Ellipse.Effect>
                                 </Ellipse>
 
-                                
+
                             </Border>
                         </Border>
                     </Viewbox>
                     <ControlTemplate.Triggers>
                         <EventTrigger RoutedEvent="Checked">
-                            
+
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation
@@ -497,14 +510,14 @@
                                         Storyboard.TargetProperty="(Ellipse.Fill).(SolidColorBrush.Color)"
                                         To="#202020"
                                         Duration="0:0:0.1"/>
-                                    
+
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
                         <EventTrigger RoutedEvent="Unchecked">
                             <BeginStoryboard>
                                 <Storyboard>
-                                    
+
                                     <ColorAnimation
                                         Storyboard.TargetName="Border"
                                         Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
@@ -516,7 +529,7 @@
                                         Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
                                         To="#c6c6c6"
                                         Duration="0:0:0.1"/>
-                                    
+
                                     <ThicknessAnimation
                                         Storyboard.TargetName="Ellipse"
                                         Storyboard.TargetProperty="Margin"
@@ -528,6 +541,99 @@
                                         Storyboard.TargetProperty="(Ellipse.Fill).(SolidColorBrush.Color)"
                                         To="#f3f3f3"
                                         Duration="0:0:0.1"/>
+
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Default_Switch" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Viewbox>
+                        <Border x:Name="OuterBorder"
+                        BorderThickness="1"
+                        BorderBrush="#cfcfcf"
+                        CornerRadius="10">
+                            <Border x:Name="Border"
+                            CornerRadius="10"
+                            Background="#00ff"
+                            Margin="-0.75"
+                            Width="40" Height="20">
+
+                                <Ellipse x:Name="Ellipse"
+                                    Fill="#cfcfcf" Stretch="Uniform"
+                                    Margin="4,4,4,4"
+                                    HorizontalAlignment="Stretch">
+                                </Ellipse>
+
+                            </Border>
+                        </Border>
+                    </Viewbox>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="Checked">
+
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation
+                                    Storyboard.TargetName="Border"
+                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                    To="#4cc2ff"
+                                    Duration="0:0:0.1"/>
+
+                                    <ColorAnimation
+                                    Storyboard.TargetName="OuterBorder"
+                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                    To="#4cc2ff"
+                                    Duration="0:0:0.1"/>
+
+                                    <ThicknessAnimation 
+                                    Storyboard.TargetName="Ellipse"
+                                    Storyboard.TargetProperty="Margin"
+                                    To="24,4,4,4"
+                                    Duration="0:0:0.1"/>
+
+                                    <ColorAnimation 
+                                    Storyboard.TargetName="Ellipse"
+                                    Storyboard.TargetProperty="(Ellipse.Fill).(SolidColorBrush.Color)"
+                                    To="#000000"
+                                    Duration="0:0:0.1"/>
+
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Unchecked">
+                            <BeginStoryboard>
+                                <Storyboard>
+
+                                    <ColorAnimation
+                                    Storyboard.TargetName="Border"
+                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
+                                    To="#00ff"
+                                    Duration="0:0:0.1"/>
+
+                                    <ColorAnimation
+                                    Storyboard.TargetName="OuterBorder"
+                                    Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)"
+                                    To="#cfcfcf"
+                                    Duration="0:0:0.1"/>
+
+                                    <ThicknessAnimation
+                                    Storyboard.TargetName="Ellipse"
+                                    Storyboard.TargetProperty="Margin"
+                                    To="4,4,4,4"
+                                    Duration="0:0:0.1"/>
+
+                                    <ColorAnimation 
+                                    Storyboard.TargetName="Ellipse"
+                                    Storyboard.TargetProperty="(Ellipse.Fill).(SolidColorBrush.Color)"
+                                    To="#cfcfcf"
+                                    Duration="0:0:0.1"/>
 
                                 </Storyboard>
                             </BeginStoryboard>

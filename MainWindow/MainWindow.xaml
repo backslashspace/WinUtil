@@ -40,7 +40,7 @@
 
         <!--#region Title -->
         <Image x:Name="MainWindowIcon"
-            Source="/WND_!Main/icons/icon_new.ico"
+            Source="/MainWindow/icons/icon_new.ico"
             Margin="9,-24,0,0"
             Height="16" Width="16"
             Visibility="Visible"
@@ -60,7 +60,7 @@
         </Viewbox>
 
         <TextBlock x:Name="Window_Title"
-            Text="WinUtil v2.0.0-dev3"
+            Text="WinUtil v2.0.0-dev6"
             Foreground="#aaaaaa"
             Margin="30,-24,0,0"
             HorizontalAlignment="Left" VerticalAlignment="Top"
@@ -189,7 +189,7 @@
                 <Grid>
                     <TextBlock Text="        Overview"/>
                     <Image
-                        Source="/WND_!Main/icons/shell_home.ico"
+                        Source="/MainWindow/icons/shell_home.ico"
                         x:Name="Navigation_Button_Overview_Icon"
                         Margin="7,0,0,0"
                         Height="18"
@@ -209,7 +209,7 @@
                 <Grid>
                     <TextBlock Text="        Appearance"/>
                     <Image
-                        Source="/WND_!Main/icons/shell_luks.ico"
+                        Source="/MainWindow/icons/shell_luks.ico"
                         x:Name="Navigation_Button_Appearance_Icon"
                         Margin="7,2,0,0"
                         Height="18"
@@ -229,7 +229,7 @@
                 <Grid>
                     <TextBlock Text="        System Behavior"/>
                     <Image x:Name="Navigation_Button_Behavior_Icon"
-                        Source="/WND_!Main/icons/shell_sustem.ico"
+                        Source="/MainWindow/icons/shell_sustem.ico"
                         Margin="7,1,0,0"
                         Height="18"
                         RenderOptions.BitmapScalingMode="HighQuality" 
@@ -248,7 +248,7 @@
                 <Grid>
                     <TextBlock Text="        Privacy"/>
                     <Image x:Name="Navigation_Button_Privacy_Icon"
-                        Source="/WND_!Main/icons/shell_tele.ico"
+                        Source="/MainWindow/icons/shell_tele.ico"
                         Margin="7,1,0,0"
                         Height="18"
                         RenderOptions.BitmapScalingMode="HighQuality" 
@@ -267,7 +267,7 @@
                 <Grid>
                     <TextBlock Text="        Security"/>
                     <Image x:Name="Navigation_Button_Security_Icon"
-                        Source="/WND_!Main/icons/shell_key.ico"
+                        Source="/MainWindow/icons/shell_key.ico"
                         Margin="7,1,0,0"
                         Height="18"
                         RenderOptions.BitmapScalingMode="HighQuality" 
@@ -286,7 +286,7 @@
                 <Grid>
                     <TextBlock Text="        Programs"/>
                     <Image x:Name="Navigation_Button_Programs_Icon"
-                        Source="/WND_!Main/icons/shell_desk.ico"
+                        Source="/MainWindow/icons/shell_desk.ico"
                         Margin="7,1,0,0"
                         Height="18"
                         RenderOptions.BitmapScalingMode="HighQuality" 
@@ -299,13 +299,13 @@
         <!--#endregion-->
 
         <!--#region Content Area -->
-        <Grid Grid.Column="1" Grid.Row="0" Margin="45,0,0,4">
+        <Grid Grid.Column="1" Grid.Row="0" Margin="7,0,0,4">
 
             <controls:OverviewGrid x:Name="OverviewGrid" Visibility="Visible"/>
 
             <controls:AppearanceGrid x:Name="AppearanceGrid" Visibility="Hidden"/>
 
-            <controls:BehaviorGrid x:Name="BehaviorGrid" Visibility="Collapsed"/>
+            <controls:BehaviorGrid x:Name="BehaviorGrid" Visibility="Hidden"/>
 
             <controls:PrivacyGrid x:Name="PrivacyGrid" Visibility="Collapsed"/>
 
@@ -322,12 +322,12 @@
             BorderThickness="4,4,0,0"
             CornerRadius="4,0,0,0"
             Grid.Column="1"
-            Margin="4,4,0,0"
+            Margin="10,4,0,0"
             Grid.Row="1">
 
             <ScrollViewer x:Name="Log_ScrollViewer" Style="{DynamicResource ScrollViewer}"
                 VerticalScrollBarVisibility="Auto"
-                Margin="-1,-1,0,4">
+                Margin="-3,-1,0,4">
                 <!--#region scrollbar offset because of border -->
                 <ScrollViewer.Template>
                     <ControlTemplate TargetType="{x:Type ScrollViewer}">
@@ -363,7 +363,7 @@
         <Button 
             Click="Restart_Explorer"
             Content="Restart Explorer"
-            Margin="10,0,10,13" VerticalAlignment="Bottom" Height="34"
+            Margin="10,0,0,13" VerticalAlignment="Bottom" Height="34"
             Grid.Row="1"/>
 
         <!-- ####################################################### -->
@@ -375,7 +375,7 @@
             IsEnabled="False"
             Click="Button_Debug"
             Content="Debug"
-            Margin="10,0,10,51" VerticalAlignment="Bottom" Height="34"
+            Margin="10,0,0,51" VerticalAlignment="Bottom" Height="34"
             Grid.Row="1"/>
 
     </Grid>

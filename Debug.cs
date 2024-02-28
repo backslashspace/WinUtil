@@ -10,8 +10,6 @@ using System.Windows.Media;
 //
 using EXT.Launcher.Process;
 using EXT.System.Registry;
-using System.CodeDom.Compiler;
-using System.Threading.Tasks;
 
 namespace WinUtil
 {
@@ -120,18 +118,19 @@ namespace WinUtil
 
         private void Button_Debug(object sender, RoutedEventArgs e)
         {
+            //10
+
+            //(_, Int32 ExitCode) = xProcess.Run(Resource_Assets.Host_INIT_PathName, "e22afd680ce7b8f23fad799fa3beef2dbce66e42e8877a9f2f0e3fd0b55619c9", WaitForExit: true);
 
 
-            
-
-
+            return;
 
             #region WARN
             Dialogue DBG = new
                 ("WinUtil: Debug",
                 "Execute offensive debug?",
                 Dialogue.Icons.Shield_Exclamation_Mark,
-                "Cancle",
+                "Cancel",
                 "Act",
                 0);
 
@@ -139,7 +138,7 @@ namespace WinUtil
 
             if (DBG.Result != 1)
             {
-                DispatchedLogBoxAdd("[i] Cancled debug", Brushes.Orange);
+                LogBox.Add("[i] Canceld debug", Brushes.Orange);
 
                 return;
             }
@@ -211,7 +210,7 @@ namespace WinUtil
                     "Notepad++ installation was found at\nC:\\Program Files\\Notepad++\n\nContinue to install / overwrite config?",
                     Dialogue.Icons.Circle_Question,
                     "Continue",
-                    "Cancle",
+                    "Cancel",
                     0);
 
                 Found.ShowDialog();
@@ -242,17 +241,17 @@ namespace WinUtil
             {
                 CustomInstall = true;
 
-                DispatchedLogBoxAdd("Installing Notepad++ with custom settings", Brushes.DarkCyan);
+                LogBox.Add("Installing Notepad++ with custom settings", Brushes.DarkCyan);
             }
             else
             {
-                DispatchedLogBoxAdd("Installing Notepad++", Brushes.DarkCyan);
+                LogBox.Add("Installing Notepad++", Brushes.DarkCyan);
             }
 
             //
 
             xProcess.Run("assets\\Program\\Notepad++\\npp.8.5.8.Installer.x64.exe", "/S", WaitForExit: true);
-            DispatchedLogBoxAdd("Installed Notepad++", Brushes.DarkGray);
+            LogBox.Add("Installed Notepad++", Brushes.DarkGray);
 
             if (CustomInstall)
             {
@@ -267,12 +266,12 @@ namespace WinUtil
                     {
                         File.Copy("assets\\Program\\Notepad++\\CascadiaMono.ttf", "C:\\Windows\\Fonts\\CascadiaMono.ttf", false);
 
-                        DispatchedLogBoxAdd("Copied 'Cascadia Mono' to C:\\Windows\\Fonts\\", Brushes.DarkGray);
+                        LogBox.Add("Copied 'Cascadia Mono' to C:\\Windows\\Fonts\\", Brushes.DarkGray);
                     }
 
                     Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Cascadia Mono Regular (TrueType)", "CascadiaMono.ttf", RegistryValueKind.String);
 
-                    DispatchedLogBoxAdd("Registered font", Brushes.DarkGray);
+                    LogBox.Add("Registered font", Brushes.DarkGray);
                 }
 
                 xProcess.Run("assets\\7z.exe", $"x \"assets\\Program\\Notepad++\\NPP(NoLogVS-Config).zip\" -o\"C:\\Users\\{Environment.UserName}\\AppData\\Roaming\\Notepad++\" -y", HiddenExecute: true, WaitForExit: true);
@@ -283,10 +282,10 @@ namespace WinUtil
                 }
 
                 xProcess.Run("assets\\7z.exe", $"x \"assets\\Program\\Notepad++\\exe.zip\" -o\"C:\\Program Files\\Notepad++\" -y", HiddenExecute: true, WaitForExit: true);
-                DispatchedLogBoxAdd("Copied program files", Brushes.DarkGray);
+                LogBox.Add("Copied program files", Brushes.DarkGray);
 
                 Registry.SetValue(@"HKEY_CLASSES_ROOT\Applications\notepad++.exe\DefaultIcon", "", "C:\\Windows\\System32\\imageres.dll,97", RegistryValueKind.String);
-                DispatchedLogBoxAdd("Set default file icon for notepad++.exe", Brushes.DarkGray);
+                LogBox.Add("Set default file icon for notepad++.exe", Brushes.DarkGray);
             }
 
 

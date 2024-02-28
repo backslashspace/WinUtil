@@ -9,13 +9,36 @@ namespace WinUtil.Grid_Tabs
 {
     public partial class OverviewGrid : UserControl
     {
+        internal void SetInfoBox(ref String os, ref String edition, ref String displayVersion, ref String versionNumber, ref String UEFIIsOn, ref String secureBootIsOn, ref String licenseMessage)
+        {
+            OSPType.Text = os;
+            OSPEdition.Text = edition;
+
+            WinVersion.Text = displayVersion;
+            BaU.Text = versionNumber;
+
+            SysType.Text = UEFIIsOn;
+            SecBoot.Text = secureBootIsOn;
+
+            LicenseStatus.Text = licenseMessage;
+        }
+
+
         public OverviewGrid()
         {
             InitializeComponent();
 
-            Task.Run(() => SysUptimeClock());
+            Thread uptimeClock = new(() => SysUptimeClock());
+            uptimeClock.Name = "OverviewGrid - SysUptimeClock";
+            uptimeClock.Start();
+
+            Loaded += OnLoaded;
         }
 
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+           
+        }
 
         #region LogBoxAdd
         internal delegate void Overview_Grid_Log_Event(String Text, SolidColorBrush Foreground, SolidColorBrush Background, Boolean StayInLine, Boolean ScrollToEnd, FontWeight FontWeight);
@@ -62,7 +85,7 @@ namespace WinUtil.Grid_Tabs
 
 
 
-        internal void SysUptimeClock()
+        private void SysUptimeClock()
         {
             TimeSpan uptime = TimeSpan.FromMilliseconds(Environment.TickCount);
 
