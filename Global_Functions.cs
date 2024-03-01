@@ -9,7 +9,6 @@ using System.Windows.Media;
 using EXT.HashTools;
 using EXT.Launcher.Powershell;
 using EXT.Launcher.Process;
-using Microsoft.Win32;
 
 namespace WinUtil
 {

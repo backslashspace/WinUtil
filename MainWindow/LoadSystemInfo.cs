@@ -22,58 +22,77 @@ namespace WinUtil
     {
         internal static void Load()
         {
-            //get os version
             try
             {
-                Machine.OSMajorVersion = Int32.Parse(xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentBuildNumber", RegistryValueKind.String, false));
-                Machine.OSMinorVersion = xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "UBR", RegistryValueKind.DWord, false);
-
-                LogBox.Add("Obtained OS version", Brushes.DarkGray);
-            }
-            catch (Exception ex)
-            {
-                LogBox.Add($"Error obtaining Version info: {ex.Message}\n", Brushes.Red);
-            }
-
-            //get os edition
-            switch (xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "InstallationType", RegistryValueKind.String).ToLower())
-            {
-                case "server":
-                    Machine.Role = Machine.HostRole.Server;
-                    if (Machine.OSMajorVersion >= 20348)
-                    {
-                        Machine.WindowPlatformFeatureCompliance = Machine.OSPlatformFeatureCompliance.Windows11_Server2022;
-                    }
-                    break;
-                case "client":
-                    if (Machine.OSMajorVersion >= 22000)
-                    {
-                        Machine.UIVersion = Machine.WindowsUIVersion.Windows11;
-                        Machine.WindowPlatformFeatureCompliance = Machine.OSPlatformFeatureCompliance.Windows11_Server2022;
-                    }
-                    break;
-            }
-
-            LogBox.Add("Obtained OS edition", Brushes.DarkGray);
-
-            Application.Object.AppearanceGrid.SetContextButtonVisibility();
-
-            //check launch hash
-            try
-            {
-                if (!Environment.GetCommandLineArgs()[1].Equals("e22afd680ce7b8f23fad799fa3beef2dbce66e42e8877a9f2f0e3fd0b55619c9"))
+                //check launch hash
+                try
                 {
-                    LogBox.Add($"[Warn] Invalid launch hash: \"{Environment.GetCommandLineArgs()[1]}\"\n", Brushes.Orange, FontWeight: FontWeights.Bold);
+                    if (!Environment.GetCommandLineArgs()[1].Equals("e22afd680ce7b8f23fad799fa3beef2dbce66e42e8877a9f2f0e3fd0b55619c9"))
+                    {
+                        LogBox.Add($"[Warn] Invalid launch hash: \"{Environment.GetCommandLineArgs()[1]}\"\n", Brushes.Orange, FontWeight: FontWeights.Bold);
+                    }
                 }
-            }
-            catch (System.IndexOutOfRangeException)
-            {
-               Application.Dispatcher.Invoke(() => Application.Object.Window_Title.Text += " - Direct start");
-            }
+                catch (System.IndexOutOfRangeException)
+                {
+                    Application.Dispatcher.Invoke(() => Application.Object.Window_Title.Text += " - Direct start");
+                }
 
-            //load info
-            try
-            {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                //get os version
+                try
+                {
+                    Machine.OSMajorVersion = Int32.Parse(xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentBuildNumber", RegistryValueKind.String, false));
+                    Machine.OSMinorVersion = xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "UBR", RegistryValueKind.DWord, false);
+
+                    LogBox.Add("Obtained OS version", Brushes.DarkGray);
+                }
+                catch (Exception ex)
+                {
+                    LogBox.Add($"Error obtaining Version info: {ex.Message}\n", Brushes.Red);
+                }
+
+                //get os edition
+                switch (xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "InstallationType", RegistryValueKind.String).ToLower())
+                {
+                    case "server":
+                        Machine.Role = Machine.HostRole.Server;
+                        if (Machine.OSMajorVersion >= 20348)
+                        {
+                            Machine.WindowPlatformFeatureCompliance = Machine.OSPlatformFeatureCompliance.Windows11_Server2022;
+                        }
+                        break;
+                    case "client":
+                        if (Machine.OSMajorVersion >= 22000)
+                        {
+                            Machine.UIVersion = Machine.WindowsUIVersion.Windows11;
+                            Machine.WindowPlatformFeatureCompliance = Machine.OSPlatformFeatureCompliance.Windows11_Server2022;
+                        }
+                        break;
+                }
+
+                LogBox.Add("Obtained OS edition", Brushes.DarkGray);
+
+                Application.Dispatcher.BeginInvoke(new Action(() => Application.Object.AppearanceGrid.External_Set_OS_Aware_Context_Button_State()));
+
+                //
+
                 Machine.NetBiosHostname = Environment.MachineName;
                 Machine.Hostname = System.Environment.GetEnvironmentVariable("COMPUTERNAME");
                 LogBox.Add($"Hostname = {Machine.Hostname}\nNetBios Hostname = {Machine.NetBiosHostname}", Brushes.DarkGray);
@@ -114,7 +133,7 @@ namespace WinUtil
                 LogBox.Add($"Local Administrator group name = {Machine.AdminGroupName}", Brushes.DarkGray);
 
                 //gets exe path
-                Machine.ExePath = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+                Machine.ExePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
                 LogBox.Add("Obtaining Windows license information.. ", Brushes.DarkGray);
 
@@ -128,10 +147,7 @@ namespace WinUtil
                 }
 
                 LogBox.Add(LicenseMessage, Brushes.DarkGray, StayInLine: true);
-
-                //
-
-                OverviewGrid.LicenseMessage = LicenseMessage;
+                Application.Dispatcher.BeginInvoke(new Action(() => Application.Object.OverviewGrid.LicenseStatus.Text = LicenseMessage));
 
                 //
 

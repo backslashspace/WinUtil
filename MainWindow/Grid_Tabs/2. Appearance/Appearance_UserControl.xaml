@@ -10,7 +10,7 @@
 
         <ScrollViewer Style="{DynamicResource ScrollViewer}"
             VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
-            
+
             <Grid Margin="3,0,0,0">
 
                 <TextBlock
@@ -30,7 +30,7 @@
                     Height="17"
                     VerticalAlignment="Top" HorizontalAlignment="Right" Width="70"/>
 
-                <ToggleButton x:Name="Bright_Mode_Switch" Style="{DynamicResource Sys_Dark-Light}"
+                <ToggleButton x:Name="OSTheme_ToggleButton" Style="{DynamicResource Sys_Dark-Light}"
                     Margin="0,24,50,0"
                     Height="40" Width="78"
                     VerticalAlignment="Top" HorizontalAlignment="Right"
@@ -63,13 +63,13 @@
                             FontWeight="DemiBold"
                             FontSize="11"/>
 
-                        <ToggleButton x:Name="Theme_Switch" Style="{DynamicResource Default_Switch}"
+                        <ToggleButton x:Name="ContextMenu_ToggleButton" Style="{DynamicResource Default_Switch}"
                             Margin="0,7,46,0"
                             Opacity="1"
                             Height="20" Width="40"
                             VerticalAlignment="Top" HorizontalAlignment="Right"
-                            Checked="ContextMenuToggle"
-                            Unchecked="ContextMenuToggle"/>
+                            Checked="ContextMenu_ToggleButton_Handler"
+                            Unchecked="ContextMenu_ToggleButton_Handler"/>
                     </Grid>
                 </Button>
 
@@ -99,13 +99,13 @@
                             FontWeight="DemiBold"
                             FontSize="11"/>
 
-                        <ToggleButton x:Name="Terminal_Integrator_SW" Style="{DynamicResource Default_Switch}"
+                        <ToggleButton x:Name="Terminal_Integration_ToggleButton" Style="{DynamicResource Default_Switch}"
                             Margin="0,7,46,0"
                             Opacity="1"
                             Height="20" Width="40"
                             VerticalAlignment="Top" HorizontalAlignment="Right"
-                            Checked="Terminal_IntegratorToggle"
-                            Unchecked="Terminal_IntegratorToggle"/>
+                            Checked="Terminal_Integration_ToggleButton_Handler"
+                            Unchecked="Terminal_Integration_ToggleButton_Handler"/>
                     </Grid>
                 </Button>
 

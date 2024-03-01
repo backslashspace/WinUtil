@@ -1,30 +1,28 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Threading.Tasks;
-//
-using EXT.System.Registry;
 using System.IO;
-using EXT.Launcher.Process;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
+//
 using EXT.Launcher.Powershell;
+using EXT.Launcher.Process;
+using EXT.System.Registry;
 
 namespace WinUtil.Grid_Tabs
 {
-    public partial class AppearanceGrid : UserControl
+    public partial class AppearanceGrid 
     {
-        private static Boolean Set_System_Theme_Toggle_State = true;
         private void Set_System_Theme_Toggle(object sender, RoutedEventArgs e)
         {
-            if (Set_System_Theme_Toggle_State)
+            Boolean state = (Boolean)!OSTheme_ToggleButton.IsChecked;
+
+            if (state)
             {
                 MainWindow.LogBoxAdd("Setting system to dark mode", Brushes.LightBlue);
                 Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", 0, RegistryValueKind.DWord);
                 Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 0, RegistryValueKind.DWord);
                 MainWindow.LogBoxAdd("Done\n", Brushes.MediumSeaGreen);
-
-                Set_System_Theme_Toggle_State = false;
             }
             else
             {
@@ -32,132 +30,45 @@ namespace WinUtil.Grid_Tabs
                 Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", 1, RegistryValueKind.DWord);
                 Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1, RegistryValueKind.DWord);
                 MainWindow.LogBoxAdd("Done\n", Brushes.MediumSeaGreen);
-
-                Set_System_Theme_Toggle_State = true;
             }
         }
 
-        private void InitContextButton()
+        private async void ContextMenu_ToggleButton_Handler(object sender, RoutedEventArgs e)
         {
-            if (xRegistry.TestRegValuePresense(@"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32", ""))
-            {
-                Theme_Switch.Checked -= ContextMenuToggle;
-                Theme_Switch.IsChecked = true;
-                Theme_Switch.Checked += ContextMenuToggle;
-            }
-            else
-            {
-                MenuStateIsLegacy = false;
-            }
-        }
-        internal void SetContextButtonVisibility()
-        {
-            if (Machine.UIVersion == Machine.WindowsUIVersion.Windows10)
-            {
-               Context_Button.IsEnabled = false;
-               Context_Button_Icon.Opacity = 0.41;
-               Theme_Switch.Opacity = 0.41;
-               Context_Button_Head.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#747474"));
-               Context_Button_Body.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#747474"));
-            }
-        }
+            ContextMenu_ToggleButton.IsEnabled = false;
+            ContextMenu_ToggleButton.Opacity = 0.41d;
 
-        private void InitThemeSwitch()
-        {
-            Int32 v0 = xRegistry.Get.Value("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "SystemUsesLightTheme", RegistryValueKind.DWord);
-            Int32 v1 = xRegistry.Get.Value("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "AppsUseLightTheme", RegistryValueKind.DWord);
+            Boolean state = (Boolean)!ContextMenu_ToggleButton.IsChecked;
 
-            if ((v0 == 1) || (v1 == 1))
-            {
-                Bright_Mode_Switch.Checked -= Set_System_Theme_Toggle;
-                Bright_Mode_Switch.IsChecked = true;
-                Bright_Mode_Switch.Checked += Set_System_Theme_Toggle;
-            }
-            else
-            {
-                Set_System_Theme_Toggle_State = false;
-            }
-        }
-
-        private void InitTerminal_Integrator()
-        {
-            if (   xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\Background\shell\OpenWTHere", "Extended")
-                && xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\Background\shell\OpenWTHere", "Icon")
-                && xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\Background\shell\OpenWTHere", "MUIVerb")
-
-                && xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\Background\shell\OpenWTHereAsAdmin", "Extended")
-                && xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\Background\shell\OpenWTHereAsAdmin", "HasLUAShield")
-                && xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\Background\shell\OpenWTHereAsAdmin", "Icon")
-                && xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\Background\shell\OpenWTHereAsAdmin", "MUIVerb")
-
-                && xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\shell\OpenWTHere", "Extended")
-                && xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\shell\OpenWTHere", "Icon")
-                && xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\shell\OpenWTHere", "MUIVerb")
-
-                && xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\shell\OpenWTHereAsAdmin", "Extended")
-                && xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\shell\OpenWTHereAsAdmin", "HasLUAShield")
-                && xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\shell\OpenWTHereAsAdmin", "Icon")
-                && xRegistry.TestRegValuePresense(@"HKEY_CLASSES_ROOT\Directory\shell\OpenWTHereAsAdmin", "MUIVerb"))
-            {
-                Terminal_Integrator_SW.Checked -= Terminal_IntegratorToggle;
-                Terminal_Integrator_SW.IsChecked = true;
-                Terminal_Integrator_SW.Checked += Terminal_IntegratorToggle;
-            }
-        }
-
-        //# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-        public AppearanceGrid()
-        {
-            InitializeComponent();
-
-            Loaded += OnLoaded;
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            InitThemeSwitch();
-
-            InitContextButton();
-
-            InitTerminal_Integrator();
-
-            Visibility = Visibility.Collapsed;
-        }
-
-        //#######################################################################################################
-
-        private static Boolean MenuStateIsLegacy = true;
-        private void ContextMenuToggle(object sender, RoutedEventArgs e)
-        {
-            if (MenuStateIsLegacy)
+            if (state)
             {
                 xRegistry.Delete.DeleteSubKeyTree(@"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}", new String[] { "InprocServer32" });
-
-                MenuStateIsLegacy = false;
             }
             else
             {
                 Registry.SetValue(@"HKEY_CURRENT_USER\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32", "", "", RegistryValueKind.String);
-
-                MenuStateIsLegacy = true;
             }
+
+            await Common.RestartExplorer().ConfigureAwait(true);
+
+            ContextMenu_ToggleButton.Opacity = 1.0d;
+            ContextMenu_ToggleButton.IsEnabled = true;
         }
 
-        private void Terminal_IntegratorToggle(object sender, RoutedEventArgs e)
+        private async void Terminal_Integration_ToggleButton_Handler(object sender, RoutedEventArgs e)
         {
-            Terminal_Integrator_SW.IsEnabled = false;
-            Terminal_Integrator_SW.Opacity = 0.41;
-
-            Boolean State = (Boolean)Terminal_Integrator_SW.IsChecked;
+            Terminal_Integration_ToggleButton.IsEnabled = false;
+            Terminal_Integration_ToggleButton.Opacity = 0.41d;
 
             MainWindow.ActivateWorker();
 
-            Task.Run(() =>
+            Boolean state = (Boolean)!Terminal_Integration_ToggleButton.IsChecked;
+
+            await Task.Run(() =>
             {
                 try
                 {
-                    if (!State)
+                    if (state)
                     {
                         LogBox.Add("Resetting Windows Terminal integration", Brushes.LightBlue);
 
@@ -166,8 +77,7 @@ namespace WinUtil.Grid_Tabs
 
                         xRegistry.Delete.DeleteValues("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked", new String[] { "{9F156763-7844-4DC4-B2B1-901F640F5155}" });
 
-                        xProcess.Run("cmd.exe", "/c \"taskkill /f /im explorer.exe\"", true, true);
-                        xProcess.Run("cmd.exe", "/c \"start explorer.exe\"", true, true);
+                        Common.RestartExplorer().Wait();
 
                         LogBox.Add("Done\n", Brushes.MediumSeaGreen);
                     }
@@ -187,7 +97,7 @@ namespace WinUtil.Grid_Tabs
                             }
                         }
 
-                        //install WT and pedendenedtcios
+                        //install WT and dependencies
                         LogBox.Add("Installing Windows Terminal");
                         if (Global.VerboseHashCheck(Resource_Assets.VCLibs_PathName, Resource_Assets.VCLibs_Hash)[0] && Global.VerboseHashCheck(Resource_Assets.WT_PathName, Resource_Assets.WT_Hash)[0] && Global.VerboseHashCheck(Resource_Assets.WT_License_PathName, Resource_Assets.WT_License_Hash)[0])
                         {
@@ -248,8 +158,7 @@ namespace WinUtil.Grid_Tabs
 
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked", "{9F156763-7844-4DC4-B2B1-901F640F5155}", "", RegistryValueKind.String);
 
-                        xProcess.Run("cmd.exe", "/c \"taskkill /f /im explorer.exe\"", true, true);
-                        xProcess.Run("cmd.exe", "/c \"start explorer.exe\"", true, true);
+                        Common.RestartExplorer().Wait();
 
                         LogBox.Add("Done, use with Shift + Right-Click\n", Brushes.MediumSeaGreen);
                     }
@@ -259,23 +168,17 @@ namespace WinUtil.Grid_Tabs
                     LogBox.Add(ex.Message + "\n", Brushes.Red);
                 }
 
-                MainWindow.DeactivateWorker();
+            soft_return:;
 
-            soft_return:
+            }).ConfigureAwait(true);
 
-                Application.Dispatcher.Invoke(new Action(() =>
-                {
-                    Terminal_Integrator_SW.IsEnabled = true;
-                    Terminal_Integrator_SW.Opacity = 1;
-                }));
-            });
+            MainWindow.DeactivateWorker();
+
+            Terminal_Integration_ToggleButton.IsEnabled = true;
+            Terminal_Integration_ToggleButton.Opacity = 1.0d;
         }
 
 
-
-
-
-
-
+        
     }
 }

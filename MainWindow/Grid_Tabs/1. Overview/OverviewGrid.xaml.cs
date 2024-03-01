@@ -22,8 +22,6 @@ namespace WinUtil.Grid_Tabs
             uptimeClock.Start();
 
             Loaded += OnLoaded;
-
-            SetInfoBox();
         }
 
         //
@@ -90,16 +88,7 @@ namespace WinUtil.Grid_Tabs
             SecBoot.Text = secureBootIsOn;
         }
 
-        private async Task SetInfoBox()
-        {
-            while (LicenseMessage == null)
-            {
-                await Task.Delay(512).ConfigureAwait(true);
-            }
-
-            LicenseStatus.Text = LicenseMessage;
-        }
-
+        
         
 
 

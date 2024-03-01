@@ -2,7 +2,7 @@
 
 namespace WinUtil
 {
-    internal static class Machine
+    internal struct Machine
     {
         internal static HostRole Role;
 

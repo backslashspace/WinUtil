@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>WinUtil</RootNamespace>
     <AssemblyName>WinUtil</AssemblyName>
-    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <LangVersion>10.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -97,26 +97,28 @@
     <Compile Include="Debug.cs" />
     <Compile Include="Ext_Resource_Assets.cs" />
     <Compile Include="Machine_Info.cs" />
-    <Compile Include="MainWindow\Grid_Tabs\2_AppearanceGrid.xaml.cs">
-      <DependentUpon>2_AppearanceGrid.xaml</DependentUpon>
+    <Compile Include="MainWindow\CommonLogic.cs" />
+    <Compile Include="MainWindow\Grid_Tabs\2. Appearance\Appearance_UserControl.xaml.cs">
+      <DependentUpon>Appearance_UserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\Grid_Tabs\1_OverviewGrid.xaml.cs">
-      <DependentUpon>1_OverviewGrid.xaml</DependentUpon>
+    <Compile Include="MainWindow\Grid_Tabs\1. Overview\OverviewGrid.xaml.cs">
+      <DependentUpon>OverviewGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\Grid_Tabs\3_BehaviorGrid\3_BehaviorGrid.xaml.cs">
-      <DependentUpon>3_BehaviorGrid.xaml</DependentUpon>
+    <Compile Include="MainWindow\Grid_Tabs\2. Appearance\ButtonHandlers.cs" />
+    <Compile Include="MainWindow\Grid_Tabs\3. System Behavior\BehaviorGrid.xaml.cs">
+      <DependentUpon>BehaviorGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\Grid_Tabs\3_BehaviorGrid\WS_Update.xaml.cs">
+    <Compile Include="MainWindow\Grid_Tabs\3. System Behavior\WS_Update.xaml.cs">
       <DependentUpon>WS_Update.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\Grid_Tabs\4_PrivacyGrid.xaml.cs">
-      <DependentUpon>4_PrivacyGrid.xaml</DependentUpon>
+    <Compile Include="MainWindow\Grid_Tabs\4. Privacy\PrivacyGrid.xaml.cs">
+      <DependentUpon>PrivacyGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\Grid_Tabs\5_SecurityGrid.xaml.cs">
-      <DependentUpon>5_SecurityGrid.xaml</DependentUpon>
+    <Compile Include="MainWindow\Grid_Tabs\5. Security\SecurityGrid.xaml.cs">
+      <DependentUpon>SecurityGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\Grid_Tabs\6_ProgramsGrid.xaml.cs">
-      <DependentUpon>6_ProgramsGrid.xaml</DependentUpon>
+    <Compile Include="MainWindow\Grid_Tabs\6. Programs\ProgramsGrid.xaml.cs">
+      <DependentUpon>ProgramsGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\LoadSystemInfo.cs" />
     <Compile Include="MainWindow\LogBox.cs" />
@@ -131,7 +133,7 @@
       <DependentUpon>Dynamic_Select.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectionWindow\Frame_Control.cs" />
-    <Page Include="MainWindow\Grid_Tabs\3_BehaviorGrid\WS_Update.xaml">
+    <Page Include="MainWindow\Grid_Tabs\3. System Behavior\WS_Update.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -147,7 +149,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow\Grid_Tabs\2_AppearanceGrid.xaml">
+    <Page Include="MainWindow\Grid_Tabs\2. Appearance\Appearance_UserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -164,23 +166,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MainWindow\Grid_Tabs\1_OverviewGrid.xaml">
+    <Page Include="MainWindow\Grid_Tabs\1. Overview\OverviewGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow\Grid_Tabs\3_BehaviorGrid\3_BehaviorGrid.xaml">
+    <Page Include="MainWindow\Grid_Tabs\3. System Behavior\BehaviorGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow\Grid_Tabs\4_PrivacyGrid.xaml">
+    <Page Include="MainWindow\Grid_Tabs\4. Privacy\PrivacyGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow\Grid_Tabs\5_SecurityGrid.xaml">
+    <Page Include="MainWindow\Grid_Tabs\5. Security\SecurityGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow\Grid_Tabs\6_ProgramsGrid.xaml">
+    <Page Include="MainWindow\Grid_Tabs\6. Programs\ProgramsGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -334,5 +336,6 @@
   <ItemGroup>
     <Resource Include="MainWindow\icons\small_sac.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -434,9 +434,7 @@ namespace WinUtil.Grid_Tabs
                     #endregion
 
                     LogBox.Add("Restarting explorer to apply changes");
-                    xProcess.Run("C:\\Windows\\System32\\taskkill.exe", "/IM explorer.exe /F", WaitForExit: true, HiddenExecute: true);
-                    Task.Delay(1000).Wait();
-                    xProcess.Run("C:\\Windows\\explorer.exe", null, WaitForExit: true, HiddenExecute: true);
+                    Common.RestartExplorer().Wait();
 
                     LogBox.Add("Done\n", Brushes.MediumSeaGreen);
                 }

@@ -1,26 +1,15 @@
 ﻿using System;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.IO;
 using System.Windows.Threading;
-using System.Windows.Controls;
 using System.Windows.Media;
-using Microsoft.Win32;
 using System.Security.Cryptography;
 //libs
-using EXT.System.User;
-using EXT.System.Firmware;
-using EXT.System.License;
-using EXT.System.Registry;
-using EXT.System.Group;
 using EXT.Launcher.Process;
-using WinUtil.Grid_Tabs;
 
 namespace WinUtil
 {
-
-
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -151,26 +140,12 @@ namespace WinUtil
         
         //#######################################################################################################
 
-        private static Boolean Restart_Explorer_Button_Gets_Handled = false;
         private async void Restart_Explorer_Button(object sender, RoutedEventArgs e)
         {
-            if (Restart_Explorer_Button_Gets_Handled)
-            {
-                return;
-            }
-
             Restart_Explorer.IsEnabled = false;
-            Restart_Explorer_Button_Gets_Handled = true;
             
-            await Task.Run(async () => 
-            {
-                xProcess.Run("C:\\Windows\\System32\\taskkill.exe", "/IM explorer.exe /F", WaitForExit: true, HiddenExecute: true);
-                await Task.Delay(1000).ConfigureAwait(false);
-                xProcess.Run("C:\\Windows\\explorer.exe", null, WaitForExit: true, HiddenExecute: true);
+            await Common.RestartExplorer().ConfigureAwait(true);
 
-            }).ConfigureAwait(true);
-
-            Restart_Explorer_Button_Gets_Handled = false;
             Restart_Explorer.IsEnabled = true;
         }
     }
