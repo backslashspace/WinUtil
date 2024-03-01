@@ -8,8 +8,9 @@
 
     <Grid>
 
-        <ScrollViewer x:Name="Log_ScrollViewer" Style="{DynamicResource ScrollViewer}"
-            VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Style="{DynamicResource ScrollViewer}"
+            VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
+            
             <Grid Margin="3,0,0,0">
 
                 <TextBlock
@@ -43,7 +44,7 @@
                     VerticalAlignment="Top">
                     <Grid Width="{Binding ActualWidth, ElementName=Context_Button, Mode=OneWay}">
                         <Image x:Name="Context_Button_Icon"
-                            Source="/WND_!Main/icons/small_window_s.png"
+                            Source="/MainWindow/icons/small_window_s.png"
                             Margin="18,10,0,0"
                             Height="15"
                             RenderOptions.BitmapScalingMode="NearestNeighbor" 
@@ -79,7 +80,7 @@
                     VerticalAlignment="Top">
                     <Grid Width="{Binding ActualWidth, ElementName=Terminal_Integrator_TB, Mode=OneWay}">
                         <Image x:Name="Terminal_Integrator_Icon"
-                            Source="/WND_!Main/icons/small_invertedkeyboard.png"
+                            Source="/MainWindow/icons/small_invertedkeyboard.png"
                             Margin="18,10,0,0"
                             Height="15"
                             RenderOptions.BitmapScalingMode="NearestNeighbor" 

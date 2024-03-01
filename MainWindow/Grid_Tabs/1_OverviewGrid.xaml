@@ -5,26 +5,21 @@
              mc:Ignorable="d"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DesignHeight="276" d:DesignWidth="607"
-             Background="white"
-             SizeChanged="Area_Size_Changed">
+             d:DesignHeight="400" d:DesignWidth="607"
+             Background="{DynamicResource MainBackgroundColor}">
 
     <Grid>
-
-        
-
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Style="{DynamicResource ScrollViewer}">
+        <ScrollViewer Style="{DynamicResource ScrollViewer}"
+            VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
 
             <Grid Margin="3,0,0,0" Height="400">
 
                 <!--#region SysInfo -->
-                <Border
-                    x:Name="WindowsArea"
+                <Border x:Name="WindowsArea"
                     Margin="0,10,10,0"
                     BorderBrush="{DynamicResource LableBackground}"
                     BorderThickness="4"
-                    CornerRadius="5" Height="189"
-                    VerticalAlignment="Top" HorizontalAlignment="Right" Width="150">
+                    CornerRadius="5" Height="221" VerticalAlignment="Top" HorizontalAlignment="Right" Width="150">
 
                     <Grid Background="{DynamicResource LableBackground}">
 
@@ -38,10 +33,9 @@
                             FontFamily="Bahnschrift"
                             />
 
-                        <TextBlock
+                        <TextBlock x:Name="OSPEdition"
                             Text="Pro for Workstations"
                             TextWrapping="Wrap"
-                            x:Name="OSPEdition"
                             FontSize="12"
                             Background="#0000"
                             FontFamily="Bahnschrift"
@@ -107,7 +101,7 @@
                         <TextBlock
                             TextWrapping="Wrap"
                             x:Name="LicenseStatus"
-                            Text="Activated [1]"
+                            Text="Activated [0]"
                             FontSize="11"
                             Background="#0000"
                             FontFamily="Bahnschrift"
@@ -141,5 +135,5 @@
 
 
     </Grid>
-    
+
 </UserControl>

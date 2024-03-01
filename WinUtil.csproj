@@ -93,6 +93,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MainWindow\ApplicationData.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Ext_Resource_Assets.cs" />
     <Compile Include="Machine_Info.cs" />
@@ -117,9 +118,10 @@
     <Compile Include="MainWindow\Grid_Tabs\6_ProgramsGrid.xaml.cs">
       <DependentUpon>6_ProgramsGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MainWindow\LoadSystemInfo.cs" />
     <Compile Include="MainWindow\LogBox.cs" />
     <Compile Include="MainWindow\WorkerIconControl.cs" />
-    <Compile Include="MainWindow\MainWindow_user_intractable.cs" />
+    <Compile Include="MainWindow\Handle Tabs.cs" />
     <Compile Include="MainWindow\Scaling_Main.cs" />
     <Compile Include="DialogueWindow\Dialogue.xaml.cs">
       <DependentUpon>Dialogue.xaml</DependentUpon>

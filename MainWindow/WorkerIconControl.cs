@@ -13,7 +13,7 @@ namespace WinUtil
         {
             if (Activity_Worker_Instances < 1)
             {
-                WorkIndicator_Static.Visibility = Visibility.Visible;
+                Application.Object.WorkIndicator.Visibility = Visibility.Visible;
 
                 ++Activity_Worker_Instances;
 
@@ -39,15 +39,15 @@ namespace WinUtil
 
         private static async void ActivityWorker()
         {
-            MainWindowIcon_Static.Visibility = Visibility.Collapsed;
+            Application.Object.MainWindowIcon.Visibility = Visibility.Collapsed;
 
             await Task.Run(() =>
             {
                 while (Activity_Worker_Instances > 0)
                 {
-                    Dispatcher_Static.Invoke(new Action(() =>
+                    Application.Dispatcher.Invoke(new Action(() =>
                     {
-                        WorkIndicator_Static.RenderTransform = new RotateTransform(WorkerRotation += 5);
+                        Application.Object.WorkIndicator.RenderTransform = new RotateTransform(WorkerRotation += 5);
                     }));
 
                     Task.Delay(1).Wait();
@@ -59,9 +59,9 @@ namespace WinUtil
                 }
             });
 
-            WorkIndicator_Static.Visibility = Visibility.Collapsed;
+            Application.Object.WorkIndicator.Visibility = Visibility.Collapsed;
 
-            MainWindowIcon_Static.Visibility = Visibility.Visible;
+            Application.Object.MainWindowIcon.Visibility = Visibility.Visible;
         }
     }
 }

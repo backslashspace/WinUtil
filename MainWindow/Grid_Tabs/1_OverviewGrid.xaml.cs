@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EXT.System.Registry;
+using Microsoft.Win32;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,20 +11,7 @@ namespace WinUtil.Grid_Tabs
 {
     public partial class OverviewGrid : UserControl
     {
-        internal void SetInfoBox(ref String os, ref String edition, ref String displayVersion, ref String versionNumber, ref String UEFIIsOn, ref String secureBootIsOn, ref String licenseMessage)
-        {
-            OSPType.Text = os;
-            OSPEdition.Text = edition;
-
-            WinVersion.Text = displayVersion;
-            BaU.Text = versionNumber;
-
-            SysType.Text = UEFIIsOn;
-            SecBoot.Text = secureBootIsOn;
-
-            LicenseStatus.Text = licenseMessage;
-        }
-
+        internal static String LicenseMessage = null;
 
         public OverviewGrid()
         {
@@ -33,32 +22,114 @@ namespace WinUtil.Grid_Tabs
             uptimeClock.Start();
 
             Loaded += OnLoaded;
+
+            SetInfoBox();
         }
+
+        //
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-           
+            UISetter();
         }
 
-        #region LogBoxAdd
-        internal delegate void Overview_Grid_Log_Event(String Text, SolidColorBrush Foreground, SolidColorBrush Background, Boolean StayInLine, Boolean ScrollToEnd, FontWeight FontWeight);
-        internal event Overview_Grid_Log_Event Commit_Log;
-
-        private void LogBoxAdd(String Text = null, SolidColorBrush Foreground = null, SolidColorBrush Background = null, Boolean StayInLine = false, Boolean ScrollToEnd = true, FontWeight FontWeight = default)
+        private void UISetter()
         {
-            Commit_Log?.Invoke(Text, Foreground, Background, StayInLine, ScrollToEnd, FontWeight);
+            String os = null;
+            String edition = null;
+
+            String displayVersion = null;
+            String versionNumber = $"[{Machine.OSMajorVersion}.{Machine.OSMinorVersion}]";
+
+            String UEFIIsOn = $"UEFI enabled: {Machine.IsUEFI}";
+            String secureBootIsOn = $"SecureBoot enabled: {Machine.SecureBootEnabled}";
+
+            //OSPType & OSPEdition
+            String productName = xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "productName", RegistryValueKind.String);
+
+            String[] temp = productName.Split(' ');
+
+            os = temp[0] + " ";
+
+            if (Machine.Role == Machine.HostRole.Server)
+            {
+                os += temp[1] + temp[2];
+            }
+            else
+            {
+                //win 11
+                if (Machine.OSMajorVersion >= 22000)
+                {
+                    os += "11";
+                }
+                else
+                {
+                    os += temp[1];
+                }
+            }
+
+            os += "®️";
+
+            for (Int16 i = 2; i < temp.Length; ++i)
+            {
+                edition += temp[i];
+            }
+
+            //BaU
+
+            displayVersion = $"Version: {xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "displayVersion", RegistryValueKind.String)}";
+
+            //set
+            OSPType.Text = os;
+            OSPEdition.Text = edition;
+
+            WinVersion.Text = displayVersion;
+            BaU.Text = versionNumber;
+
+            SysType.Text = UEFIIsOn;
+            SecBoot.Text = secureBootIsOn;
         }
-        #endregion
 
-        #region LogBoxRemoveLine
-        internal delegate void Overview_Grid_Log_Remove_Event(UInt32 Lines);
-        internal event Overview_Grid_Log_Remove_Event Remove_Log_Line;
-
-        private void LogBoxRemoveLine(UInt32 Lines = 1)
+        private async Task SetInfoBox()
         {
-            Remove_Log_Line?.Invoke(Lines);
+            while (LicenseMessage == null)
+            {
+                await Task.Delay(512).ConfigureAwait(true);
+            }
+
+            LicenseStatus.Text = LicenseMessage;
         }
-        #endregion
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
 
 
 
@@ -74,7 +145,6 @@ namespace WinUtil.Grid_Tabs
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            LogBoxAdd("sdddddddddddddddddddddddddddddddd");
         }
 
 
@@ -141,36 +211,6 @@ namespace WinUtil.Grid_Tabs
 
 
 
-        private void Area_Size_Changed(object sender, System.Windows.SizeChangedEventArgs e)
-        {
-            if (MainWindow.CurrentArea != MainWindow.Navigation_Areas.Overview) return;
-
-            Double WAWidth = (Double)Convert.ToInt32(ActualWidth / 100 * 25);
-            Double WAHeight = ActualHeight - 95;
-
-            WindowsArea.Width = WAWidth;
-            WindowsArea.Height = WAHeight;
-
-            if (ActualHeight > 450)
-            {
-                //SystemLable.FontSize = 36;
-            }
-            else
-            {
-                //SystemLable.FontSize = 24;
-            }
-
-            //Double VersionHight = WindowsArea.ActualHeight / 100 * 25;
-            //WinVersion.Margin = new Thickness(5, VersionHight, 0, 0);
-            //BaU.Margin = new Thickness(5, VersionHight + 14, 0, 0);
-
-            //Double SysTypeHight = WindowsArea.ActualHeight / 100 * 50;
-            //SysType.Margin = new Thickness(5, SysTypeHight, 0, 0);
-            //SecBoot.Margin = new Thickness(5, SysTypeHight + 14, 0, 0);
-
-            //Double LicenseLableHight = WindowsArea.ActualHeight / 100 * 75;
-            //LicenseLable.Margin = new Thickness(5, LicenseLableHight, 0, 0);
-            //LicenseStatus.Margin = new Thickness(5, LicenseLableHight + 14, 0, 0);
-        }
+        
     }
 }

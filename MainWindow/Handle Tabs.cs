@@ -4,7 +4,6 @@ namespace WinUtil
 {
     public partial class MainWindow
     {
-        #region Navigation Buttons
         internal static Navigation_Areas CurrentArea = Navigation_Areas.Overview;
 
         internal enum Navigation_Areas
@@ -23,7 +22,7 @@ namespace WinUtil
 
             CurrentArea = Navigation_Areas.Overview;
 
-            ManageNavigationButtons(CurrentArea, OldArea);
+            HandleNavigationButtons(CurrentArea, OldArea);
         }
 
         private void AppearanceButton(object sender, RoutedEventArgs e)
@@ -32,7 +31,7 @@ namespace WinUtil
 
             CurrentArea = Navigation_Areas.Appearance;
 
-            ManageNavigationButtons(CurrentArea, OldArea);
+            HandleNavigationButtons(CurrentArea, OldArea);
         }
 
         private void BehaviorButton(object sender, RoutedEventArgs e)
@@ -41,7 +40,7 @@ namespace WinUtil
 
             CurrentArea = Navigation_Areas.Behavior;
 
-            ManageNavigationButtons(CurrentArea, OldArea);
+            HandleNavigationButtons(CurrentArea, OldArea);
         }
 
         private void PrivacyButton(object sender, RoutedEventArgs e)
@@ -50,7 +49,7 @@ namespace WinUtil
 
             CurrentArea = Navigation_Areas.Privacy;
 
-            ManageNavigationButtons(CurrentArea, OldArea);
+            HandleNavigationButtons(CurrentArea, OldArea);
         }
 
         private void SecurityButton(object sender, RoutedEventArgs e)
@@ -59,7 +58,7 @@ namespace WinUtil
 
             CurrentArea = Navigation_Areas.Security;
 
-            ManageNavigationButtons(CurrentArea, OldArea);
+            HandleNavigationButtons(CurrentArea, OldArea);
         }
 
         private void ProgramsButton(object sender, RoutedEventArgs e)
@@ -68,12 +67,12 @@ namespace WinUtil
 
             CurrentArea = Navigation_Areas.Programs;
 
-            ManageNavigationButtons(CurrentArea, OldArea);
+            HandleNavigationButtons(CurrentArea, OldArea);
         }
 
         //
 
-        private void ManageNavigationButtons(Navigation_Areas NewTab, Navigation_Areas OldTab)
+        private void HandleNavigationButtons(Navigation_Areas NewTab, Navigation_Areas OldTab)
         {
             switch (NewTab)
             {
@@ -146,6 +145,5 @@ namespace WinUtil
                     break;
             }
         }
-        #endregion
     }
 }

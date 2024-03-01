@@ -60,8 +60,6 @@ namespace WinUtil.Grid_Tabs
                Context_Button_Head.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#747474"));
                Context_Button_Body.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#747474"));
             }
-
-            
         }
 
         private void InitThemeSwitch()
@@ -265,7 +263,7 @@ namespace WinUtil.Grid_Tabs
 
             soft_return:
 
-                MainWindow.Dispatcher_Static.Invoke(new Action(() =>
+                Application.Dispatcher.Invoke(new Action(() =>
                 {
                     Terminal_Integrator_SW.IsEnabled = true;
                     Terminal_Integrator_SW.Opacity = 1;

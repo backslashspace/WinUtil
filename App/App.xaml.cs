@@ -1,8 +1,6 @@
-﻿using System.Windows;
-
-namespace WinUtil
+﻿namespace WinUtil
 {
-    public partial class App : Application
+    public partial class App : System.Windows.Application
     {
     }
 }

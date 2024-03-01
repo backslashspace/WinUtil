@@ -9,12 +9,12 @@ namespace WinUtil
     {
         internal static void Add(String Text = null, SolidColorBrush Foreground = null, SolidColorBrush Background = null, Boolean StayInLine = false, Boolean ScrollToEnd = true, FontWeight FontWeight = default)
         {
-            MainWindow.Dispatcher_Static.Invoke(new Action(() => MainWindow.LogBoxAdd(Text, Foreground, Background, StayInLine, ScrollToEnd, FontWeight)));
+            Application.Dispatcher.Invoke(new Action(() => MainWindow.LogBoxAdd(Text, Foreground, Background, StayInLine, ScrollToEnd, FontWeight)));
         }
 
         internal static void DispatchedLogBoxRemoveLine(UInt32 Lines = 1)
         {
-            MainWindow.Dispatcher_Static.Invoke(new Action(() => MainWindow.LogBoxRemoveLine(Lines)));
+            Application.Dispatcher.Invoke(new Action(() => MainWindow.LogBoxRemoveLine(Lines)));
         }
     }
 
@@ -28,14 +28,14 @@ namespace WinUtil
 
             if (StayInLine)
             {
-                TxR = new(Log_Static.Document.ContentEnd, Log_Static.Document.ContentEnd)
+                TxR = new(Application.Object.Log_RichTextBox.Document.ContentEnd, Application.Object.Log_RichTextBox.Document.ContentEnd)
                 {
                     Text = Text
                 };
             }
             else
             {
-                TxR = new(Log_Static.Document.ContentEnd, Log_Static.Document.ContentEnd)
+                TxR = new(Application.Object.Log_RichTextBox.Document.ContentEnd, Application.Object.Log_RichTextBox.Document.ContentEnd)
                 {
                     Text = "\n" + Text
                 };
@@ -55,7 +55,7 @@ namespace WinUtil
 
             if (ScrollToEnd == true)
             {
-                LogScrollViewer_Static.ScrollToEnd();
+                Application.Object.Log_ScrollViewer.ScrollToEnd();
             }
         }
 
@@ -63,7 +63,7 @@ namespace WinUtil
         {
             for (UInt32 I = 0; I < Lines; I++)
             {
-                Log_Static.Document.Blocks.Remove(Log_Static.Document.Blocks.LastBlock);
+                Application.Object.Log_RichTextBox.Document.Blocks.Remove(Application.Object.Log_RichTextBox.Document.Blocks.LastBlock);
             }
         }
     }

@@ -8,7 +8,7 @@
 
     <Grid>
 
-        <ScrollViewer x:Name="Log_ScrollViewer" Style="{DynamicResource ScrollViewer}"
+        <ScrollViewer Style="{DynamicResource ScrollViewer}"
             VerticalScrollBarVisibility="Auto" Margin="0,0,0,0">
             <Grid Margin="3,0,0,0">
 
@@ -25,7 +25,7 @@
                     Click="UX">
                     <Grid Width="{Binding ActualWidth, ElementName=UXB, Mode=OneWay}">
                         <Image
-                            Source="/WND_!Main/icons/small_taskbar.png"
+                            Source="/MainWindow/icons/small_taskbar.png"
                             Margin="18,10,0,0"
                             Height="16"
                             RenderOptions.BitmapScalingMode="NearestNeighbor" 
@@ -45,7 +45,7 @@
                             FontSize="11"/>
 
                         <Image
-                            Source="/WND_!Main/icons/small_menuas.png"
+                            Source="/MainWindow/icons/small_menuas.png"
                             Margin="0,1,23,0"
                             Height="12" Width="6"
                             RenderOptions.BitmapScalingMode="Linear" 
@@ -60,7 +60,7 @@
                     Click="HyperKey_UnReg">
                     <Grid>
                         <Image
-                            Source="/WND_!Main/icons/small_keyboard.png"
+                            Source="/MainWindow/icons/small_keyboard.png"
                             Margin="18,10,0,0"
                             Height="15"
                             RenderOptions.BitmapScalingMode="NearestNeighbor" 
@@ -88,7 +88,7 @@
                     Click="GameDVR_GameBar">
                     <Grid>
                         <Image
-                            Source="/WND_!Main/icons/small_gamebar.png"
+                            Source="/MainWindow/icons/small_gamebar.png"
                             Margin="18,9,0,0"
                             Height="18"
                             RenderOptions.BitmapScalingMode="NearestNeighbor" 
@@ -116,7 +116,7 @@
                     Click="Boot_Policy">
                     <Grid>
                         <Image
-                            Source="/WND_!Main/icons/small_wrench.png"
+                            Source="/MainWindow/icons/small_wrench.png"
                             Margin="18,8,0,0"
                             Height="20"
                             RenderOptions.BitmapScalingMode="NearestNeighbor" 
@@ -144,7 +144,7 @@
                     VerticalAlignment="Top">
                     <Grid Width="{Binding ActualWidth, ElementName=BackGroundApps_BButton, Mode=OneWay}">
                         <Image
-                            Source="/WND_!Main/icons/small_stat.png"
+                            Source="/MainWindow/icons/small_stat.png"
                             Margin="18,10,0,0"
                             Height="16"
                             RenderOptions.BitmapScalingMode="NearestNeighbor" 
@@ -180,7 +180,7 @@
                     Click="Windows_Update">
                     <Grid Width="{Binding ActualWidth, ElementName=WUB, Mode=OneWay}">
                         <Image
-                            Source="/WND_!Main/icons/small_lsettings.png"
+                            Source="/MainWindow/icons/small_lsettings.png"
                             Margin="18,8,0,0"
                             Height="20"
                             RenderOptions.BitmapScalingMode="NearestNeighbor" 
@@ -200,7 +200,7 @@
                             FontSize="11"/>
                         
                         <Image
-                            Source="/WND_!Main/icons/small_menuas.png"
+                            Source="/MainWindow/icons/small_menuas.png"
                             Margin="0,1,23,0"
                             Height="12" Width="6"
                             RenderOptions.BitmapScalingMode="Linear" 

@@ -360,18 +360,16 @@
         </Border>
         <!--#endregion-->
 
-        <Button 
-            Click="Restart_Explorer"
+        <Button x:Name="Restart_Explorer"
+            Click="Restart_Explorer_Button"
             Content="Restart Explorer"
             Margin="10,0,0,13" VerticalAlignment="Bottom" Height="34"
             Grid.Row="1"/>
 
-        <!-- ####################################################### -->
-
         <!-- Debug -->
 
         <Button x:Name="Debug_Button"
-            Visibility="Collapsed"
+            Visibility="Visible"
             IsEnabled="False"
             Click="Button_Debug"
             Content="Debug"

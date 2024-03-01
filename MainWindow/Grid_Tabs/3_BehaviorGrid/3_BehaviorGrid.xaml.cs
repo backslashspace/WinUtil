@@ -86,7 +86,7 @@ namespace WinUtil.Grid_Tabs
                 { true, true,   "Remove dynamic user home directory links",                     "By default, the documents, video and image folders are linked to each other, this can lead to some unexpected behavior, like copying the contents of all folders when only copying the documents folder." },
                 { true, true,   "Activate explorer compact mode",                               "This is most of the time the default." },
                 { true, true,   "Remove old 'Open PowerShell here' entry from context menu",    null },
-                { true, true,   "Explorer dont pretty path",                                    "By default, Explorer changes the case of filenames so that a file that is named c:\\iLikeTOTypeTHiS appears as c:\\Iliketotypethis." },
+                { true, true,   "Explorer don't pretty path",                                    "By default, Explorer changes the case of filenames so that a file that is named c:\\iLikeTOTypeTHiS appears as c:\\Iliketotypethis." },
                 { true, true,   "Show file operations details",                                 "Shows information like total files, remaining time and speed when copying or moving files." },
                 { true, true,   "Hide Taskbar widgets",                                         null },
                 { true, true,   "Disable lock screen tips and tricks",                          null },
@@ -96,11 +96,11 @@ namespace WinUtil.Grid_Tabs
                 { true, true,   "Deactivate search bar web search",                             null },
                 { true, true,   "Start menu Settings, Network and Explorer integration",        "Adds small icons to the bottom left of the Start menu in Windows 11 / bottom right in Windows 10." },
                 { true, true,   "Deactivate StickyKeys",                                        null },
-                { true, true,   "Reduce system & UI delays",                                         null }
+                { true, true,   "Reduce system & UI delays",                                    null }
             };
 
             Dynamic_Select ODS = new($"UX module {Version}",
-                        "\\WND_Dialogue\\Icons\\imageres_114.ico",
+                        "\\DialogueWindow\\Icons\\imageres_114.ico",
                         "General settings",
                         "For more information on some points, read the tooltip.",
                         Fields);

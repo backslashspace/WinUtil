@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace WinUtil
 {
-    internal partial class MainWindow
+    public partial class MainWindow
     {
         private void OnRescale(object sender, SizeChangedEventArgs e)
         {
@@ -17,7 +17,7 @@ namespace WinUtil
 
         private void Rescale()
         {
-            Log_Static.Document.PageWidth = Log_Static.ActualWidth;
+            Application.Object.Log_RichTextBox.Document.PageWidth = Application.Object.Log_RichTextBox.ActualWidth;
 
             Double Window_Height;
             Double Window_Width;
