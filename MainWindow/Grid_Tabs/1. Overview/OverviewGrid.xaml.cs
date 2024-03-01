@@ -33,6 +33,7 @@ namespace WinUtil.Grid_Tabs
 
         private void UISetter()
         {
+            //todo
             String os = null;
             String edition = null;
 

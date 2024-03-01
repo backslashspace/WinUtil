@@ -37,7 +37,7 @@
                     Unchecked="Set_System_Theme_Toggle"
                     Checked="Set_System_Theme_Toggle"/>
 
-                <Button x:Name="Context_Button"  Style="{DynamicResource Setting_Button_NoClick}"
+                <Button x:Name="Context_Button" Style="{DynamicResource Setting_Button_NoClick}"
                     Margin="0,100,25,0"
                     Height="69"
                     IsEnabled="True"
@@ -73,13 +73,13 @@
                     </Grid>
                 </Button>
 
-                <Button x:Name="Terminal_Integrator_TB"  Style="{DynamicResource Setting_Button_NoClick}"
+                <Button x:Name="Terminal_Integrator_ref" Style="{DynamicResource Setting_Button_NoClick}"
                     Margin="0,171,25,0"
                     Height="69"
                     IsEnabled="True"
                     VerticalAlignment="Top">
-                    <Grid Width="{Binding ActualWidth, ElementName=Terminal_Integrator_TB, Mode=OneWay}">
-                        <Image x:Name="Terminal_Integrator_Icon"
+                    <Grid Width="{Binding ActualWidth, ElementName=Terminal_Integrator_ref, Mode=OneWay}">
+                        <Image
                             Source="/MainWindow/icons/small_invertedkeyboard.png"
                             Margin="18,10,0,0"
                             Height="15"
@@ -87,12 +87,12 @@
                             VerticalAlignment="Top" HorizontalAlignment="Left"
                             Width="20"/>
 
-                        <TextBlock x:Name="Terminal_Integrator_Head"
+                        <TextBlock
                             Text="Terminal context menu integration"
                             Margin="58,0,0,0"
                             FontSize="14"/>
 
-                        <TextBlock x:Name="Terminal_Integrator_Body"
+                        <TextBlock
                             Text="Installs and adds the new Terminal app and integrates it into the context menu"
                             Foreground="#cfcfcf"
                             Margin="58,20,0,0"
@@ -109,17 +109,8 @@
                     </Grid>
                 </Button>
 
-
-
-
-
-
-
-
-
-
-
-
+                
+                
             </Grid>
         </ScrollViewer>
 

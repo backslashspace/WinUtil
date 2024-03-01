@@ -50,16 +50,10 @@ namespace WinUtil.Grid_Tabs
 
         //###################################################################
 
-        private static Boolean UX_FState = false;
-        private void UX(object sender, RoutedEventArgs e)
+        private async void UX(object sender, RoutedEventArgs e)
         {
-            if (UX_FState)
-            {
-                MainWindow.LogBoxAdd("General settings are currently being applied, please wait\n", Brushes.Orange);
-                return;
-            }
-
-            UX_FState = true;
+            UXB.IsEnabled = false;
+            UXB.Opacity = 0.41d;
 
             MainWindow.ActivateWorker();
 
@@ -109,8 +103,8 @@ namespace WinUtil.Grid_Tabs
 
             if ((Boolean)ODS.Was_Canceled)
             {
-                MainWindow.DeactivateWorker();
-                UX_FState = false;
+                Exit();
+
                 return;
             }
 
@@ -121,7 +115,7 @@ namespace WinUtil.Grid_Tabs
                 MainWindow.LogBoxAdd($" - UX module {Version}\n", StayInLine: true);
 
                 Dialogue Warn = new($"WinUtil: UX module {Version}",
-                        $"\"{Resource_Assets.SetACL_PathName}\" was not found or is invalid,\nskip \"{Fields[18,2]}\"?",
+                        $"\"{Resource_Assets.SetACL_PathName}\" was not found or is invalid,\nskip \"{Fields[18, 2]}\"?",
                         Dialogue.Icons.Circle_Error,
                         "Continue",
                         "Cancel");
@@ -134,8 +128,8 @@ namespace WinUtil.Grid_Tabs
                 }
                 else
                 {
-                    MainWindow.DeactivateWorker();
-                    UX_FState = false;
+                    Exit();
+
                     return;
                 }
             }
@@ -144,7 +138,7 @@ namespace WinUtil.Grid_Tabs
 
             MainWindow.LogBoxAdd("Applying general settings", Brushes.LightBlue);
 
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 try
                 {
@@ -290,7 +284,7 @@ namespace WinUtil.Grid_Tabs
 
                     if (ODS.Result[19])
                     {
-                        LogBox.Add("Explorer dont pretty path");
+                        LogBox.Add("Explorer don't pretty path");
                         Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DontPrettyPath", 1, RegistryValueKind.DWord);
                     }
 
@@ -392,22 +386,17 @@ namespace WinUtil.Grid_Tabs
                         Byte[] V = new Byte[] { 0x44, 0x81, 0x75, 0xFE, 0x0D, 0x08, 0xAE, 0x42, 0x8B, 0xDA, 0x34, 0xED, 0x97, 0xB6, 0x63, 0x94, 0xBC, 0x24, 0x8A, 0x14, 0x0C, 0xD6, 0x89, 0x42, 0xA0, 0x80, 0x6E, 0xD9, 0xBB, 0xA2, 0x48, 0x82, 0x86, 0x08, 0x73, 0x52, 0xAA, 0x51, 0x43, 0x42, 0x9F, 0x7B, 0x27, 0x76, 0x58, 0x46, 0x59, 0xD4 };
                         Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Start", "VisiblePlaces", V, RegistryValueKind.Binary);
 
-                        using (RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount", true))
+                        using RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount", true);
+                        foreach (String subKeyName in key.GetSubKeyNames())
                         {
-                            foreach (String subKeyName in key.GetSubKeyNames())
+                            if (subKeyName.Contains("$windows.data.unifiedtile.startglobalproperties"))
                             {
-                                if (subKeyName.Contains("$windows.data.unifiedtile.startglobalproperties"))
-                                {
-                                    Byte[] Bytes = new Byte[] { 0x02, 0x00, 0x00, 0x00, 0xAA, 0x00, 0x9F, 0xEC, 0x94, 0x2E, 0xDA, 0x01, 0x00, 0x00, 0x00, 0x00, 0x43, 0x42, 0x01, 0x00, 0xCB, 0x32, 0x0A, 0x03, 0x05, 0x86, 0x91, 0xCC, 0x93, 0x05, 0x24, 0xAA, 0xA3, 0x01, 0x44, 0xC3, 0x84, 0x01, 0x66, 0x9F, 0xF7, 0x9D, 0xB1, 0x87, 0xCB, 0xD1, 0xAC, 0xD4, 0x01, 0x00, 0x05, 0xC4, 0x82, 0xD6, 0xF3, 0x0F, 0x24, 0x8D, 0x10, 0x44, 0xAE, 0x85, 0x01, 0x66, 0x8B, 0xB5, 0xD3, 0xE9, 0xFE, 0xD2, 0xED, 0xB1, 0x94, 0x01, 0x00, 0x05, 0xBC, 0xC9, 0xA8, 0xA4, 0x01, 0x24, 0x8C, 0xAC, 0x03, 0x44, 0x89, 0x85, 0x01, 0x66, 0xA0, 0x81, 0xBA, 0xCB, 0xBD, 0xD7, 0xA8, 0xA4, 0x82, 0x01, 0x00, 0xC2, 0x3C, 0x01, 0xC2, 0x46, 0x01, 0xC5, 0x5A, 0x01, 0x00 };
+                                Byte[] Bytes = new Byte[] { 0x02, 0x00, 0x00, 0x00, 0xAA, 0x00, 0x9F, 0xEC, 0x94, 0x2E, 0xDA, 0x01, 0x00, 0x00, 0x00, 0x00, 0x43, 0x42, 0x01, 0x00, 0xCB, 0x32, 0x0A, 0x03, 0x05, 0x86, 0x91, 0xCC, 0x93, 0x05, 0x24, 0xAA, 0xA3, 0x01, 0x44, 0xC3, 0x84, 0x01, 0x66, 0x9F, 0xF7, 0x9D, 0xB1, 0x87, 0xCB, 0xD1, 0xAC, 0xD4, 0x01, 0x00, 0x05, 0xC4, 0x82, 0xD6, 0xF3, 0x0F, 0x24, 0x8D, 0x10, 0x44, 0xAE, 0x85, 0x01, 0x66, 0x8B, 0xB5, 0xD3, 0xE9, 0xFE, 0xD2, 0xED, 0xB1, 0x94, 0x01, 0x00, 0x05, 0xBC, 0xC9, 0xA8, 0xA4, 0x01, 0x24, 0x8C, 0xAC, 0x03, 0x44, 0x89, 0x85, 0x01, 0x66, 0xA0, 0x81, 0xBA, 0xCB, 0xBD, 0xD7, 0xA8, 0xA4, 0x82, 0x01, 0x00, 0xC2, 0x3C, 0x01, 0xC2, 0x46, 0x01, 0xC5, 0x5A, 0x01, 0x00 };
 
-                                    Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\" + subKeyName + "\\Current", "Data", Bytes, RegistryValueKind.Binary);
+                                Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount\" + subKeyName + "\\Current", "Data", Bytes, RegistryValueKind.Binary);
 
-                                    break;
-                                }
+                                break;
                             }
-
-                            key.Close();
-                            key.Dispose();
                         }
                     }
 
@@ -442,11 +431,17 @@ namespace WinUtil.Grid_Tabs
                 {
                     LogBox.Add(ex.Message, Brushes.Red);
                 }
+            }).ConfigureAwait(true);
 
+            //
+
+            void Exit()
+            {
                 MainWindow.DeactivateWorker();
 
-                UX_FState = false;
-            });
+                UXB.IsEnabled = true;
+                UXB.Opacity = 1.0d;
+            }
         }
 
         private static Boolean HyperKey_UnReg_FState = false;
