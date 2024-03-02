@@ -12,7 +12,7 @@ namespace WinUtil
             Application.Dispatcher.Invoke(new Action(() => MainWindow.LogBoxAdd(Text, Foreground, Background, StayInLine, ScrollToEnd, FontWeight)));
         }
 
-        internal static void DispatchedLogBoxRemoveLine(UInt32 Lines = 1)
+        internal static void Remove(UInt32 Lines = 1)
         {
             Application.Dispatcher.Invoke(new Action(() => MainWindow.LogBoxRemoveLine(Lines)));
         }

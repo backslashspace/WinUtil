@@ -60,7 +60,7 @@
         </Viewbox>
 
         <TextBlock x:Name="Window_Title"
-            Text="WinUtil v2.0.0-dev6"
+            Text="WinUtil v2.0.0-dev7"
             Foreground="#aaaaaa"
             Margin="30,-24,0,0"
             HorizontalAlignment="Left" VerticalAlignment="Top"

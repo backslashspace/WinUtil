@@ -18,12 +18,12 @@
                     Foreground="{DynamicResource FontColor}"
                     Margin="0,15,0,0" Height="66" VerticalAlignment="Top" HorizontalAlignment="Left" Width="615"/>
 
-                <Button x:Name="UXB" Style="{DynamicResource Setting_Button}"
+                <Button x:Name="UX_Button" Style="{DynamicResource Setting_Button}"
                     Margin="0,100,25,0"
                     Height="69"
                     VerticalAlignment="Top"
-                    Click="UX">
-                    <Grid Width="{Binding ActualWidth, ElementName=UXB, Mode=OneWay}">
+                    Click="UX_ButtonHandler">
+                    <Grid Width="{Binding ActualWidth, ElementName=UX_Button, Mode=OneWay}">
                         <Image
                             Source="/MainWindow/icons/small_taskbar.png"
                             Margin="18,10,0,0"
@@ -53,7 +53,7 @@
                     </Grid>
                 </Button>
 
-                <Button Style="{DynamicResource Setting_Button}"
+                <Button x:Name="HyperKey_Button" Style="{DynamicResource Setting_Button}"
                     Margin="0,172,25,0"
                     Height="69"
                     VerticalAlignment="Top"
@@ -81,7 +81,7 @@
                     </Grid>
                 </Button>
 
-                <Button Style="{DynamicResource Setting_Button}"
+                <Button x:Name="GameDVR_Button" Style="{DynamicResource Setting_Button}"
                     Margin="0,244,25,0"
                     Height="69"
                     VerticalAlignment="Top"
@@ -109,7 +109,7 @@
                     </Grid>
                 </Button>
 
-                <Button Style="{DynamicResource Setting_Button}"
+                <Button x:Name="BootPolicy_Button" Style="{DynamicResource Setting_Button}"
                     Margin="0,316,25,0"
                     Height="69"
                     VerticalAlignment="Top"
@@ -137,12 +137,12 @@
                     </Grid>
                 </Button>
 
-                <Button x:Name="BackGroundApps_BButton"  Style="{DynamicResource Setting_Button_NoClick}"
+                <Button x:Name="BackGroundApps_Button"  Style="{DynamicResource Setting_Button_NoClick}"
                     Margin="0,388,25,0"
                     Height="69"
                     IsEnabled="True"
                     VerticalAlignment="Top">
-                    <Grid Width="{Binding ActualWidth, ElementName=BackGroundApps_BButton, Mode=OneWay}">
+                    <Grid Width="{Binding ActualWidth, ElementName=BackGroundApps_Button, Mode=OneWay}">
                         <Image
                             Source="/MainWindow/icons/small_stat.png"
                             Margin="18,10,0,0"
@@ -163,7 +163,7 @@
                             FontWeight="DemiBold"
                             FontSize="11"/>
 
-                        <ToggleButton x:Name="Theme_Switch" Style="{DynamicResource Default_Switch}"
+                        <ToggleButton x:Name="BackGroundApps_ToggleButton" Style="{DynamicResource Default_Switch}"
                             Margin="0,7,46,0"
                             Opacity="1"
                             Height="20" Width="40"
@@ -173,7 +173,7 @@
                     </Grid>
                 </Button>
 
-                <Button x:Name="WUB" Style="{DynamicResource Setting_Button}"
+                <Button x:Name="WindowsUpdate_Button" Style="{DynamicResource Setting_Button}"
                     Margin="0,461,25,0"
                     Height="69"
                     VerticalAlignment="Top"

@@ -4,13 +4,11 @@ using System.Windows;
 
 namespace WinUtil
 {
-    public partial class Dynamic_Select
+    public partial class Selector
     {
         #region Close_Button
         private void Close_Button_Click(object sender, RoutedEventArgs e)
         {
-            Was_Canceled = true;
-
             this.Close();
         }
 
@@ -39,13 +37,13 @@ namespace WinUtil
 
         //# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-        private static class WindowButtonColors
+        private struct WindowButtonColors
         {
-            public static String Close_Button_Color_Idle = "#373737";
-            public static String Close_Button_Color_Mouse_Is_Over = "#c42b1c";
-            public static String Close_Button_Color_Down = "#b22a1b";
-            public static String Close_Button_Stroke_Color_Enabled = "#ffffff";
-            public static String Close_Button_Stroke_Color_Disabled = "#777777";
+            internal static String Close_Button_Color_Idle = "#181818";
+            internal static String Close_Button_Color_Mouse_Is_Over = "#c42b1c";
+            internal static String Close_Button_Color_Down = "#b22a1b";
+            internal static String Close_Button_Stroke_Color_Enabled = "#ffffff";
+            internal static String Close_Button_Stroke_Color_Disabled = "#777777";
         }
     }
 }

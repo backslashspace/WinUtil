@@ -5,8 +5,6 @@ using System.IO;
 using System.Windows.Threading;
 using System.Windows.Media;
 using System.Security.Cryptography;
-//libs
-using EXT.Launcher.Process;
 
 namespace WinUtil
 {

@@ -78,11 +78,7 @@ namespace WinUtil.Grid_Tabs
 
                         xRegistry.Delete.DeleteValues("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked", new String[] { "{9F156763-7844-4DC4-B2B1-901F640F5155}" });
 
-                        Debug.Write($"{Thread.CurrentThread.ManagedThreadId}\n");
-
                         Common.RestartExplorer().Wait();
-
-                        Debug.Write($"{Thread.CurrentThread.ManagedThreadId}\n");
 
                         LogBox.Add("Done\n", Brushes.MediumSeaGreen);
                     }
@@ -104,15 +100,13 @@ namespace WinUtil.Grid_Tabs
                         LogBox.Add("Installing Windows Terminal");
                         if (Global.VerboseHashCheck(Resource_Assets.VCLibs_PathName, Resource_Assets.VCLibs_Hash)[0] && Global.VerboseHashCheck(Resource_Assets.WT_PathName, Resource_Assets.WT_Hash)[0] && Global.VerboseHashCheck(Resource_Assets.WT_License_PathName, Resource_Assets.WT_License_Hash)[0])
                         {
-                            xPowershell.Run($"Add-AppxPackage -Path \"assets\\{Resource_Assets.VCLibs_PathName}\"");
-                            xPowershell.Run($"Add-ProvisionedAppPackage -Online -PackagePath \"assets\\Windows Terminal\\{Resource_Assets.WT_PathName}\" -LicensePath \"assets\\Windows Terminal\\{Resource_Assets.WT_License_PathName}\"");
+                            xPowershell.Run($"Add-AppxPackage -Path \"{Resource_Assets.VCLibs_PathName}\"");
+                            xPowershell.Run($"Add-ProvisionedAppPackage -Online -PackagePath \"{Resource_Assets.WT_PathName}\" -LicensePath \"{Resource_Assets.WT_License_PathName}\"");
 
                             LogBox.Add("Done");
                         }
                         else
                         {
-                            MainWindow.DeactivateWorker();
-
                             goto soft_return;
                         }
 
@@ -161,8 +155,6 @@ namespace WinUtil.Grid_Tabs
 
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked", "{9F156763-7844-4DC4-B2B1-901F640F5155}", "", RegistryValueKind.String);
 
-                        Debug.Write($"ff\n");
-
                         Common.RestartExplorer().Wait();
 
                         LogBox.Add("Done, use with Shift + Right-Click\n", Brushes.MediumSeaGreen);
@@ -182,6 +174,13 @@ namespace WinUtil.Grid_Tabs
             Terminal_Integration_ToggleButton.IsEnabled = true;
             Terminal_Integration_ToggleButton.Opacity = 1.0d;
         }
+
+
+
+
+
+
+
 
 
         

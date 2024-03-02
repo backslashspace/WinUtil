@@ -93,9 +93,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="App\CustomAppEntry.cs" />
-    <Compile Include="MainWindow\ApplicationData.cs" />
+    <Compile Include="MainWindow\PinnedApplication.cs" />
     <Compile Include="Debug.cs" />
-    <Compile Include="ResourceHashes.cs" />
+    <Compile Include="MainWindow\Grid_Tabs\3. System Behavior\ButtonHandler.cs" />
+    <Compile Include="ResourceInfo.cs" />
     <Compile Include="Machine_Info.cs" />
     <Compile Include="MainWindow\CommonLogic.cs" />
     <Compile Include="MainWindow\Grid_Tabs\2. Appearance\Appearance_UserControl.xaml.cs">
@@ -104,7 +105,7 @@
     <Compile Include="MainWindow\Grid_Tabs\1. Overview\OverviewGrid.xaml.cs">
       <DependentUpon>OverviewGrid.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow\Grid_Tabs\2. Appearance\ButtonHandlers.cs" />
+    <Compile Include="MainWindow\Grid_Tabs\2. Appearance\ButtonHandler.cs" />
     <Compile Include="MainWindow\Grid_Tabs\3. System Behavior\BehaviorGrid.xaml.cs">
       <DependentUpon>BehaviorGrid.xaml</DependentUpon>
     </Compile>
@@ -129,14 +130,14 @@
       <DependentUpon>Dialogue.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow\temp.cs" />
-    <Compile Include="SelectionWindow\Dynamic_Select.xaml.cs">
-      <DependentUpon>Dynamic_Select.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SelectionWindow\Frame_Control.cs" />
     <ApplicationDefinition Include="App\App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="UserSelectionWindow\FrameControl.cs" />
+    <Compile Include="UserSelectionWindow\Selector.xaml.cs">
+      <DependentUpon>Selector.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow\Grid_Tabs\3. System Behavior\WS_Update.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -186,9 +187,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SelectionWindow\Dynamic_Select.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="UserSelectionWindow\Selector.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
