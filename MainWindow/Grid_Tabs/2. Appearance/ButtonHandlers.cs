@@ -8,6 +8,7 @@ using System.Windows.Media;
 using EXT.Launcher.Powershell;
 using EXT.Launcher.Process;
 using EXT.System.Registry;
+using System.Threading;
 
 namespace WinUtil.Grid_Tabs
 {
@@ -77,7 +78,11 @@ namespace WinUtil.Grid_Tabs
 
                         xRegistry.Delete.DeleteValues("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked", new String[] { "{9F156763-7844-4DC4-B2B1-901F640F5155}" });
 
+                        Debug.Write($"{Thread.CurrentThread.ManagedThreadId}\n");
+
                         Common.RestartExplorer().Wait();
+
+                        Debug.Write($"{Thread.CurrentThread.ManagedThreadId}\n");
 
                         LogBox.Add("Done\n", Brushes.MediumSeaGreen);
                     }
@@ -89,8 +94,6 @@ namespace WinUtil.Grid_Tabs
 
                         for (Int32 i = 0; i < Folders.Length; i++)
                         {
-                            //Debug.Write(Folders[i]);
-
                             if (Folders[i].Contains("WindowsTerminal"))
                             {
                                 goto SkipInstall;
@@ -157,6 +160,8 @@ namespace WinUtil.Grid_Tabs
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\shell\OpenWTHereAsAdmin\command", "", "cmd /c start /min powershell.exe -WindowStyle Hidden Start-Process -Verb RunAs wt.exe -ArgumentList @('-d', '\"\"\"%V\"\"\"')", RegistryValueKind.String);
 
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked", "{9F156763-7844-4DC4-B2B1-901F640F5155}", "", RegistryValueKind.String);
+
+                        Debug.Write($"ff\n");
 
                         Common.RestartExplorer().Wait();
 

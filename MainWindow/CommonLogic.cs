@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 //
 using EXT.Launcher.Process;
 
@@ -10,7 +11,7 @@ namespace WinUtil
         {
             xProcess.Run("C:\\Windows\\System32\\taskkill.exe", "/IM explorer.exe /F", WaitForExit: true, HiddenExecute: true);
             await Task.Delay(1000).ConfigureAwait(false);
-            xProcess.Run("C:\\Windows\\explorer.exe", null, WaitForExit: true, HiddenExecute: true);
+            xProcess.Run("C:\\Windows\\explorer.exe");
         }
         
 

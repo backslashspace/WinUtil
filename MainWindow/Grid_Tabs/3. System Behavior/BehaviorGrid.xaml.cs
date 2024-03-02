@@ -482,7 +482,7 @@ namespace WinUtil.Grid_Tabs
 
                         "The following combinations will be deregister:\n\n" +
                         "Office: Ctrl + Shift + Win + Alt + W, T, Y, O, P, D, L, X, N, <Space>\n" +
-                        "Office-App: Ctrl + Shift + Win + Alt\n" +
+                        "Office-Entry: Ctrl + Shift + Win + Alt\n" +
                         "Windows Help: F1\n" +
                         "Teams: Win + C",
                         Dialogue.Icons.Gear,

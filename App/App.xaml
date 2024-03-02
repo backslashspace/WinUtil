@@ -8,8 +8,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
 
-                <ResourceDictionary Source="\Generic_Dictionary.xaml"/>
-                <ResourceDictionary Source="\MainWindow\src_Dictionary.xaml"/>
+                <ResourceDictionary Source="\ButtonDefinitions.xaml"/>
+                <ResourceDictionary Source="\src_Dictionary.xaml"/>
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

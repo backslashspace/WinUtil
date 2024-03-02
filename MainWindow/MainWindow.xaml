@@ -369,7 +369,7 @@
         <!-- Debug -->
 
         <Button x:Name="Debug_Button"
-            Visibility="Visible"
+            Visibility="Collapsed"
             IsEnabled="False"
             Click="Button_Debug"
             Content="Debug"

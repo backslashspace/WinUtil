@@ -61,7 +61,7 @@
     <ApplicationManifest>App\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
+    <StartupObject>WinUtil.CustomAppEntry</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -89,13 +89,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App\App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
+    <Compile Include="App\App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App\CustomAppEntry.cs" />
     <Compile Include="MainWindow\ApplicationData.cs" />
     <Compile Include="Debug.cs" />
-    <Compile Include="Ext_Resource_Assets.cs" />
+    <Compile Include="ResourceHashes.cs" />
     <Compile Include="Machine_Info.cs" />
     <Compile Include="MainWindow\CommonLogic.cs" />
     <Compile Include="MainWindow\Grid_Tabs\2. Appearance\Appearance_UserControl.xaml.cs">
@@ -123,16 +123,20 @@
     <Compile Include="MainWindow\LoadSystemInfo.cs" />
     <Compile Include="MainWindow\LogBox.cs" />
     <Compile Include="MainWindow\WorkerIconControl.cs" />
-    <Compile Include="MainWindow\Handle Tabs.cs" />
-    <Compile Include="MainWindow\Scaling_Main.cs" />
+    <Compile Include="MainWindow\HandleTabs.cs" />
+    <Compile Include="MainWindow\Scaling.cs" />
     <Compile Include="DialogueWindow\Dialogue.xaml.cs">
       <DependentUpon>Dialogue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Global_Functions.cs" />
+    <Compile Include="MainWindow\temp.cs" />
     <Compile Include="SelectionWindow\Dynamic_Select.xaml.cs">
       <DependentUpon>Dynamic_Select.xaml</DependentUpon>
     </Compile>
     <Compile Include="SelectionWindow\Frame_Control.cs" />
+    <ApplicationDefinition Include="App\App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
     <Page Include="MainWindow\Grid_Tabs\3. System Behavior\WS_Update.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -141,11 +145,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Generic_Dictionary.xaml">
+    <Page Include="ButtonDefinitions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow\src_Dictionary.xaml">
+    <Page Include="src_Dictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -157,10 +161,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App\App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="MainWindow\Frame_Control.cs" />
     <Compile Include="MainWindow\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -209,7 +209,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="app.config" />
     <None Include="App\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

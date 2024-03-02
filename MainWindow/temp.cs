@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
 //libs
 using EXT.HashTools;
@@ -51,7 +52,17 @@ namespace WinUtil
         */
 
 
-
+        internal static String GetButtonTag(object sender)
+        {
+            try
+            {
+                return ((Button)sender).Tag.ToString();
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
 
 

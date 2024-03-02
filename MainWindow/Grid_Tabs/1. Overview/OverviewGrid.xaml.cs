@@ -135,6 +135,7 @@ namespace WinUtil.Grid_Tabs
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            throw new Exception("message");
         }
 
 

@@ -3,53 +3,19 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 //
 using EXT.Launcher.Process;
-using EXT.System.Registry;
 
 namespace WinUtil
 {
-    /// <summary>This will not be used in release mode</summary>
     internal static class Debug
     {
-        #region Kernel32
-        private static Thread ConsoleThread;
-
-        [Conditional("DEBUG")]
-        internal static void SpawnConsole()
-        {
-            if (ConsoleThread != null)
-            {
-                return;
-            }
-
-            ConsoleThread = new(Console);
-            ConsoleThread.Start();
-
-            static void Console()
-            {
-                AllocConsole();
-
-                while (true)
-                {
-                    Thread.Sleep(1000000);
-                }
-            }
-
-            [DllImport("Kernel32")]
-            static extern void AllocConsole();
-        }
-
-        [Conditional("DEBUG")]
         [DllImport("Kernel32")]
-        static extern void FreeConsole();
-        #endregion
+        internal static extern void AllocConsole();
 
-        //################################################################################
+        //
 
         [Conditional("DEBUG")]
         internal static void Write(object Input)
@@ -57,72 +23,36 @@ namespace WinUtil
             Console.Write(Input);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-
-        internal static String GetButtonTag(object sender)
+        [Conditional("DEBUG")]
+        internal static void WriteLine(object Input)
         {
-            try
-            {
-                return ((Button)sender).Tag.ToString();
-            }
-            catch
-            {
-                return null;
-            }
+            Console.WriteLine(Input);
         }
     }
 
     public partial class MainWindow
     {
-        [Conditional("DEBUG")]
-        private void EnableDebug()
+#if DEBUG
+        private void SoftDebug()
         {
-            Debug.SpawnConsole();
+            Debug.AllocConsole();
 
             Debug_Button.IsEnabled = true;
             Debug_Button.Visibility = Visibility.Visible;
         }
+#endif
+
+        //# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
         private static Boolean TTT = false;
 
         private void Button_Debug(object sender, RoutedEventArgs e)
         {
-            //10
+            //Debug.Write("test\n");
 
             //(_, Int32 ExitCode) = xProcess.Run(Resource_Assets.Host_INIT_PathName, "e22afd680ce7b8f23fad799fa3beef2dbce66e42e8877a9f2f0e3fd0b55619c9", WaitForExit: true);
-
-
+            Debug.WriteLine("debug");
+            
             return;
 
             #region WARN

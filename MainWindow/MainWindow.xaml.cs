@@ -16,7 +16,9 @@ namespace WinUtil
         {
             InitializeComponent();
 
-            EnableDebug();
+#if DEBUG
+            SoftDebug();
+#endif
 
             //pin whole application (?????)
             Application.Dispatcher = Dispatcher.CurrentDispatcher;
