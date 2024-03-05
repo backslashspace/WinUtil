@@ -13,8 +13,9 @@ namespace WinUtil
 {
     internal static class Debug
     {
+
         [DllImport("Kernel32")]
-        internal static extern void AllocConsole();
+        internal static extern Boolean AllocConsole();
 
         //
 
@@ -42,6 +43,18 @@ namespace WinUtil
             Debug_Button.Visibility = Visibility.Visible;
         }
 #endif
+
+
+        
+
+
+
+
+
+
+
+
+
 
         //# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 

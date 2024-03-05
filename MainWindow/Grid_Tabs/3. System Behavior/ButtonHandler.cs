@@ -61,7 +61,7 @@ namespace WinUtil.Grid_Tabs
 
             selection.ShowDialog();
 
-            if ((Boolean)selection.Was_Canceled)
+            if (selection.Was_Canceled == null || (Boolean)selection.Was_Canceled)
             {
                 PrepareExit();
 

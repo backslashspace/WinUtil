@@ -299,19 +299,43 @@
         <!--#endregion-->
 
         <!--#region Content Area -->
-        <Grid Grid.Column="1" Grid.Row="0" Margin="7,0,0,4">
+        <Grid Grid.Column="1" Grid.Row="0" Margin="7,0,0,4" RenderTransformOrigin="0,1">
 
-            <controls:OverviewGrid x:Name="OverviewGrid" Visibility="Visible"/>
+            <controls:OverviewGrid x:Name="OverviewGrid" Visibility="Visible" RenderTransformOrigin="0.5,0.5">
+                <controls:OverviewGrid.Effect>
+                    <DropShadowEffect Direction="225" RenderingBias="Performance" Color="#FF5D5D5D" BlurRadius="15"/>
+                </controls:OverviewGrid.Effect>
+            </controls:OverviewGrid>
 
-            <controls:AppearanceGrid x:Name="AppearanceGrid" Visibility="Hidden"/>
+            <controls:AppearanceGrid x:Name="AppearanceGrid" Visibility="Hidden">
+                <controls:AppearanceGrid.Effect>
+                    <DropShadowEffect Direction="225" RenderingBias="Performance" Color="#FF5D5D5D" BlurRadius="15"/>
+                </controls:AppearanceGrid.Effect>
+            </controls:AppearanceGrid>
 
-            <controls:BehaviorGrid x:Name="BehaviorGrid" Visibility="Hidden"/>
+            <controls:BehaviorGrid x:Name="BehaviorGrid" Visibility="Hidden">
+                <controls:BehaviorGrid.Effect>
+                    <DropShadowEffect Direction="225" RenderingBias="Performance" Color="#FF5D5D5D" BlurRadius="15"/>
+                </controls:BehaviorGrid.Effect>
+            </controls:BehaviorGrid>
 
-            <controls:PrivacyGrid x:Name="PrivacyGrid" Visibility="Collapsed"/>
+            <controls:PrivacyGrid x:Name="PrivacyGrid" Visibility="Collapsed">
+                <controls:PrivacyGrid.Effect>
+                    <DropShadowEffect Direction="225" RenderingBias="Performance" Color="#FF5D5D5D" BlurRadius="15"/>
+                </controls:PrivacyGrid.Effect>
+            </controls:PrivacyGrid>
 
-            <controls:SecurityGrid x:Name="SecurityGrid" Visibility="Collapsed"/>
+            <controls:SecurityGrid x:Name="SecurityGrid" Visibility="Collapsed">
+                <controls:SecurityGrid.Effect>
+                    <DropShadowEffect Direction="225" RenderingBias="Performance" Color="#FF5D5D5D" BlurRadius="15"/>
+                </controls:SecurityGrid.Effect>
+            </controls:SecurityGrid>
 
-            <controls:ProgramsGrid x:Name="ProgramsGrid" Visibility="Collapsed"/>
+            <controls:ProgramsGrid x:Name="ProgramsGrid" Visibility="Collapsed">
+                <controls:ProgramsGrid.Effect>
+                    <DropShadowEffect Direction="225" RenderingBias="Performance" Color="#FF5D5D5D" BlurRadius="15"/>
+                </controls:ProgramsGrid.Effect>
+            </controls:ProgramsGrid>
 
         </Grid>
         <!--#endregion-->
@@ -320,6 +344,7 @@
         <Border
             BorderBrush="{DynamicResource  LogPanel}"
             BorderThickness="4,4,0,0"
+            Focusable="False"
             CornerRadius="4,0,0,0"
             Grid.Column="1"
             Margin="10,4,0,0"
@@ -363,7 +388,9 @@
         <Button x:Name="Restart_Explorer"
             Click="Restart_Explorer_Button"
             Content="Restart Explorer"
-            Margin="10,0,0,13" VerticalAlignment="Bottom" Height="34"
+            Margin="10,0,0,13"
+            VerticalAlignment="Bottom"
+            Height="34"
             Grid.Row="1"/>
 
         <!-- Debug -->
@@ -373,7 +400,9 @@
             IsEnabled="False"
             Click="Button_Debug"
             Content="Debug"
-            Margin="10,0,0,51" VerticalAlignment="Bottom" Height="34"
+            Margin="10,0,0,51"
+            Height="34"
+            VerticalAlignment="Bottom"
             Grid.Row="1"/>
 
     </Grid>
