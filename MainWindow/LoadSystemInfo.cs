@@ -27,7 +27,7 @@ namespace WinUtil
                 {
                     if (!Environment.GetCommandLineArgs()[1].Equals("e22afd680ce7b8f23fad799fa3beef2dbce66e42e8877a9f2f0e3fd0b55619c9"))
                     {
-                        LogBox.Add($"[Warn] Invalid launch hash: \"{Environment.GetCommandLineArgs()[1]}\"\n", Brushes.Orange, FontWeight: FontWeights.Bold);
+                        LogBox.Add($"[Warn] Invalid launch hash: \"{Environment.GetCommandLineArgs()[1]}\"\n", Brushes.Orange, fontWeight: FontWeights.Bold);
                     }
                 }
                 catch (System.IndexOutOfRangeException)
@@ -146,7 +146,7 @@ namespace WinUtil
                     Machine.IsActivated = false;
                 }
 
-                LogBox.Add(LicenseMessage, Brushes.DarkGray, StayInLine: true);
+                LogBox.Add(LicenseMessage, Brushes.DarkGray, stayInLine: true);
                 Application.Dispatcher.BeginInvoke(new Action(() => Application.Object.OverviewGrid.LicenseStatus.Text = LicenseMessage));
 
                 //

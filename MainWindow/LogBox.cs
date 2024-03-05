@@ -7,61 +7,61 @@ namespace WinUtil
 {
     internal class LogBox
     {
-        internal static void Add(String Text = null, SolidColorBrush Foreground = null, SolidColorBrush Background = null, Boolean StayInLine = false, Boolean ScrollToEnd = true, FontWeight FontWeight = default)
+        internal static void Add(String text = null, SolidColorBrush foreground = null, SolidColorBrush background = null, Boolean stayInLine = false, Boolean scrollToEnd = true, FontWeight fontWeight = default)
         {
-            Application.Dispatcher.Invoke(new Action(() => MainWindow.LogBoxAdd(Text, Foreground, Background, StayInLine, ScrollToEnd, FontWeight)));
+            Application.Dispatcher.Invoke(new Action(() => MainWindow.LogBoxAdd(text, foreground, background, stayInLine, scrollToEnd, fontWeight)));
         }
 
-        internal static void Remove(UInt32 Lines = 1)
+        internal static void Remove(UInt32 ammount = 1)
         {
-            Application.Dispatcher.Invoke(new Action(() => MainWindow.LogBoxRemoveLine(Lines)));
+            Application.Dispatcher.Invoke(new Action(() => MainWindow.LogBoxRemoveLine(ammount)));
         }
     }
 
     public partial class MainWindow
     {
-        internal static void LogBoxAdd(String Text = null, SolidColorBrush Foreground = null, SolidColorBrush Background = null, Boolean StayInLine = false, Boolean ScrollToEnd = true, FontWeight FontWeight = default)
+        internal static void LogBoxAdd(String text = null, SolidColorBrush foreground = null, SolidColorBrush background = null, Boolean stayInLine = false, Boolean scrollToEnd = true, FontWeight fontWeight = default)
         {
-            Foreground ??= Brushes.LightGray;
+            foreground ??= Brushes.LightGray;
 
             TextRange TxR;
 
-            if (StayInLine)
+            if (stayInLine)
             {
                 TxR = new(Application.Object.Log_RichTextBox.Document.ContentEnd, Application.Object.Log_RichTextBox.Document.ContentEnd)
                 {
-                    Text = Text
+                    Text = text
                 };
             }
             else
             {
                 TxR = new(Application.Object.Log_RichTextBox.Document.ContentEnd, Application.Object.Log_RichTextBox.Document.ContentEnd)
                 {
-                    Text = "\n" + Text
+                    Text = "\n" + text
                 };
             }
 
-            TxR.ApplyPropertyValue(TextElement.ForegroundProperty, Foreground);
+            TxR.ApplyPropertyValue(TextElement.ForegroundProperty, foreground);
 
-            if (FontWeight != default)
+            if (fontWeight != default)
             {
-                TxR.ApplyPropertyValue(TextElement.FontWeightProperty, FontWeight);
+                TxR.ApplyPropertyValue(TextElement.FontWeightProperty, fontWeight);
             }
 
-            if (Background != null)
+            if (background != null)
             {
-                TxR.ApplyPropertyValue(TextElement.BackgroundProperty, Background);
+                TxR.ApplyPropertyValue(TextElement.BackgroundProperty, background);
             }
 
-            if (ScrollToEnd == true)
+            if (scrollToEnd == true)
             {
                 Application.Object.Log_ScrollViewer.ScrollToEnd();
             }
         }
 
-        internal static void LogBoxRemoveLine(UInt32 Lines = 1)
+        internal static void LogBoxRemoveLine(UInt32 ammount = 1)
         {
-            for (UInt32 I = 0; I < Lines; I++)
+            for (UInt32 I = 0; I < ammount; I++)
             {
                 Application.Object.Log_RichTextBox.Document.Blocks.Remove(Application.Object.Log_RichTextBox.Document.Blocks.LastBlock);
             }

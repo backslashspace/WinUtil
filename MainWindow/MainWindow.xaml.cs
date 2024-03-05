@@ -36,7 +36,7 @@ namespace WinUtil
             }
             else
             {
-                LogBoxAdd("Verified program files\n", Brushes.LightGreen, StayInLine: true);
+                LogBoxAdd("Verified program files\n", Brushes.LightGreen, stayInLine: true);
             }
 
             Loaded += InitiateApplication;
@@ -88,7 +88,7 @@ namespace WinUtil
 
             if (hadErrors)
             {
-                LogBoxAdd(errorString, Brushes.OrangeRed, StayInLine: true);
+                LogBoxAdd(errorString, Brushes.OrangeRed, stayInLine: true);
             }
 
             return hadErrors;

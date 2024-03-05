@@ -82,9 +82,9 @@ namespace WinUtil
                     CreatePathString();
 
                     LogBox.Add(rpath, Brushes.Gray);
-                    LogBox.Add(efile, Brushes.OrangeRed, StayInLine: true);
-                    LogBox.Add(" ── ", Brushes.Gray, StayInLine: true);
-                    LogBox.Add("Invalide Hash", Brushes.Red, StayInLine: true);
+                    LogBox.Add(efile, Brushes.OrangeRed, stayInLine: true);
+                    LogBox.Add(" ── ", Brushes.Gray, stayInLine: true);
+                    LogBox.Add("Invalide Hash", Brushes.Red, stayInLine: true);
 
                     return new Boolean[] { false, true };
                 }
@@ -94,9 +94,9 @@ namespace WinUtil
                 CreatePathString();
 
                 LogBox.Add(rpath, Brushes.Gray);
-                LogBox.Add(efile, Brushes.OrangeRed, StayInLine: true);
-                LogBox.Add(" ── ", Brushes.Gray, StayInLine: true);
-                LogBox.Add("File missing", Brushes.Red, StayInLine: true);
+                LogBox.Add(efile, Brushes.OrangeRed, stayInLine: true);
+                LogBox.Add(" ── ", Brushes.Gray, stayInLine: true);
+                LogBox.Add("File missing", Brushes.Red, stayInLine: true);
 
                 return new Boolean[] { false, false };
             }

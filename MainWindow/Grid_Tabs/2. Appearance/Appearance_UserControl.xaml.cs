@@ -32,10 +32,10 @@ namespace WinUtil.Grid_Tabs
 
         private void Init_Theme_Switch()
         {
-            UInt32 v0 = xRegistry.GetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "SystemUsesLightTheme", RegistryValueKind.DWord);
-            UInt32 v1 = xRegistry.GetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "AppsUseLightTheme", RegistryValueKind.DWord);
+            UInt32 SystemLightTheme = xRegistry.GetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "SystemUsesLightTheme", RegistryValueKind.DWord);
+            UInt32 appLightTheme = xRegistry.GetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "AppsUseLightTheme", RegistryValueKind.DWord);
 
-            if ((v0 == 1) || (v1 == 1))
+            if ((SystemLightTheme == 1) || (appLightTheme == 1))
             {
                 OSTheme_ToggleButton.Checked -= Set_System_Theme_Toggle;
                 OSTheme_ToggleButton.IsChecked = true;

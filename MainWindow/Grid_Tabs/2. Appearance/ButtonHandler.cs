@@ -63,7 +63,7 @@ namespace WinUtil.Grid_Tabs
 
             Boolean state = (Boolean)!Terminal_Integration_ToggleButton.IsChecked;
 
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 try
                 {
@@ -73,10 +73,9 @@ namespace WinUtil.Grid_Tabs
 
                         xRegistry.DeleteSubKeyTrees("HKEY_CLASSES_ROOT\\Directory\\Background\\shell", new String[] { "Powershell", "OpenWTHere", "OpenWTHereAsAdmin" });
                         xRegistry.DeleteSubKeyTrees("HKEY_CLASSES_ROOT\\Directory\\shell", new String[] { "Powershell", "OpenWTHere", "OpenWTHereAsAdmin" });
-
                         xRegistry.DeleteValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked", "{9F156763-7844-4DC4-B2B1-901F640F5155}");
 
-                        Common.RestartExplorer().Wait();
+                        await Common.RestartExplorer().ConfigureAwait(false);
 
                         LogBox.Add("Done\n", Brushes.MediumSeaGreen);
                     }
@@ -84,18 +83,18 @@ namespace WinUtil.Grid_Tabs
                     {
                         LogBox.Add("Adding Windows Terminal to context menu", Brushes.LightBlue);
 
-                        String[] Folders = Directory.GetDirectories("C:\\Program Files\\WindowsApps");
+                        String[] directoryNames = Directory.GetDirectories("C:\\Program Files\\WindowsApps");
 
-                        for (Int32 i = 0; i < Folders.Length; i++)
+                        for (Int32 i = 0; i < directoryNames.Length; i++)
                         {
-                            if (Folders[i].Contains("WindowsTerminal"))
+                            if (directoryNames[i].Contains("WindowsTerminal"))
                             {
                                 goto SkipInstall;
                             }
                         }
 
-                        //install WT and dependencies
                         LogBox.Add("Installing Windows Terminal");
+
                         if (Global.VerboseHashCheck(Resource_Assets.VCLibs_PathName, Resource_Assets.VCLibs_Hash)[0] && Global.VerboseHashCheck(Resource_Assets.WT_PathName, Resource_Assets.WT_Hash)[0] && Global.VerboseHashCheck(Resource_Assets.WT_License_PathName, Resource_Assets.WT_License_Hash)[0])
                         {
                             xPowershell.Run($"Add-AppxPackage -Path \"{Resource_Assets.VCLibs_PathName}\"");
@@ -110,7 +109,6 @@ namespace WinUtil.Grid_Tabs
 
                     SkipInstall:
 
-                        //remove old ps entry
                         if (Machine.AdminGroupName == null)
                         {
                             LogBox.Add("Waiting for program initialization", Brushes.Orange);
@@ -128,7 +126,7 @@ namespace WinUtil.Grid_Tabs
                         xProcess.Run(Resource_Assets.SetACL_PathName, $"-on \"HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Directory\\shell\\Powershell\" -ot reg -actn ace -ace \"n:{Machine.AdminGroupName};p:full\" -rec Yes", waitForExit: true, hiddenExecute: true);
                         xRegistry.DeleteSubKeyTrees("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\Directory", new String[] { "Background\\shell\\Powershell", "shell\\Powershell" });
 
-                        //put new
+                        //put actual
                         xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\Background\shell\OpenWTHere", "Extended", "", RegistryValueKind.String);
                         xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\Background\shell\OpenWTHere", "Icon", "imageres.dll,-5323", RegistryValueKind.String);
                         xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Directory\Background\shell\OpenWTHere", "MUIVerb", "Open in Windows Terminal", RegistryValueKind.String);
@@ -153,7 +151,7 @@ namespace WinUtil.Grid_Tabs
 
                         xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked", "{9F156763-7844-4DC4-B2B1-901F640F5155}", "", RegistryValueKind.String);
 
-                        Common.RestartExplorer().Wait();
+                        await Common.RestartExplorer().ConfigureAwait(false);
 
                         LogBox.Add("Done, use with Shift + Right-Click\n", Brushes.MediumSeaGreen);
                     }
