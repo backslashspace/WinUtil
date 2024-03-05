@@ -12,9 +12,9 @@ namespace WinUtil
             Application.Dispatcher.Invoke(new Action(() => MainWindow.LogBoxAdd(text, foreground, background, stayInLine, scrollToEnd, fontWeight)));
         }
 
-        internal static void Remove(UInt32 ammount = 1)
+        internal static void Remove(UInt32 amount = 1)
         {
-            Application.Dispatcher.Invoke(new Action(() => MainWindow.LogBoxRemoveLine(ammount)));
+            Application.Dispatcher.Invoke(new Action(() => MainWindow.LogBoxRemoveLine(amount)));
         }
     }
 
@@ -59,9 +59,9 @@ namespace WinUtil
             }
         }
 
-        internal static void LogBoxRemoveLine(UInt32 ammount = 1)
+        internal static void LogBoxRemoveLine(UInt32 amount = 1)
         {
-            for (UInt32 I = 0; I < ammount; I++)
+            for (UInt32 I = 0; I < amount; I++)
             {
                 Application.Object.Log_RichTextBox.Document.Blocks.Remove(Application.Object.Log_RichTextBox.Document.Blocks.LastBlock);
             }

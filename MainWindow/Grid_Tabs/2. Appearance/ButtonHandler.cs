@@ -95,7 +95,7 @@ namespace WinUtil.Grid_Tabs
 
                         LogBox.Add("Installing Windows Terminal");
 
-                        if (Global.VerboseHashCheck(Resource_Assets.VCLibs_PathName, Resource_Assets.VCLibs_Hash)[0] && Global.VerboseHashCheck(Resource_Assets.WT_PathName, Resource_Assets.WT_Hash)[0] && Global.VerboseHashCheck(Resource_Assets.WT_License_PathName, Resource_Assets.WT_License_Hash)[0])
+                        if (Common.VerboseHashCheck(Resource_Assets.VCLibs_PathName, Resource_Assets.VCLibs_Hash)[0] && Common.VerboseHashCheck(Resource_Assets.WT_PathName, Resource_Assets.WT_Hash)[0] && Common.VerboseHashCheck(Resource_Assets.WT_License_PathName, Resource_Assets.WT_License_Hash)[0])
                         {
                             xPowershell.Run($"Add-AppxPackage -Path \"{Resource_Assets.VCLibs_PathName}\"");
                             xPowershell.Run($"Add-ProvisionedAppPackage -Online -PackagePath \"{Resource_Assets.WT_PathName}\" -LicensePath \"{Resource_Assets.WT_License_PathName}\"");

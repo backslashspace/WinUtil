@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Policy;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -65,55 +66,7 @@ namespace WinUtil
 
 
 
-        ///<returns><see langword="Boolean"/>[2] { IsValid, IsPresent }</returns>
-        internal static Boolean[] VerboseHashCheck(String filePath, String IsHash, xHash.Algorithm algorithm = xHash.Algorithm.SHA256)
-        {
-            String efile;
-            String rpath;
-
-            try
-            {
-                if (xHash.CompareHash(filePath, IsHash, algorithm))
-                {
-                    return new Boolean[] { true, true };
-                }
-                else
-                {
-                    CreatePathString();
-
-                    LogBox.Add(rpath, Brushes.Gray);
-                    LogBox.Add(efile, Brushes.OrangeRed, stayInLine: true);
-                    LogBox.Add(" ── ", Brushes.Gray, stayInLine: true);
-                    LogBox.Add("Invalide Hash", Brushes.Red, stayInLine: true);
-
-                    return new Boolean[] { false, true };
-                }
-            }
-            catch
-            {
-                CreatePathString();
-
-                LogBox.Add(rpath, Brushes.Gray);
-                LogBox.Add(efile, Brushes.OrangeRed, stayInLine: true);
-                LogBox.Add(" ── ", Brushes.Gray, stayInLine: true);
-                LogBox.Add("File missing", Brushes.Red, stayInLine: true);
-
-                return new Boolean[] { false, false };
-            }
-
-            void CreatePathString()
-            {
-                String[] temp = filePath.Split('\\');
-                efile = temp[temp.Length - 1];
-                temp = temp.Skip(0).Take((temp.Length) - 1).ToArray();
-                rpath = String.Join("\\", temp);
-
-                if (filePath.Contains('\\'))
-                {
-                    rpath += "\\";
-                }
-            }
-        }
+        
 
         ///<summary>Tests internet connectivity.</summary>
         ///<remarks>(Attempts to resolve a hostname)</remarks>
@@ -169,11 +122,11 @@ namespace WinUtil
             {
                 LogBox.Add("Installing WinGet..", Brushes.DarkGreen);
 
-                if (VerboseHashCheck("assets\\" + Resource_Assets.VCLibs_PathName, Resource_Assets.VCLibs_Hash)[0] && VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.WinGetName, Resource_Assets.WinGetHash)[0] && VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.Xaml27Name, Resource_Assets.Xaml27Hash)[0] && VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.WinGetLicenseName, Resource_Assets.WinGetLicenseHash)[0])
+                if (Common.VerboseHashCheck("assets\\" + Resource_Assets.VCLibs_PathName, Resource_Assets.VCLibs_Hash)[0] && Common.VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.WinGetName, Resource_Assets.WinGetHash)[0] && Common.VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.Xaml27Name, Resource_Assets.Xaml27Hash)[0] && Common.VerboseHashCheck("assets\\WinGet\\" + Resource_Assets.WinGetLicenseName, Resource_Assets.WinGetLicenseHash)[0])
                 {
-                    xPowershell.Run($"Add-AppxPackage -Path \"assets\\{Resource_Assets.VCLibs_PathName}\"");
+                    xPowershell.Run($"Add-AppxPackage -path \"assets\\{Resource_Assets.VCLibs_PathName}\"");
 
-                    xPowershell.Run("Add-AppxPackage -Path \"assets\\WinGet\\" + Resource_Assets.Xaml27Name + "\"");
+                    xPowershell.Run("Add-AppxPackage -path \"assets\\WinGet\\" + Resource_Assets.Xaml27Name + "\"");
 
                     xPowershell.Run("Add-ProvisionedAppPackage -Online -PackagePath \"assets\\WinGet\\" + Resource_Assets.WinGetName + "\" -LicensePath \"assets\\WinGet\\" + Resource_Assets.WinGetLicenseName + "\"");
 

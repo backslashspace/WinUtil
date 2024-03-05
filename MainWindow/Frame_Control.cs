@@ -159,25 +159,25 @@ namespace WinUtil
 
         //# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-        private static class WindowButtonColors
+        private readonly struct WindowButtonColors
         {
-            internal static String Minimize_Button_Color_Idle = "#202020";
-            internal static String Minimize_Button_Color_Mouse_Is_Over = "#2d2d2d";
-            internal static String Minimize_Button_Color_Down = "#2a2a2a";
-            internal static String Minimize_Button_Stroke_Color_Enabled = "#ffffff";
-            internal static String Minimize_Button_Stroke_Color_Disabled = "#777777";
-
-            internal static String State_Button_Color_Idle = "#202020";
-            internal static String State_Button_Color_Mouse_Is_Over = "#2d2d2d";
-            internal static String State_Button_Color_Down = "#2a2a2a";
-            internal static String State_Button_Stroke_Color_Enabled = "#ffffff";
-            internal static String State_Button_Stroke_Color_Disabled = "#777777";
-
-            internal static String Close_Button_Color_Idle = "#202020";
-            internal static String Close_Button_Color_Mouse_Is_Over = "#c42b1c";
-            internal static String Close_Button_Color_Down = "#b22a1b";
-            internal static String Close_Button_Stroke_Color_Enabled = "#ffffff";
-            internal static String Close_Button_Stroke_Color_Disabled = "#777777";
+            internal static readonly String Minimize_Button_Color_Idle = "#202020";
+            internal static readonly String Minimize_Button_Color_Mouse_Is_Over = "#2d2d2d";
+            internal static readonly String Minimize_Button_Color_Down = "#2a2a2a";
+            internal static readonly String Minimize_Button_Stroke_Color_Enabled = "#ffffff";
+            internal static readonly String Minimize_Button_Stroke_Color_Disabled = "#777777";
+                    
+            internal static readonly String State_Button_Color_Idle = "#202020";
+            internal static readonly String State_Button_Color_Mouse_Is_Over = "#2d2d2d";
+            internal static readonly String State_Button_Color_Down = "#2a2a2a";
+            internal static readonly String State_Button_Stroke_Color_Enabled = "#ffffff";
+            internal static readonly String State_Button_Stroke_Color_Disabled = "#777777";
+                      
+            internal static readonly String Close_Button_Color_Idle = "#202020";
+            internal static readonly String Close_Button_Color_Mouse_Is_Over = "#c42b1c";
+            internal static readonly String Close_Button_Color_Down = "#b22a1b";
+            internal static readonly String Close_Button_Stroke_Color_Enabled = "#ffffff";
+            internal static readonly String Close_Button_Stroke_Color_Disabled = "#777777";
         }
     }
 }

@@ -18,63 +18,68 @@ namespace WinUtil
 
         private void OverviewButton(object sender, RoutedEventArgs e)
         {
-            Navigation_Areas OldArea = CurrentArea;
+            Navigation_Areas oldArea = CurrentArea;
 
             CurrentArea = Navigation_Areas.Overview;
 
-            HandleNavigationButtons(CurrentArea, OldArea);
+            HandleNavigationButtons(CurrentArea, oldArea);
         }
 
         private void AppearanceButton(object sender, RoutedEventArgs e)
         {
-            Navigation_Areas OldArea = CurrentArea;
+            Navigation_Areas oldArea = CurrentArea;
 
             CurrentArea = Navigation_Areas.Appearance;
 
-            HandleNavigationButtons(CurrentArea, OldArea);
+            HandleNavigationButtons(CurrentArea, oldArea);
         }
 
         private void BehaviorButton(object sender, RoutedEventArgs e)
         {
-            Navigation_Areas OldArea = CurrentArea;
+            Navigation_Areas oldArea = CurrentArea;
 
             CurrentArea = Navigation_Areas.Behavior;
 
-            HandleNavigationButtons(CurrentArea, OldArea);
+            HandleNavigationButtons(CurrentArea, oldArea);
         }
 
         private void PrivacyButton(object sender, RoutedEventArgs e)
         {
-            Navigation_Areas OldArea = CurrentArea;
+            Navigation_Areas oldArea = CurrentArea;
 
             CurrentArea = Navigation_Areas.Privacy;
 
-            HandleNavigationButtons(CurrentArea, OldArea);
+            HandleNavigationButtons(CurrentArea, oldArea);
         }
 
         private void SecurityButton(object sender, RoutedEventArgs e)
         {
-            Navigation_Areas OldArea = CurrentArea;
+            Navigation_Areas oldArea = CurrentArea;
 
             CurrentArea = Navigation_Areas.Security;
 
-            HandleNavigationButtons(CurrentArea, OldArea);
+            HandleNavigationButtons(CurrentArea, oldArea);
         }
 
         private void ProgramsButton(object sender, RoutedEventArgs e)
         {
-            Navigation_Areas OldArea = CurrentArea;
+            Navigation_Areas oldArea = CurrentArea;
 
             CurrentArea = Navigation_Areas.Programs;
 
-            HandleNavigationButtons(CurrentArea, OldArea);
+            HandleNavigationButtons(CurrentArea, oldArea);
         }
 
         //
 
-        private void HandleNavigationButtons(Navigation_Areas NewTab, Navigation_Areas OldTab)
+        private void HandleNavigationButtons(Navigation_Areas newArea, Navigation_Areas oldArea)
         {
-            switch (NewTab)
+            if (newArea == oldArea)
+            {
+                return;
+            }
+
+            switch (newArea)
             {
                 case Navigation_Areas.Overview:
                     Overview.IsChecked = true;
@@ -107,12 +112,7 @@ namespace WinUtil
                     break;
             }
 
-            if (NewTab == OldTab)
-            {
-                return;
-            }
-
-            switch (OldTab)
+            switch (oldArea)
             {
                 case Navigation_Areas.Overview:
                     Overview.IsChecked = false;

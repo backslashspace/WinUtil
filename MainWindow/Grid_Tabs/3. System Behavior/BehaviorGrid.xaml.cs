@@ -11,9 +11,9 @@ namespace WinUtil.Grid_Tabs
     {
         private void InitBackGroundAppsToggleButton()
         {
-            UInt32? backgroundAppOperationStatus = xRegistry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy", "LetAppsRunInBackground", RegistryValueKind.DWord);
+            UInt32? backgroundAppOperationConfig = xRegistry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy", "LetAppsRunInBackground", RegistryValueKind.DWord);
 
-            if (backgroundAppOperationStatus == 2)
+            if (backgroundAppOperationConfig == 2)
             {
                 BackGroundApps_ToggleButton.Checked -= BackGroundAppsToggle;
                 BackGroundApps_ToggleButton.IsChecked = true;

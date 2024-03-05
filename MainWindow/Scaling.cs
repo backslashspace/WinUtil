@@ -19,26 +19,24 @@ namespace WinUtil
         {
             Application.Object.Log_RichTextBox.Document.PageWidth = Application.Object.Log_RichTextBox.ActualWidth;
 
-            Double Window_Height;
-            Double Window_Width;
+            Double windowHeight;
+            Double windowWidth;
 
-            #region Window_State_Aware
             if (WindowState == WindowState.Maximized)
             {
-                Window_Height = ActualHeight - 16;
-                Window_Width = ActualWidth - 16;
+                windowHeight = ActualHeight - 16;
+                windowWidth = ActualWidth - 16;
             }
             else
             {
-                Window_Height = ActualHeight;
-                Window_Width = ActualWidth;
+                windowHeight = ActualHeight;
+                windowWidth = ActualWidth;
             }
-            #endregion
 
             //
 
             #region Content area size
-            if (Window_Width > 1400)
+            if (windowWidth > 1400)
             {
                 if (Navigation_Button_Area_Size[1])
                 {
@@ -48,7 +46,7 @@ namespace WinUtil
                     Navigation_Button_Area_Size[1] = false;
                 }
             }
-            else if (Window_Width < 951)
+            else if (windowWidth < 951)
             {
                 if (Navigation_Button_Area_Size[0])
                 {
@@ -60,7 +58,7 @@ namespace WinUtil
             }
             else
             {
-                Navigation_Column.Width = new GridLength(166 + ((Window_Width - 950) / 6), GridUnitType.Pixel);
+                Navigation_Column.Width = new GridLength(166 + ((windowWidth - 950) / 6), GridUnitType.Pixel);
 
                 Navigation_Button_Area_Size[0] = true;
                 Navigation_Button_Area_Size[1] = true;
@@ -68,11 +66,11 @@ namespace WinUtil
             #endregion
 
             #region nav buttons
-            if (Window_Width < 1200 || Window_Height < 708)
+            if (windowWidth < 1200 || windowHeight < 708)
             {
                 if (Navigation_Button_Size_State[0])
                 {
-                    Byte N_IconSize = 18;
+                    Byte small_NavigationIconSize = 18;
 
                     Navigation_Button_Size_State[0] = false;
                     Navigation_Button_Size_State[1] = true;
@@ -86,34 +84,34 @@ namespace WinUtil
 
                     Overview.Height = 52;
                     Overview.Margin = new Thickness(9, 0, 0, 0);
-                    Navigation_Button_Overview_Icon.Height = N_IconSize;
+                    Navigation_Button_Overview_Icon.Height = small_NavigationIconSize;
 
                     Appearance.Height = 36;
                     Appearance.Margin = new Thickness(9, 58, 0, 0);
-                    Navigation_Button_Appearance_Icon.Height = N_IconSize;
+                    Navigation_Button_Appearance_Icon.Height = small_NavigationIconSize;
 
                     Behavior.Height = 36;
                     Behavior.Margin = new Thickness(9, 98, 0, 0);
-                    Navigation_Button_Behavior_Icon.Height = N_IconSize;
+                    Navigation_Button_Behavior_Icon.Height = small_NavigationIconSize;
 
                     Privacy.Height = 36;
                     Privacy.Margin = new Thickness(9, 138, 0, 0);
-                    Navigation_Button_Privacy_Icon.Height = N_IconSize;
+                    Navigation_Button_Privacy_Icon.Height = small_NavigationIconSize;
 
                     Security.Height = 36;
                     Security.Margin = new Thickness(9, 178, 0, 0);
-                    Navigation_Button_Security_Icon.Height = N_IconSize;
+                    Navigation_Button_Security_Icon.Height = small_NavigationIconSize;
 
                     Programs.Height = 36;
                     Programs.Margin = new Thickness(9, 218, 0, 0);
-                    Navigation_Button_Programs_Icon.Height = N_IconSize;
+                    Navigation_Button_Programs_Icon.Height = small_NavigationIconSize;
                 }
             }
             else
             {
                 if (Navigation_Button_Size_State[1])
                 {
-                    Byte L_IconSize = 22;
+                    Byte big_NavigationIconSize = 22;
 
                     Navigation_Button_Size_State[0] = true;
                     Navigation_Button_Size_State[1] = false;
@@ -127,27 +125,27 @@ namespace WinUtil
 
                     Overview.Height = 54;
                     Overview.Margin = new Thickness(9, 0, 0, 0);
-                    Navigation_Button_Overview_Icon.Height = L_IconSize;
+                    Navigation_Button_Overview_Icon.Height = big_NavigationIconSize;
 
                     Appearance.Height = 44;
                     Appearance.Margin = new Thickness(9, 60, 0, 0);
-                    Navigation_Button_Appearance_Icon.Height = L_IconSize;
+                    Navigation_Button_Appearance_Icon.Height = big_NavigationIconSize;
 
                     Behavior.Height = 44;
                     Behavior.Margin = new Thickness(9, 108, 0, 0);
-                    Navigation_Button_Behavior_Icon.Height = L_IconSize;
+                    Navigation_Button_Behavior_Icon.Height = big_NavigationIconSize;
 
                     Privacy.Height = 44;
                     Privacy.Margin = new Thickness(9, 156, 0, 0);
-                    Navigation_Button_Privacy_Icon.Height = L_IconSize;
+                    Navigation_Button_Privacy_Icon.Height = big_NavigationIconSize;
 
                     Security.Height = 44;
                     Security.Margin = new Thickness(9, 204, 0, 0);
-                    Navigation_Button_Security_Icon.Height = L_IconSize;
+                    Navigation_Button_Security_Icon.Height = big_NavigationIconSize;
 
                     Programs.Height = 44;
                     Programs.Margin = new Thickness(9, 252, 0, 0);
-                    Navigation_Button_Programs_Icon.Height = L_IconSize;
+                    Navigation_Button_Programs_Icon.Height = big_NavigationIconSize;
                 }
             }
             #endregion

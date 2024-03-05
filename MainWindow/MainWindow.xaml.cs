@@ -95,34 +95,29 @@ namespace WinUtil
 
             //# # # # # # # # # #
 
-            static String Validator(String FilePath)
+            static String Validator(String filePath)
             {
-                if (!File.Exists(FilePath))
+                if (!File.Exists(filePath))
                 {
                     return "";
                 }
 
-                using SHA256 SHA256 = SHA256.Create();
+                using SHA256 sha256 = SHA256.Create();
 
-                String Hash;
+                String hash;
 
                 try
                 {
-                    using FileStream Stream = File.OpenRead(FilePath);
+                    using FileStream fileStream = File.OpenRead(filePath);
 
-                    Hash = BitConverter.ToString(SHA256.ComputeHash(Stream)).Replace("-", String.Empty);
-
-                    Stream.Close();
-                    Stream.Dispose();
+                    hash = BitConverter.ToString(sha256.ComputeHash(fileStream)).Replace("-", String.Empty);
                 }
                 catch
                 {
-                    Hash = null;
+                    hash = null;
                 }
 
-                SHA256.Dispose();
-
-                return Hash;
+                return hash;
             }
 
             static void BuildErrorString(ref String errorString, String line)

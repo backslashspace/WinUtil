@@ -20,7 +20,7 @@ namespace WinUtil.Grid_Tabs
         }
 
         private static Boolean Telemetry_FState = false;
-        private void Telemetry(object sender, RoutedEventArgs e)
+        private async void Telemetry(object sender, RoutedEventArgs e)
         {
             if (Telemetry_FState)
             {
@@ -31,23 +31,23 @@ namespace WinUtil.Grid_Tabs
 
             MainWindow.ActivateWorker();
 
-            Task.Run(() =>
+            await Task.Run(() =>
             {
                 try
                 {
                     LogBox.Add("Deactivating telemetry", Brushes.LightBlue);
 
                     LogBox.Add("Running O&O ShutUp10");
-                    if (Global.VerboseHashCheck(Resource_Assets.su10exe, Resource_Assets.su10exeHash)[0] && Global.VerboseHashCheck(Resource_Assets.su10settings, Resource_Assets.su10settingsHash)[0])
+                    if (Common.VerboseHashCheck(Resource_Assets.su10exe, Resource_Assets.su10exeHash)[0] && Common.VerboseHashCheck(Resource_Assets.su10settings, Resource_Assets.su10settingsHash)[0])
                     {
-                        UInt32? TBSB = xRegistry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search", "SearchboxTaskbarMode", RegistryValueKind.DWord, false);
+                        UInt32? taskbarSearchBoxMode = xRegistry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search", "SearchboxTaskbarMode", RegistryValueKind.DWord, false);
 
                         xProcess.Run(Resource_Assets.su10exe, $"{Resource_Assets.su10settings} /nosrp /quiet", waitForExit: true, hiddenExecute: true);
 
                         //restore
-                        if (TBSB != -1 && TBSB != null)
+                        if (taskbarSearchBoxMode != -1 && taskbarSearchBoxMode != null)
                         {
-                            xRegistry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search", "SearchboxTaskbarMode", TBSB, RegistryValueKind.DWord);
+                            xRegistry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Search", "SearchboxTaskbarMode", taskbarSearchBoxMode, RegistryValueKind.DWord);
                         }
                     }
                     else

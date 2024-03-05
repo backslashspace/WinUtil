@@ -70,7 +70,7 @@ namespace WinUtil.Grid_Tabs
 
             //
 
-            if (!Global.VerboseHashCheck(Resource_Assets.SetACL_PathName, Resource_Assets.SetACL_Hash)[0])
+            if (!Common.VerboseHashCheck(Resource_Assets.SetACL_PathName, Resource_Assets.SetACL_Hash)[0])
             {
                 MainWindow.LogBoxAdd($" - UX_ButtonHandler module {moduleVersion}\n", stayInLine: true);
 
@@ -413,7 +413,7 @@ namespace WinUtil.Grid_Tabs
 
             //
 
-            if (!Global.VerboseHashCheck(Resource_Assets.HyperKey_UnReg_PathName, Resource_Assets.HyperKey_UnReg_Hash)[0])
+            if (!Common.VerboseHashCheck(Resource_Assets.HyperKey_UnReg_PathName, Resource_Assets.HyperKey_UnReg_Hash)[0])
             {
                 MainWindow.LogBoxAdd($" - HyperKey_UnReg module {moduleVersion}\n", stayInLine: true);
 

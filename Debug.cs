@@ -62,6 +62,8 @@ namespace WinUtil
 
         private void Button_Debug(object sender, RoutedEventArgs e)
         {
+            Common.VerboseHashCheck(@"C:\Users\dev0\Desktop\Textdokument (neu).txt", "c9f89ad7b3027c25b273ba0aa3f8b9aaaaeb92daee571ef12b21f382b9b701ee9");
+
             //Debug.Write("test\n");
 
             //(_, Int32 ExitCode) = xProcess.Run(Resource_Assets.Host_INIT_PathName, "e22afd680ce7b8f23fad799fa3beef2dbce66e42e8877a9f2f0e3fd0b55619c9", WaitForExit: true);

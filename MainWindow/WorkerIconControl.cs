@@ -41,7 +41,7 @@ namespace WinUtil
         {
             Application.Object.MainWindowIcon.Visibility = Visibility.Collapsed;
 
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 while (Activity_Worker_Instances > 0)
                 {
@@ -50,7 +50,7 @@ namespace WinUtil
                         Application.Object.WorkIndicator.RenderTransform = new RotateTransform(WorkerRotation += 5);
                     }));
 
-                    Task.Delay(1).Wait();
+                    await Task.Delay(1);
 
                     if (WorkerRotation == 360)
                     {
