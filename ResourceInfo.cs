@@ -4,7 +4,7 @@ namespace WinUtil
 {
     internal readonly struct EXT_DLL
     {
-        internal const String BSS_System = "275bdc79d65985f7d4e51987fb7cb933aa7df0e11a8defd1af72c8422c288649";
+        internal const String BSS_System = "0c022e0f7e70fda69783438e8fa642e7aa30605df179e4d5c44849366f8a22d9";
         internal const String BSS_HashTools = "5ebb8052b2f0395ede2423354fcc8e39495eba6596187435f983f99274a71136";
         internal const String BSS_Launcher = "8fbdaf21a67f57fc48bd402e56ed10c35c1c667c5ad34cba34a8dbc4e295ccce";
 

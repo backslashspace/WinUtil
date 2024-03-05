@@ -512,8 +512,6 @@ namespace WinUtil.Grid_Tabs
 
             MainWindow.ActivateWorker();
 
-            MainWindow.LogBoxAdd("Deactivating GameDVR and GameBar\n", Brushes.LightBlue, null);
-
             try
             {
                 await Task.Run(() =>
@@ -532,6 +530,8 @@ namespace WinUtil.Grid_Tabs
             {
                 LogBox.Add(ex.Message + "\n", Brushes.Red);
             }
+
+            MainWindow.LogBoxAdd("Deactivated GameDVR and GameBar\n", Brushes.LightBlue, null);
 
             MainWindow.DeactivateWorker();
 
