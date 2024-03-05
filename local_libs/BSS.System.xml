@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BSS.System</name>
+    </assembly>
+    <members>
+        <member name="T:BSS.System.Windows.xFirmware">
+            <summary></summary>
+        </member>
+        <member name="T:BSS.System.Windows.xFirmware.FirmwareType">
+            <summary></summary>
+        </member>
+        <member name="F:BSS.System.Windows.xFirmware.FirmwareType.UEFI">
+            <summary></summary>
+        </member>
+        <member name="F:BSS.System.Windows.xFirmware.FirmwareType.Legacy_BIOS">
+            <summary></summary>
+        </member>
+        <member name="M:BSS.System.Windows.xFirmware.GetFWType">
+            <summary>Checks if the System is running on UEFI or legacy BIOS</summary>
+        </member>
+        <member name="M:BSS.System.Windows.xFirmware.GetSecureBootStatus">
+            <summary>Checks if Secure Boot is enabled on the system</summary>
+        </member>
+        <member name="M:BSS.System.Windows.xLocalUsers.GetSystemUserList(System.Boolean,System.Boolean)">
+            <summary>Retrieves</summary>
+        </member>
+        <member name="M:BSS.System.Windows.xLocalUsers.GetUACUser">
+            <summary>Gets the current UAC user</summary>
+        </member>
+        <member name="M:BSS.System.Windows.xLocalGroups.GetAdminGroupName">
+            <summary>Gets local Administrator group name</summary>
+        </member>
+        <member name="T:BSS.System.Windows.xWinLicense">
+            <summary></summary>
+        </member>
+        <member name="M:BSS.System.Windows.xWinLicense.GetStatus(System.String@)">
+            <summary>Retrieves the Windows activation status using the WMI</summary>
+        </member>
+        <member name="M:BSS.System.Windows.xWinLicense.LicenseStatusToString(System.Byte)">
+            <summary>Maps the WMI license status to its representative string</summary>
+        </member>
+        <member name="M:BSS.System.Windows.xWinLicense.QueryStatus">
+            <summary>Retrieves the Windows activation status as byte using WMI</summary>
+        </member>
+        <member name="T:BSS.System.Registry.xRegistry">
+            <summary>Handles Registry access.</summary>
+        </member>
+        <member name="M:BSS.System.Registry.xRegistry.SetValue(System.String,System.String,System.Object,Microsoft.Win32.RegistryValueKind)">
+            <summary>Patched Registry.SetValue()</summary>
+        </member>
+        <member name="M:BSS.System.Registry.xRegistry.GetValue(System.String,System.String,Microsoft.Win32.RegistryValueKind,System.Boolean)">
+            <summary>Reads a value from the Registry.</summary>
+            <returns>
+            Returns data in form of specified <typeparamref name="RegistryValueKind"/>.<br/>
+            Returns <see langword="null"/> when value is not present.<br/>
+            Returns '<c>-1</c>' when value has the wrong type and <paramref name="deleteIfWrongType"/> is set to <see langword="false"/>.
+            </returns>
+        </member>
+        <member name="M:BSS.System.Registry.xRegistry.GetSubKeys(System.String)">
+            <summary>Returns all subkeys.</summary>
+        </member>
+        <member name="M:BSS.System.Registry.xRegistry.DeleteValue(System.String,System.String,System.Boolean)">
+            <summary>Removes a value from the Registry.</summary>
+            <remarks>Takes a value and removes them in the specified path.</remarks>
+            <returns><see langword="true"/> when at least one error occurred.</returns>
+        </member>
+        <member name="M:BSS.System.Registry.xRegistry.DeleteValues(System.String,System.String[],System.Boolean)">
+            <summary>Removes values from the Registry.</summary>
+            <remarks>Takes an array of values and removes them in the specified path.</remarks>
+            <returns><see langword="true"/> when at least one error occurred.</returns>
+        </member>
+        <member name="M:BSS.System.Registry.xRegistry.DeleteSubKeyTree(System.String,System.String,System.Boolean)">
+            <summary>Removes a key from the Registry.</summary>
+            <remarks>Takes a keys and removes it in the specified path.</remarks>
+            <returns><see langword="true"/> when an error occurred.</returns>
+        </member>
+        <member name="M:BSS.System.Registry.xRegistry.DeleteSubKeyTrees(System.String,System.String[],System.Boolean)">
+            <summary>Removes keys from the Registry.</summary>
+            <remarks>Takes an array of keys and removes them in the specified path.</remarks>
+            <returns><see langword="true"/> when at least one error occurred.</returns>
+        </member>
+        <member name="M:BSS.System.Registry.xRegistry.TestRegValuePresense(System.String,System.String)">
+            <summary>Tests if a value exists in the Registry.</summary>
+            <returns><see langword="false"/> if not present.</returns>
+            <returns> if not present.</returns>
+        </member>
+        <member name="M:BSS.System.Registry.xRegistry.PathToRegistryKey(System.String)">
+            <summary>Humane path to <see cref="T:Microsoft.Win32.RegistryKey"/></summary>
+        </member>
+        <member name="T:BSS.System.Service.xService">
+            <summary>Interact with Windows services</summary>
+        </member>
+        <member name="M:BSS.System.Service.xService.GetStatusString(System.String)">
+            <summary>Returns the status of a given service.</summary>
+        </member>
+        <member name="M:BSS.System.Service.xService.GetStatusEnum(System.String)">
+            <summary>Returns the status of a given service.</summary>
+        </member>
+        <member name="M:BSS.System.Service.xService.Start(System.String,System.String[])">
+            <summary>Starts a given service</summary>
+        </member>
+        <member name="M:BSS.System.Service.xService.Stop(System.String)">
+            <summary>Stops a given service</summary>
+        </member>
+        <member name="M:BSS.System.Service.xService.Pause(System.String)">
+            <summary>Stops a given service</summary>
+        </member>
+        <member name="M:BSS.System.Service.xService.SetStartupType(System.String,System.ServiceProcess.ServiceStartMode)">
+            <summary>Changes the service start type</summary>
+        </member>
+        <member name="M:BSS.System.Service.xService.GetStartupType(System.String)">
+            <summary>Gets the service start type</summary>
+        </member>
+    </members>
+</doc>

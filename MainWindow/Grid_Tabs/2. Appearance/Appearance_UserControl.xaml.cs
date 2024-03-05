@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 //
-using EXT.System.Registry;
+using BSS.System.Registry;
 
 namespace WinUtil.Grid_Tabs
 {
@@ -32,8 +32,8 @@ namespace WinUtil.Grid_Tabs
 
         private void Init_Theme_Switch()
         {
-            Int32 v0 = xRegistry.Get.Value("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "SystemUsesLightTheme", RegistryValueKind.DWord);
-            Int32 v1 = xRegistry.Get.Value("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "AppsUseLightTheme", RegistryValueKind.DWord);
+            UInt32 v0 = xRegistry.GetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "SystemUsesLightTheme", RegistryValueKind.DWord);
+            UInt32 v1 = xRegistry.GetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize", "AppsUseLightTheme", RegistryValueKind.DWord);
 
             if ((v0 == 1) || (v1 == 1))
             {

@@ -8,9 +8,9 @@ namespace WinUtil
 
         internal static String OSEdition = null;
 
-        internal static Int32 OSMajorVersion = 0;
+        internal static UInt32 OSMajorVersion = 0;
 
-        internal static Int32 OSMinorVersion = 0;
+        internal static UInt32 OSMinorVersion = 0;
 
         internal static OSPlatformFeatureCompliance WindowPlatformFeatureCompliance;
 

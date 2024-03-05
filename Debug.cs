@@ -6,7 +6,8 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
 //
-using EXT.Launcher.Process;
+using BSS.Launcher;
+using BSS.System.Registry;
 
 namespace WinUtil
 {
@@ -180,7 +181,7 @@ namespace WinUtil
 
             //
 
-            xProcess.Run("assets\\Program\\Notepad++\\npp.8.5.8.Installer.x64.exe", "/S", WaitForExit: true);
+            xProcess.Run("assets\\Program\\Notepad++\\npp.8.5.8.Installer.x64.exe", "/S", waitForExit: true);
             LogBox.Add("Installed Notepad++", Brushes.DarkGray);
 
             if (CustomInstall)
@@ -199,22 +200,22 @@ namespace WinUtil
                         LogBox.Add("Copied 'Cascadia Mono' to C:\\Windows\\Fonts\\", Brushes.DarkGray);
                     }
 
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Cascadia Mono Regular (TrueType)", "CascadiaMono.ttf", RegistryValueKind.String);
+                    xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Cascadia Mono Regular (TrueType)", "CascadiaMono.ttf", RegistryValueKind.String);
 
                     LogBox.Add("Registered font", Brushes.DarkGray);
                 }
 
-                xProcess.Run("assets\\7z.exe", $"x \"assets\\Program\\Notepad++\\NPP(NoLogVS-Config).zip\" -o\"C:\\Users\\{Environment.UserName}\\AppData\\Roaming\\Notepad++\" -y", HiddenExecute: true, WaitForExit: true);
+                xProcess.Run("assets\\7z.exe", $"x \"assets\\Program\\Notepad++\\NPP(NoLogVS-Config).zip\" -o\"C:\\Users\\{Environment.UserName}\\AppData\\Roaming\\Notepad++\" -y", hiddenExecute: true, waitForExit: true);
 
                 if (Directory.Exists("C:\\Program Files\\Notepad++"))
                 {
                     Directory.Delete("C:\\Program Files\\Notepad++", true);
                 }
 
-                xProcess.Run("assets\\7z.exe", $"x \"assets\\Program\\Notepad++\\exe.zip\" -o\"C:\\Program Files\\Notepad++\" -y", HiddenExecute: true, WaitForExit: true);
+                xProcess.Run("assets\\7z.exe", $"x \"assets\\Program\\Notepad++\\exe.zip\" -o\"C:\\Program Files\\Notepad++\" -y", hiddenExecute: true, waitForExit: true);
                 LogBox.Add("Copied program files", Brushes.DarkGray);
 
-                Registry.SetValue(@"HKEY_CLASSES_ROOT\Applications\notepad++.exe\DefaultIcon", "", "C:\\Windows\\System32\\imageres.dll,97", RegistryValueKind.String);
+                xRegistry.SetValue(@"HKEY_CLASSES_ROOT\Applications\notepad++.exe\DefaultIcon", "", "C:\\Windows\\System32\\imageres.dll,97", RegistryValueKind.String);
                 LogBox.Add("Set default file icon for notepad++.exe", Brushes.DarkGray);
             }
 

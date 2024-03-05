@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 //libs
-using EXT.HashTools;
-using EXT.Launcher.Powershell;
-using EXT.Launcher.Process;
+using BSS.HashTools;
+using BSS.Launcher;
 
 namespace WinUtil
 {
@@ -182,7 +181,7 @@ namespace WinUtil
 
                     try
                     {
-                        xProcess.Run("winget.exe", RunAs: true, HiddenExecute: true);
+                        xProcess.Run("winget.exe", RunAs: true, hiddenExecute: true);
 
                         LogBox.Add("Done\n", Brushes.DarkCyan);
 

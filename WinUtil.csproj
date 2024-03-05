@@ -64,6 +64,15 @@
     <StartupObject>WinUtil.CustomAppEntry</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BSS.HashTools">
+      <HintPath>local_libs\BSS.HashTools.dll</HintPath>
+    </Reference>
+    <Reference Include="BSS.Launcher">
+      <HintPath>local_libs\BSS.Launcher.dll</HintPath>
+    </Reference>
+    <Reference Include="BSS.System">
+      <HintPath>local_libs\BSS.System.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceProcess" />
@@ -77,16 +86,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WinX64_HashTools">
-      <HintPath>local_libs\WinX64_HashTools.dll</HintPath>
-    </Reference>
-    <Reference Include="WinX64_Launcher">
-      <HintPath>local_libs\WinX64_Launcher.dll</HintPath>
-    </Reference>
-    <Reference Include="WinX64_System, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>local_libs\WinX64_System.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App\App.xaml.cs">

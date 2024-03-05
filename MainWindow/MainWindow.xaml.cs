@@ -62,19 +62,19 @@ namespace WinUtil
                 BuildErrorString(ref errorString, "[Critical] invalid ManagedNativeWifi.dll");
             }
 
-            if (!Validator("WinX64_HashTools.dll").Equals(EXT_DLL.WinX64_HashTools, StringComparison.OrdinalIgnoreCase))
+            if (!Validator("BSS.HashTools.dll").Equals(EXT_DLL.BSS_HashTools, StringComparison.OrdinalIgnoreCase))
             {
                 hadErrors = true;
                 BuildErrorString(ref errorString, "[Critical] invalid WinX64_HashTools.dll");
             }
 
-            if (!Validator("WinX64_Launcher.dll").Equals(EXT_DLL.WinX64_Launcher, StringComparison.OrdinalIgnoreCase))
+            if (!Validator("BSS.Launcher.dll").Equals(EXT_DLL.BSS_Launcher, StringComparison.OrdinalIgnoreCase))
             {
                 hadErrors = true;
                 BuildErrorString(ref errorString, "[Critical] invalid WinX64_Launcher.dll");
             }
 
-            if (!Validator("WinX64_System.dll").Equals(EXT_DLL.WinX64_System, StringComparison.OrdinalIgnoreCase))
+            if (!Validator("BSS.System.dll").Equals(EXT_DLL.BSS_System, StringComparison.OrdinalIgnoreCase))
             {
                 hadErrors = true;
                 BuildErrorString(ref errorString, "[Critical] invalid WinX64_System.dll");

@@ -1,11 +1,11 @@
-﻿using EXT.System.Registry;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+//
+using BSS.System.Registry;
 
 namespace WinUtil.Grid_Tabs
 {
@@ -44,7 +44,7 @@ namespace WinUtil.Grid_Tabs
             String secureBootIsOn = $"SecureBoot enabled: {Machine.SecureBootEnabled}";
 
             //OSPType & OSPEdition
-            String productName = xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "productName", RegistryValueKind.String);
+            String productName = xRegistry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "productName", RegistryValueKind.String);
 
             String[] temp = productName.Split(' ');
 
@@ -76,7 +76,7 @@ namespace WinUtil.Grid_Tabs
 
             //BaU
 
-            displayVersion = $"Version: {xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "displayVersion", RegistryValueKind.String)}";
+            displayVersion = $"Version: {xRegistry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "displayVersion", RegistryValueKind.String)}";
 
             //set
             OSPType.Text = os;

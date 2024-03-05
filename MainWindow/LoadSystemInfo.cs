@@ -1,9 +1,4 @@
-﻿using EXT.System.Firmware;
-using EXT.System.Group;
-using EXT.System.License;
-using EXT.System.Registry;
-using EXT.System.User;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +10,9 @@ using System.Windows.Threading;
 using System.Windows;
 using WinUtil.Grid_Tabs;
 using System.Windows.Controls;
+//
+using BSS.System.Windows;
+using BSS.System.Registry;
 
 namespace WinUtil
 {
@@ -58,8 +56,8 @@ namespace WinUtil
                 //get os version
                 try
                 {
-                    Machine.OSMajorVersion = Int32.Parse(xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentBuildNumber", RegistryValueKind.String, false));
-                    Machine.OSMinorVersion = xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "UBR", RegistryValueKind.DWord, false);
+                    Machine.OSMajorVersion = UInt32.Parse(xRegistry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "CurrentBuildNumber", RegistryValueKind.String, false));
+                    Machine.OSMinorVersion = xRegistry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "UBR", RegistryValueKind.DWord, false);
 
                     LogBox.Add("Obtained OS version", Brushes.DarkGray);
                 }
@@ -69,7 +67,7 @@ namespace WinUtil
                 }
 
                 //get os edition
-                switch (xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "InstallationType", RegistryValueKind.String).ToLower())
+                switch (xRegistry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "InstallationType", RegistryValueKind.String).ToLower())
                 {
                     case "server":
                         Machine.Role = Machine.HostRole.Server;
@@ -103,7 +101,7 @@ namespace WinUtil
                 }
                 LogBox.Add($"Is Domain joined = {Machine.IsInDomain}", Brushes.DarkGray);
 
-                Machine.User = xWindowsUser.GetUACUser();
+                Machine.User = xLocalUsers.GetUACUser();
                 Machine.UserPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile).Split('\\')[2];
                 LogBox.Add($"User = '{Machine.User}'", Brushes.DarkGray);
                 LogBox.Add($"User Home = '{Machine.UserPath}'", Brushes.DarkGray);
@@ -113,7 +111,7 @@ namespace WinUtil
                     Machine.IsUEFI = true;
                     LogBox.Add($"OS Firmware type is UEFI = {Machine.IsUEFI}", Brushes.DarkGray);
 
-                    if (xFirmware.SecureBoot_IsEnabled())
+                    if (xFirmware.GetSecureBootStatus())
                     {
                         Machine.SecureBootEnabled = true;
                         LogBox.Add($"Secure Boot is enabled = {Machine.SecureBootEnabled}", Brushes.DarkGray);
@@ -121,7 +119,9 @@ namespace WinUtil
                 }
 
                 Task INSTGPO = null;
-                if (xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "EditionID", RegistryValueKind.String, false) == "Core" && (xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", "GPO Status", RegistryValueKind.DWord, true) != 2 || xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", "GPO Status", RegistryValueKind.DWord, true) != 1))
+                if (xRegistry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion", "EditionID", RegistryValueKind.String, false) == "Core"
+                    && (xRegistry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", "GPO Status", RegistryValueKind.DWord, true) != 2
+                    || xRegistry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\WinUtil", "GPO Status", RegistryValueKind.DWord, true) != 1))
                 {
                     LogBox.Add("Detected Home edition", Brushes.DarkGray);
 
@@ -129,7 +129,7 @@ namespace WinUtil
                     //INSTGPO = Task.Run(() => InstallGPO());
                 }
 
-                Machine.AdminGroupName = xWindowsGroup.GetAdminGroupName();
+                Machine.AdminGroupName = xLocalGroups.GetAdminGroupName();
                 LogBox.Add($"Local Administrator group name = {Machine.AdminGroupName}", Brushes.DarkGray);
 
                 //gets exe path

@@ -4,9 +4,9 @@ namespace WinUtil
 {
     internal readonly struct EXT_DLL
     {
-        internal const String WinX64_System = "126b055ea93b7e53e9ffcc6017741b424c969dc65be29e51b0546b0f00905f1d";
-        internal const String WinX64_HashTools = "eea04a55e13e3bd42983fc0219d57acc6bbb4976e8a2dd7a1e729cefbb279454";
-        internal const String WinX64_Launcher = "3c8faebecedce6964b75e49dcdb8110ed620dc626bc9a2d91ccf4d4160b2eec0";
+        internal const String BSS_System = "275bdc79d65985f7d4e51987fb7cb933aa7df0e11a8defd1af72c8422c288649";
+        internal const String BSS_HashTools = "5ebb8052b2f0395ede2423354fcc8e39495eba6596187435f983f99274a71136";
+        internal const String BSS_Launcher = "8fbdaf21a67f57fc48bd402e56ed10c35c1c667c5ad34cba34a8dbc4e295ccce";
 
         internal const String ManagedNativeWifi = "c590995858bc7f5624ae4161e7b22bfe834c17b6a6fc0c4dfd7207d1b11a3ca3";
         internal const String CodeDom = "d4047cdc0c372b06afc9cbed39b717fac18dced723e5851806a19f1bf42de1a3";

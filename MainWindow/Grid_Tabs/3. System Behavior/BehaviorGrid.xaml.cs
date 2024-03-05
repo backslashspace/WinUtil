@@ -3,8 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 //
-
-using EXT.System.Registry;
+using BSS.System.Registry;
 
 namespace WinUtil.Grid_Tabs
 {
@@ -12,7 +11,7 @@ namespace WinUtil.Grid_Tabs
     {
         private void InitBackGroundAppsToggleButton()
         {
-            Int32? tmp = xRegistry.Get.Value("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy", "LetAppsRunInBackground", RegistryValueKind.DWord);
+            UInt32? tmp = xRegistry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy", "LetAppsRunInBackground", RegistryValueKind.DWord);
 
             if (tmp == 2)
             {
