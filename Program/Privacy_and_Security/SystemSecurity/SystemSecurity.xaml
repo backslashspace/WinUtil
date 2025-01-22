@@ -1,0 +1,80 @@
+﻿<Window x:Class="Stimulator.SubWindows.SystemSecurity"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        Title="System Security" Height="235" Width="506">
+
+    <Grid>
+
+        <Button
+            Background="LightGray"
+            Content="SMB Server&#xA;Configuration"
+            TextBlock.TextAlignment="Center"
+            Margin="10,10,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="150" Click="SMBButton_Click"
+            />
+
+        <Button
+            Background="LightGray"
+            Content="Harden"
+            Margin="0,10,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Center"
+            Width="150"
+            Click="HardenButton_Click"
+            />
+
+        <Button
+            Background="LightGray"
+            Content="LSASS.exe&#xA;as&#xA;Protected Process Light"
+            TextBlock.TextAlignment="Center"
+            Margin="0,72,10,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Width="150"
+            Click="LsassPplButton_Click"
+            />
+
+        <Button
+            Background="LightGray"
+            Content="VBS"
+            Margin="10,72,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="150" Click="VBSButton_Click"
+            />
+
+        <Button
+            Background="LightGray"
+            Content="BSI hosts file&#xA;Blocklist"
+            TextBlock.TextAlignment="Center"
+            Margin="0,72,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Center"
+            Width="150"
+            Click="BSIHostsFileButton_Click"
+            />
+
+        <Button
+            Background="LightGray"
+            Content="Page File and&#xA;Memory Dump"
+            TextBlock.TextAlignment="Center"
+            Margin="0,10,10,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Width="150" Click="PageFileButton_Click"
+            />
+
+    </Grid>
+</Window>

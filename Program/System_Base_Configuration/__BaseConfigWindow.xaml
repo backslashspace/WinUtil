@@ -1,0 +1,60 @@
+﻿<Window x:Class="Stimulator.SubWindows.BaseConfigWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        Title="Base Configuration" Height="229" Width="400">
+
+    <Grid>
+
+        <Button
+            Background="orange"
+            Content="Stability &amp; Reliability"
+            Margin="10,10,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="175"
+            Click="Stability_Reliability_Click"/>
+
+        <Button
+            Background="orange"
+            Content="Streamline &amp; Pacify"
+            Margin="0,10,10,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Width="175"
+            Click="UnAnnoy_Click"/>
+
+        <Button
+            Background="LightGray"
+            Content="TCP Settings"
+            Margin="10,82,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="175"
+            Click="TCPSettingsButton_Click"/>
+
+        <Button
+            Background="IndianRed"
+            Content="Windows Update"
+            Margin="0,82,10,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Width="175"
+            Click="WindowsUpdateButton_Click"/>
+
+        <ToggleButton x:Name="BackgroundAppsToggleButton"
+            Margin="10,0,10,10"
+            Height="32"
+            Content="Allow Background Apps: --"
+            VerticalAlignment="Bottom"
+            Click="ToggleBackgroundApps"/>
+
+    </Grid>
+</Window>

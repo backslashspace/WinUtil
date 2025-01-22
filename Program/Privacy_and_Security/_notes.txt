@@ -1,0 +1,301 @@
+﻿
+
+
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows
+
+- Privacy
+	- O&O Shutup
+	- lockscreen notifications
+	- Deactivate recall
+	- File History etc
+	- Disable Cortana*
+	- Telemetry
+	- Remove 'AutoLogger' file and restricting directory
+	- daeactivate diag track
+	- File History etc
+	LogBox.Add("Disabling Tailored Experiences\n");
+                    xRegistry.SetValue(@"HKEY_CURRENT_USER\SOFTWARE\Policies\Microsoft\Windows\CloudContent", "DisableTailoredExperiencesWithDiagnosticData", 1, RegistryValueKind.DWord);
+                    xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting", "Disabled", 1, RegistryValueKind.DWord);
+                    xProcess.Run("schtasks.exe", "/Change /TN \"Microsoft\\Windows\\Windows Error Reporting\\QueueReporting\" /Disable", waitForExit: true, hiddenExecute: true);
+
+					LogBox.Add("Stopping and disabling Superfetch service\n");
+                    xService.SetStartupType("SysMain", ServiceStartMode.Disabled);
+
+                    LogBox.Add("Disabling Wi-Fi Sense\n");
+                    xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\PolicyManager\default\WiFi\AllowWiFiHotSpotReporting", "Value", 0, RegistryValueKind.DWord);
+                    xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\PolicyManager\default\WiFi\AllowAutoConnectToWiFiSenseHotspots", "Value", 0, RegistryValueKind.DWord);
+
+                    LogBox.Add("Disabling Microsoft Geolocation service\n");
+                    xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\location", "Value", "Deny", RegistryValueKind.String);
+
+                    LogBox.Add("Disabling system telemetry\n");
+                    xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DataCollection", "AllowTelemetry", 0, RegistryValueKind.DWord);
+                    xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "EnableActivityFeed", 0, RegistryValueKind.DWord);
+                    xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "PublishUserActivities", 0, RegistryValueKind.DWord);
+                    xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "UploadUserActivities", 0, RegistryValueKind.DWord);
+                    xProcess.Run("schtasks.exe", "/Change /TN \"Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser\" /Disable", waitForExit: true, hiddenExecute: true);
+                    xProcess.Run("schtasks.exe", "/Change /TN \"Microsoft\\Windows\\Application Experience\\ProgramDataUpdater\" /Disable", waitForExit: true, hiddenExecute: true);
+                    xProcess.Run("schtasks.exe", "/Change /TN \"Microsoft\\Windows\\Autochk\\Proxy\" /Disable", waitForExit: true, hiddenExecute: true);
+                    xProcess.Run("schtasks.exe", "/Change /TN \"Microsoft\\Windows\\Customer Experience Improvement Program\\Consolidator\" /Disable", waitForExit: true, hiddenExecute: true);
+                    xProcess.Run("schtasks.exe", "/Change /TN \"Microsoft\\Windows\\Customer Experience Improvement Program\\UsbCeip\" /Disable", waitForExit: true, hiddenExecute: true);
+                    xProcess.Run("schtasks.exe", "/Change /TN \"Microsoft\\Windows\\DiskDiagnostic\\Microsoft-Windows-DiskDiagnosticDataCollector\" /Disable", waitForExit: true, hiddenExecute: true);
+                    xProcess.Run("schtasks.exe", "/Change /TN \"Microsoft\\Windows\\Feedback\\Siuf\\DmClient\" /Disable", waitForExit: true, hiddenExecute: true);
+                    xProcess.Run("schtasks.exe", "/Change /TN \"Microsoft\\Windows\\Feedback\\Siuf\\DmClientOnScenarioDownload\" /Disable", waitForExit: true, hiddenExecute: true);
+
+                    xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CloudContent", "DisableWindowsConsumerFeatures", 1, RegistryValueKind.DWord);
+
+                    LogBox.Add("Removing advertisement ID");
+                    xRegistry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo", "Enabled", 0, RegistryValueKind.DWord);
+                    xRegistry.DeleteValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo", "Id", true);
+                    xRegistry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo", "DisabledByGroupPolicy", 1, RegistryValueKind.DWord);
+
+                    LogBox.Add("Deactivating website access to language list");
+                    xRegistry.SetValue(@"HKEY_CURRENT_USER\Control Panel\International\User Profile", "HttpAcceptLanguageOptOut", 1, RegistryValueKind.DWord);
+
+
+
+
+
+
+
+
+
+-------------------------
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\DeviceGuard]
+"RequirePlatformSecurityFeatures"=dword:00000003
+"ConfigureKernelShadowStacksLaunch"=dword:00000001
+"ConfigureSystemGuardLaunch"=dword:00000001
+"MachineIdentityIsolation"=dword:00000002
+"LsaCfgFlags"=dword:00000001
+"HVCIMATRequired"=dword:00000001
+"HypervisorEnforcedCodeIntegrity"=dword:00000001
+"EnableVirtualizationBasedSecurity"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\System\ControlSet001\Control\DeviceGuard]
+"Locked"=dword:00000001
+"EnableVirtualizationBasedSecurity"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\System\ControlSet001\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity]
+"Locked"=dword:00000001
+"HVCIMATRequired"=dword:00000001
+"Enabled"=dword:00000001
+
+[HKEY_LOCAL_MACHINE\System\ControlSet001\Control\DeviceGuard\Scenarios\KernelShadowStacks]
+"Enabled"=dword:00000001
+
+-------------------------
+TTTTTTTTTTTTTTTTTTTTTTtTttTTTTTTTTTTT
+
+-------------------------
+HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\System
+
+RunAsPPL
+
+2
+
+
+bitlocker
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\FVE
+Windows 10 [Version 1511] und höher
+EncryptionMethodWithXtsFdv		7
+EncryptionMethodWithXtsOs		7
+EncryptionMethodWithXtsOs		7	(XTS-AES 256-Bit )
+
+erschlüsselungsmethode und Verschlüsselungsstärke für Laufwerk auswählen (Windows 8, Windows Server 2012, Windows 8.1, Windows Server 2012 R2, Windows 10 [Version 1507]
+EncryptionMethodNoDiffuser		4	AES-256-Bit 
+
+EncryptionMethod				2
+-------------------------
+HKEY_LOCAL_MACHINE\Software\Microsoft\OneDrive
+
+PreventNetworkTrafficPreUserSignIn	1
+-------------------------
+smb
+HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\LanmanServer
+HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\LanmanServer
+MinSmb2Dialect			785
+HonorCipherSuiteOrder	1
+CipherSuiteOrder		String[]	AES_256_GCM, AES_128_GCM, AES_256_CCM, AES_128_CCM
+-------------------------
+HKEY_LOCAL_MACHINE\System\ControlSet001\Control\Lsa\FipsAlgorithmPolicy
+Enabled
+1
+-------------------------
+
+
+
+
+Bitlocker algos
+
+
+
+https://www.deskmodder.de/wiki/index.php/Datenschutz_Einstellungen_deaktivieren_aktivieren_Windows_10
+
+all data collection
+
+ xRegistry.SetValue(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Siuf\Rules", "NumberOfSIUFInPeriod", 0, RegistryValueKind.DWord);
+Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection", "DoNotShowFeedbackNotifications", 1, RegistryValueKind.DWord);
+https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.CloudContent::DisableWindowsConsumerFeatures
+
+
+
+
+https://geckro.github.io/html/articles/windows11.html
+
+
+
+
+https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.NetworkProvider::Pol_HardenedPaths
+
+https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.CypherStrength::SSLCurveOrder		curve25519, secp384r1, nistP384, nistP256
+https://learn.microsoft.com/de-de/windows/win32/secauthn/tls-cipher-suites-in-windows-11-v22h2
+
+
+TLS_AES_256_GCM_SHA384,TLS_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_256_GCM_SHA384,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_3DES_EDE_CBC_SHA,TLS_RSA_WITH_NULL_SHA256,TLS_RSA_WITH_NULL_SHA,TLS_PSK_WITH_AES_256_GCM_SHA384,TLS_PSK_WITH_AES_128_GCM_SHA256,TLS_PSK_WITH_AES_256_CBC_SHA384,TLS_PSK_WITH_AES_128_CBC_SHA256,TLS_PSK_WITH_NULL_SHA384,TLS_PSK_WITH_NULL_SHA256
+
+https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.NetworkProvider::Pol_HardenedPaths
+
+https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.CypherStrength::SSLCurveOrder		curve25519, secp384r1, nistP384, nistP256
+
+
+https://learn.microsoft.com/de-de/windows/win32/secauthn/cipher-suites-in-schannel?redirectedfrom=MSDN
+
+https://admx.help/?Category=Windows_11_2022&Policy=Microsoft.Windows.DeviceGuard::VirtualizationBasedSecurity
+https://admx.help/?Category=Windows_11_2022&Policy=Microsoft.Policies.VolumeEncryption::EncryptionMethodNoDiffuser_Name
+https://admx.help/?Category=Windows_11_2022&Policy=Microsoft.Policies.VolumeEncryption::EncryptionMethodWithXts_Name
+https://admx.help/?Category=Windows_11_2022&Policy=Microsoft.Policies.VolumeEncryption::MorBehavior_Name
+
+https://admx.help/?Category=Windows_11_2022&Policy=Microsoft.Policies.DataCollection::AllowCommercialDataPipeline
+
+https://admx.help/?Category=Windows_11_2022&Policy=Microsoft.Policies.OOBE++::DisablePrivacyExperience
+
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+Dont trag prog starts for suggestions			HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced			Start_TrackProgs			0	DWORD
+dont allow website sto acces lang lists			HKEY_CURRENT_USER\Control Panel\International\User Profile								HttpAcceptLanguageOptOut	1	DWORD
+		
+allow perosnalied adds with ad ID				HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo				Id								DEL
+allow perosnalied adds with ad ID				HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo				Enabled							DEL
+allow perosnalied adds with ad ID				HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo				Value							DEL
+
+online voice reconcintin						HKEY_CURRENT_USER\Software\Microsoft\Speech_OneCore\Settings\OnlineSpeechPrivacy		HasAccepted						0
+
+
+https://admx.help/HKLM/Software/Policies/Microsoft/Windows/DataCollection
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CPSS\Store\AllowTelemetry													Value						1	DWORD
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\DataCollection													MaxTelemetryAllowed			1	DWORD
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\DataCollection													AllowTelemetry				1	DWORD
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection													AllowTelemetry				0	DWORD server, edu and enterprise
+
+
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack\EventTranscriptKey		EnableEventTranscript   0
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Privacy											TailoredExperiencesWithDiagnosticDataEnabled	0
+
+HKEY_CURRENT_USER\Software\Microsoft\Siuf\Rules																NumberOfSIUFInPeriod			0
+
+https://geckro.github.io/html/articles/windows11.html
+
+
+
+
+---
+
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings		IsAADCloudSearchEnabled
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings		IsDeviceSearchHistoryEnabled
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings		IsDynamicSearchBoxEnabled
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings		IsMSACloudSearchEnabled
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\SearchSettings		SafeSearchMode
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+DiagTrack _ svc name
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DiagTrack 							Start = 4
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Diagtrack-Listener	Start = 0
+
+New-NetFirewallRule -DisplayName "BlockDiagTrackService" -Name "BlockDiagTrackService" -Direction Outbound -Service "DiagTrack" -Action Block
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+ Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard", "EnableVirtualizationBasedSecurity", 1, RegistryValueKind.DWord);
+        //    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard", "RequirePlatformSecurityFeatures", 3, RegistryValueKind.DWord);
+        //    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard", "LsaCfgFlags", 1, RegistryValueKind.DWord);
+
+
+
+
+
+
+/    Write("Deinstall Windows-Defender-ApplicationGuard\n", "darkgreen", null);
+        //
+        //    var result0 = System.Windows.Forms.MessageBox.Show(
+        //        "Deinstall Windows-Defender-ApplicationGuard?",
+        //        "",
+        //        MessageBoxButtons.YesNo,
+        //        MessageBoxIcon.Question);
+        //
+        //    if (result0 == System.Windows.Forms.DialogResult.No)
+        //    {
+        //        Write("Cancled\n\n", "darkyellow", null);
+        //        ThreadIsAlive.ApplicationGuard = false;
+        //        return;
+        //    }
+        //    PowerShell.Create().AddCommand("Disable-WindowsOptionalFeature")
+        //           .AddParameter("-online")
+        //           .AddParameter("FeatureName", "Windows-Defender-ApplicationGuard")
+        //           .AddParameter("-norestart")
+        //           .Invoke();
+        //
+
+
+
+
+
+    //{
+        //    Write("Install Windows-Defender-ApplicationGuard\n", "darkgreen", null);
+        //
+        //    var result0 = System.Windows.Forms.MessageBox.Show(
+        //        "Install Windows-Defender-ApplicationGuard?",
+        //        "",
+        //        MessageBoxButtons.YesNo,
+        //        MessageBoxIcon.Question);
+        //
+        //    if (result0 == System.Windows.Forms.DialogResult.No)
+        //    {
+        //        Write("Cancled\n\n", "darkyellow", null);
+        //        ThreadIsAlive.ApplicationGuard = false;
+        //        return;
+        //    }
+        //
+        //    PowerShell.Create().AddCommand("Enable-WindowsOptionalFeature")
+        //           .AddParameter("-online")
+        //           .AddParameter("FeatureName", "Windows-Defender-ApplicationGuard")
+        //           .AddParameter("-norestart")
+        //           .Invoke();
+        //

@@ -1,0 +1,53 @@
+﻿<Window x:Class="Stimulator.SubWindows.AppearanceConfigWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        Title="Appearance" Height="197" Width="352">
+
+    <Grid>
+
+        <ToggleButton x:Name="ContextMenuButton" 
+            Content="Legacy Context&#xA;Menu: --"
+            TextBlock.TextAlignment="Center"
+            Margin="10,10,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="150" Click="ContextMenuButton_Click"
+            />
+
+        <ToggleButton x:Name="LoginScreenBlurButton" 
+            Content="Login Screen&#xA;Blur: --"
+            TextBlock.TextAlignment="Center"
+            Margin="0,10,10,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Width="150" Click="LoginScreenBlurButton_Click"
+            />
+
+        <ToggleButton x:Name="TerminalIntegrationButton" 
+            Content="Better Terminal&#xA;Integration: --"
+            TextBlock.TextAlignment="Center"
+            Margin="10,72,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="150" Click="TerminalIntegrationButton_Click"
+            />
+
+        <ToggleButton x:Name="LockScreenButton" 
+            Content="Lock Screen&#xA;Enabled: --"
+            TextBlock.TextAlignment="Center"
+            Margin="0,72,10,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Width="150" Click="LockScreenButton_Click"
+            />
+
+    </Grid>
+</Window>

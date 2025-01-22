@@ -1,0 +1,227 @@
+﻿<Window x:Class="Stimulator.SubWindows.SecurityConfigWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        Title="Privacy and Security" Height="395" Width="506">
+
+    <Grid>
+
+        <Button
+            Background="orange"
+            Content="Privacy"
+            Margin="10,10,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="150"
+            Click="PrivacyButton_Click"
+            />
+
+        <Button
+            Background="orange"
+            Content="System Security"
+            Margin="0,10,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Center"
+            Width="150" Click="SystemSecurityButton_Click"
+            />
+
+        <Button x:Name="AttackSurfaceReductionButton"
+            Background="IndianRed"
+            Content="Attack Surface &#xA;Reduction"
+            TextBlock.TextAlignment="Center"
+            Margin="0,10,10,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Width="150" Click="AttackSurfaceReductionButton_Click"
+            />
+
+        <Line
+            X1="0"
+            X2="506"
+            Y1="73"
+            Y2="73"
+            StrokeThickness="1" 
+            Stroke="Black"/>
+
+        <ToggleButton x:Name="SafeDesktopToggleButton"
+            Content="Require&#xA;CTRL + ALT + DEL&#xA;in login screen: --"
+            TextBlock.TextAlignment="Center"
+            Margin="0,84,10,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Click="SafeDesktopToggleButton_Click"
+            Width="150"
+            />
+
+        <Button
+            Background="orange"
+            Content="Launch O&amp;O"
+            TextBlock.TextAlignment="Center"
+            Margin="0,84,0,0"
+            Height="52"
+            IsEnabled="False"
+            VerticalAlignment="Top"
+            Click="OnOLaunchButton_Click"
+            HorizontalAlignment="Center"
+            Width="150"
+            />
+
+        <ToggleButton x:Name="UACToggleButton"
+            Content="UAC always prompt&#xA;for Credentials: --"
+            TextBlock.TextAlignment="Center"
+            Margin="10,84,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="150" Click="UACToggleButton_Click"
+            />
+
+        <Line
+            X1="0"
+            X2="506"
+            Y1="147"
+            Y2="147"
+            StrokeThickness="1" 
+            Stroke="Black"/>
+
+        <TextBlock
+            HorizontalAlignment="Center"
+            Text="System Inactivity Lock&#xA;in seconds 0(off), 10-960"
+            TextAlignment="Center"
+            Height="32"
+            Width="150"
+            Margin="0,156,0,0"
+            VerticalAlignment="Top"
+            />
+
+        <TextBox x:Name="SystemInactivityTextBox"
+            HorizontalAlignment="Center"
+            Height="27"
+            TextAlignment="Center"
+            Text="600"
+            Background="LightGray"
+            VerticalContentAlignment="Center"
+            BorderBrush="Black"
+            Width="110"
+            Margin="0,195,0,0" VerticalAlignment="Top"/>
+
+        <Button
+            Background="LightGreen"
+            Content="Set Inactivity Lock"
+            TextBlock.TextAlignment="Center"
+            Margin="0,232,0,0"
+            Height="32"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Center"
+            Width="150"
+            Click="SystemInactivityButton_Click"
+            />
+
+
+        <TextBlock
+            HorizontalAlignment="Right"
+            Text="Max. Failed login attempts&#xA;before reboot 0=off, 4-999"
+            TextAlignment="Center"
+            Height="32"
+            Width="150"
+            Margin="0,156,10,0"
+            VerticalAlignment="Top"
+            />
+
+        <TextBox x:Name="FailToRebootTextBox"
+            HorizontalAlignment="Right"
+            Height="27"
+            TextAlignment="Center"
+            Text="4"
+            Background="LightGray"
+            VerticalContentAlignment="Center"
+            BorderBrush="Black"
+            Width="110"
+            Margin="0,195,30,0" VerticalAlignment="Top"/>
+
+        <Button
+            Background="orange"
+            Content="Set Reboot Policy"
+            TextBlock.TextAlignment="Center"
+            Margin="0,232,10,0"
+            Height="32"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Width="150"
+            Click="FailToRebootButton_Click"
+            />
+
+
+        <TextBlock
+            HorizontalAlignment="Left"
+            TextAlignment="Center"
+            Height="32"
+            Width="150"
+            Text="Block login after&#xA;0=off, 1-999"
+            Margin="10,156,0,0"
+            VerticalAlignment="Top"
+            />
+
+        <TextBox x:Name="LoginTimeoutTextBoxThreshold"
+            HorizontalAlignment="Left"
+            Height="26"
+            TextAlignment="Center"
+            Text="4"
+            Background="LightGray"
+            VerticalContentAlignment="Center"
+            BorderBrush="Black"
+            Width="110"
+            Margin="30,195,0,0" VerticalAlignment="Top"/>
+
+        <TextBlock
+            HorizontalAlignment="Left"
+            TextAlignment="Center"
+            Height="54"
+            Width="150"
+            Text="failed attempts&#xA;for 0=manual unlock&#xA;to 99999 in minutes"
+            Margin="10,225,0,0"
+            VerticalAlignment="Top"
+            />
+
+        <TextBox x:Name="LoginTimeoutTextBoxWindow"
+            HorizontalAlignment="Left"
+            Height="26"
+            TextAlignment="Center"
+            Text="4"
+            Background="LightGray"
+            VerticalContentAlignment="Center"
+            BorderBrush="Black"
+            Width="110"
+            Margin="30,278,0,0" VerticalAlignment="Top"/>
+
+        <Button x:Name="LoginTimeoutButton"
+            Background="LightGreen"
+            Content="Set Timeout Policy"
+            TextBlock.TextAlignment="Center"
+            Margin="10,314,0,0"
+            Height="32"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="150" Click="LoginTimeoutButton_Click"
+            />
+
+        <Button
+            Content="msinfo32"
+            TextBlock.TextAlignment="Center"
+            Margin="0,298,63,0"
+            Height="32"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Width="150"
+            Click="MSINFO32"
+            />
+
+    </Grid>
+</Window>

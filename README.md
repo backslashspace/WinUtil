@@ -1,2 +1,3 @@
 # WinUtil
- Description to be made
+
+currently in functional preview state for UI update in v2.0

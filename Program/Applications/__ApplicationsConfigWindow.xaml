@@ -1,0 +1,74 @@
+﻿<Window x:Class="Stimulator.SubWindows.ApplicationsConfigWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        Title="Applications" Height="320" Width="346">
+
+    <Grid>
+
+        <Button x:Name="EdgeButton" 
+            Content="Launch Edge Script"
+            TextBlock.TextAlignment="Center"
+            Margin="10,10,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="150" Click="EdgeButton_Click"
+            />
+
+        <Button
+            Background="LightGray"
+            Content="Remove OneDrive"
+            Margin="0,10,10,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Width="150"
+            Click="OneDriveButton_Click"
+            />
+
+        <Button x:Name="AzureSyncButton" 
+            Content="DISM remove AzureSync"
+            TextBlock.TextAlignment="Center"
+            Margin="10,72,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="150" Click="AzureSyncButton_Click"
+            />
+
+        <Button x:Name="NotepadButton"
+            Content="Install Notepad++"
+            TextBlock.TextAlignment="Center"
+            Margin="10,150,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="150" Click="NotepadButton_Click"
+            />
+
+        <Button
+            Content="Install Media Extensions"
+            TextBlock.TextAlignment="Center"
+            Margin="0,150,10,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Width="150" Click="CodecsButton_Click"
+            />
+
+        <Button x:Name="ImageGlassButton"
+            Content="Install ImageGlass"
+            TextBlock.TextAlignment="Center"
+            Margin="10,212,0,0"
+            Height="52"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Width="150" Click="ImageGlassButton_Click"
+            />
+
+    </Grid>
+</Window>

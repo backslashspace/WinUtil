@@ -1,6 +1,8 @@
-﻿namespace WinUtil
+﻿using System.Windows;
+
+namespace Stimulator
 {
-    public partial class App : System.Windows.Application
+    public sealed partial class App : Application
     {
     }
 }

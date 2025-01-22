@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35605.110
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OS Stimulator", "OS Stimulator.csproj", "{97C0E43F-9AB3-47E6-A3CD-C975E4E45C2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HyperKey Deregisterer", "Helper\HyperKey Deregisterer\HyperKey Deregisterer.csproj", "{42111420-13AA-4416-8FBA-6DF476D381BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97C0E43F-9AB3-47E6-A3CD-C975E4E45C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97C0E43F-9AB3-47E6-A3CD-C975E4E45C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97C0E43F-9AB3-47E6-A3CD-C975E4E45C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97C0E43F-9AB3-47E6-A3CD-C975E4E45C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42111420-13AA-4416-8FBA-6DF476D381BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42111420-13AA-4416-8FBA-6DF476D381BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42111420-13AA-4416-8FBA-6DF476D381BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42111420-13AA-4416-8FBA-6DF476D381BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FB8D4D37-374D-4500-BD9C-56AFCD44FA00}
+	EndGlobalSection
+EndGlobal

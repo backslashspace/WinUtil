@@ -1,0 +1,79 @@
+﻿<Window x:Class="Stimulator.SubWindows.OptionSelector"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        ResizeMode="CanMinimize"
+        Title="OptionSelector" Height="450" Width="550">
+
+    <Grid>
+        <Grid
+            Margin="0,0,0,75"
+            Background="#aaaaaa">
+
+            <ScrollViewer>
+                <Grid Height="auto" x:Name="OptionsGrid">
+
+                </Grid>
+            </ScrollViewer>
+            
+        </Grid>
+
+        <Button
+            Background="Orange"
+            Height="45"
+            Content="Commit"
+            VerticalAlignment="Bottom"
+            Margin="0,0,10,10"
+            Click="Commit_Click" HorizontalAlignment="Right" Width="72"
+            />
+
+        <Button
+            Background="Gray"
+            Height="45"
+            Content="Cancel"
+            VerticalAlignment="Bottom"
+            Margin="0,0,87,10"
+            Click="Cancel_Click" HorizontalAlignment="Right" Width="72"
+            />
+
+        <Button
+            Background="LightGray"
+            Height="45"
+            Content="None"
+            VerticalAlignment="Bottom"
+            Margin="0,0,-75,10"
+            Click="None_Click" HorizontalAlignment="Center" Width="72"
+            />
+
+        <Button
+            Background="LightGray"
+            Height="45"
+            Content="All"
+            VerticalAlignment="Bottom"
+            Margin="0,0,75,10"
+            Click="All_Click" HorizontalAlignment="Center" Width="72"
+            />
+
+
+        <Button x:Name="SaveButton"
+            Background="LightGray"
+            Height="45"
+            Content="Save"
+            VerticalAlignment="Bottom"
+            Margin="10,0,0,10"
+            Click="Save_Click" HorizontalAlignment="Left" Width="72"
+            />
+
+        <Button x:Name="LoadButton"
+            Background="LightGray"
+            Height="45"
+            Content="Load"
+            VerticalAlignment="Bottom"
+            Margin="87,0,0,10"
+            Click="Load_Click" HorizontalAlignment="Left" Width="72"
+            />
+
+    </Grid>
+</Window>
