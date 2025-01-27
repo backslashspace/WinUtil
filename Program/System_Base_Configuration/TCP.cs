@@ -106,7 +106,7 @@ namespace Stimulator.SubWindows
                 {
                     Log.FastLog("Enabling TCP selective acknowledgements (RFC 2018)", LogSeverity.Info, TCP_SOURCE);
 
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters", "SackOpts ", 1, RegistryValueKind.DWord);
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters", "SackOpts", 1, RegistryValueKind.DWord);
                 }
                 catch (Exception exception)
                 {

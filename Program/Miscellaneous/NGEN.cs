@@ -21,7 +21,7 @@ namespace Stimulator.SubWindows
                     {
                         if (File.Exists(runtimes[i] + "\\ngen.exe"))
                         {
-                            Log.FastLog($"Starting{runtimes[i]}\\ngen.exe executeQueuedItems", LogSeverity.Info, NGEN_SOURCE);
+                            Log.FastLog($"Starting {runtimes[i]}\\ngen.exe executeQueuedItems", LogSeverity.Info, NGEN_SOURCE);
                             Util.Execute.Process(new(runtimes[i] + "\\ngen.exe", "executeQueuedItems", true, true, true));
                         }
                     }
@@ -34,7 +34,7 @@ namespace Stimulator.SubWindows
                     {
                         if (File.Exists(runtimes[i] + "\\ngen.exe"))
                         {
-                            Log.FastLog($"Starting{runtimes[i]}\\ngen.exe executeQueuedItems", LogSeverity.Info, NGEN_SOURCE);
+                            Log.FastLog($"Starting {runtimes[i]}\\ngen.exe executeQueuedItems", LogSeverity.Info, NGEN_SOURCE);
                             Util.Execute.Process(new(runtimes[i] + "\\ngen.exe", "executeQueuedItems", true, true, true));
                         }
                     }

@@ -38,6 +38,8 @@ namespace Stimulator.SubWindows
                 new(true, false, "Disable Windows Defender reminder to turn on Edge SmartScreen filter",                    null!),
                 new(true, false, "Disable News and Interest in taskbar",                                                    null!),
                 new(true, false, "Disable OneDrive Notifications in Explorer",                                              null!),
+                new(true, false, "Show more apps in the start menu",                                                        null!),
+                new(true, false, "Enable Numlock on start",                                                                 null!),
             ];
 
             OptionSelector optionSelector = new("Streamline & Pacify", options, new(true, 0, "pacify.cfg"));
@@ -146,7 +148,7 @@ namespace Stimulator.SubWindows
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search", "AllowSearchToUseLocation", 0, RegistryValueKind.DWord);
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search", "ConnectedSearchUseWeb", 0, RegistryValueKind.DWord);
 
-                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Personalization\Settings", "AcceptedPrivacyPolicy ", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Personalization\Settings", "AcceptedPrivacyPolicy", 0, RegistryValueKind.DWord);
                     }
                 }
                 catch (Exception exception)
@@ -250,12 +252,12 @@ namespace Stimulator.SubWindows
                     {
                         Log.FastLog("[MACHINE] Deactivating Cortana", LogSeverity.Info, PACIFY_SOURCE);
 
-                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search", "AllowCortana ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search", "AllowCortanaAboveLock ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\InputPersonalization", "AllowInputPersonalization ", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search", "AllowCortana", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search", "AllowCortanaAboveLock", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\InputPersonalization", "AllowInputPersonalization", 0, RegistryValueKind.DWord);
 
-                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Windows Search", "CortanaConsent ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Personalization\Settings", "AcceptedPrivacyPolicy ", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Windows Search", "CortanaConsent", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Personalization\Settings", "AcceptedPrivacyPolicy", 0, RegistryValueKind.DWord);
                     }
                 }
                 catch (Exception exception)
@@ -272,15 +274,15 @@ namespace Stimulator.SubWindows
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR", "AllowGameDVR", 0, RegistryValueKind.DWord);
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR", "AllowGameDVR", 0, RegistryValueKind.DWord);
 
-                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\GameBar", "UseNexusForGameBarEnabled ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\GameBar", "AutoGameModeEnabled ", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\GameBar", "UseNexusForGameBarEnabled", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\GameBar", "AutoGameModeEnabled", 0, RegistryValueKind.DWord);
 
-                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_DXGIHonorFSEWindowsCompatible ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_EFSEFeatureFlags ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_Enabled ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_FSEBehaviorMode ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_HonorUserFSEBehaviorMode ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_FSEBehaviorMode ", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_DXGIHonorFSEWindowsCompatible", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_EFSEFeatureFlags", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_Enabled", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_FSEBehaviorMode", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_HonorUserFSEBehaviorMode", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\System\GameConfigStore", "GameDVR_FSEBehaviorMode", 0, RegistryValueKind.DWord);
                     }
                 }
                 catch (Exception exception)
@@ -475,7 +477,7 @@ namespace Stimulator.SubWindows
                 }
                 catch (Exception exception)
                 {
-                    Log.FastLog("[USER] Disabling News and Interest in taskbar failed with: " + exception.Message, LogSeverity.Error, PACIFY_SOURCE);
+                    Log.FastLog("[USER] Disabling News and Interest in taskbar failed with: " + exception.Message, LogSeverity.Warning, PACIFY_SOURCE);
                 }
 
                 try
@@ -490,6 +492,34 @@ namespace Stimulator.SubWindows
                 catch (Exception exception)
                 {
                     Log.FastLog("[USER] Disabling OneDrive Notifications in Explorer failed with: " + exception.Message, LogSeverity.Error, PACIFY_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[25])
+                    {
+                        Log.FastLog("[USER] Showing more apps in the start menu", LogSeverity.Info, PACIFY_SOURCE);
+
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_Layout", 1, RegistryValueKind.DWord);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("[USER] Showing more apps in the start menu failed with: " + exception.Message, LogSeverity.Error, PACIFY_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[26])
+                    {
+                        Log.FastLog("[MACHINE] Enabling Numlock after boot", LogSeverity.Info, PACIFY_SOURCE);
+
+                        Registry.SetValue("HKEY_USERS\\.DEFAULT\\Control Panel\\Keyboard", "InitialKeyboardIndicators", 2, RegistryValueKind.DWord);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("[MACHINE] Enabling Numlock after boot failed with: " + exception.Message, LogSeverity.Error, PACIFY_SOURCE);
                 }
 
                 Util.RestartExplorerForUser();

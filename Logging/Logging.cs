@@ -24,11 +24,21 @@ namespace BSS.Logging
   
         internal sealed class Options
         {
-            internal static Options Default() => new(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
-
             internal const Int32 DEFAULT_PADDING_WIDTH = 52;
             internal const String FILENAME_FORMAT = "yyyy.MM.dd";
             internal const String TIME_FORMAT = "dd.MM.yyyy HH:mm:ss";
+
+            public Options()
+            {
+                LogDirectoryPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                Padding = DEFAULT_PADDING_WIDTH;
+                TimeFormat = TIME_FORMAT;
+                FilenameFormat = FILENAME_FORMAT;
+                DefaultTextColor = Console.ForegroundColor;
+                AllocateConsoleInReleaseMode = false;
+
+                Initialized = true;
+            }
 
             internal Options(String logDirectoryPath, Int32 padding = DEFAULT_PADDING_WIDTH, String timeFormat = TIME_FORMAT, String filenameFormat = FILENAME_FORMAT, Boolean allocateConsoleInReleaseMode = false)
             {

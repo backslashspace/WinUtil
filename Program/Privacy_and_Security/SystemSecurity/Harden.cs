@@ -31,7 +31,7 @@ namespace Stimulator.SubWindows
                new(false, false, "Set default app for .cmd to notepad",                             null!),
                new(true, false, "Set default app for .vbs to notepad",                              null!),
                new(true, false, "Set default app for .vbe to notepad",                              null!),
-               new(true, false, "*Block system apps in firewall (see tooltip) ,  ",                 "notepad.exe, regsvr32.exe, mshta.exe, wscript.exe, cscript.exe, runscripthelper.exe, hh.exe"),
+               new(true, false, "*Block system apps in firewall (see tooltip)",                 "notepad.exe, regsvr32.exe, mshta.exe, wscript.exe, cscript.exe, runscripthelper.exe, hh.exe"),
                new(true, false, "Deactivate anonymous Sam-Account enumeration",                     null!),
                new(true, false, "Activate Anti-spoof for facial recognition",                       null!),
                new(true, false, "Deactivate camera on locked screen",                               null!),

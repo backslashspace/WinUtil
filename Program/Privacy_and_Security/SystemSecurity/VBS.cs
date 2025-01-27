@@ -88,29 +88,20 @@ namespace Stimulator.SubWindows
         private static void DisableVBS()
         {
             RegistryKey controlLsa = Registry.LocalMachine.OpenSubKey("SYSTEM\\CurrentControlSet\\Control\\Lsa", true);
-            controlLsa.DeleteValue("LsaCfgFlags", false);
+            controlLsa?.DeleteValue("LsaCfgFlags", false);
 
             RegistryKey windowsDeviceGuard = Registry.LocalMachine.OpenSubKey("Software\\Policies\\Microsoft\\Windows\\DeviceGuard", true);
-            windowsDeviceGuard.DeleteValue("RequirePlatformSecurityFeatures", false);
-            windowsDeviceGuard.DeleteValue("ConfigureKernelShadowStacksLaunch", false);
-            windowsDeviceGuard.DeleteValue("ConfigureSystemGuardLaunch", false);
-            windowsDeviceGuard.DeleteValue("MachineIdentityIsolation", false);
-            windowsDeviceGuard.DeleteValue("LsaCfgFlags", false);
-            windowsDeviceGuard.DeleteValue("HVCIMATRequired", false);
-            windowsDeviceGuard.DeleteValue("HypervisorEnforcedCodeIntegrity", false);
-            windowsDeviceGuard.DeleteValue("EnableVirtualizationBasedSecurity", false);
+            windowsDeviceGuard?.DeleteValue("RequirePlatformSecurityFeatures", false);
+            windowsDeviceGuard?.DeleteValue("ConfigureKernelShadowStacksLaunch", false);
+            windowsDeviceGuard?.DeleteValue("ConfigureSystemGuardLaunch", false);
+            windowsDeviceGuard?.DeleteValue("MachineIdentityIsolation", false);
+            windowsDeviceGuard?.DeleteValue("LsaCfgFlags", false);
+            windowsDeviceGuard?.DeleteValue("HVCIMATRequired", false);
+            windowsDeviceGuard?.DeleteValue("HypervisorEnforcedCodeIntegrity", false);
+            windowsDeviceGuard?.DeleteValue("EnableVirtualizationBasedSecurity", false);
 
-            RegistryKey controlDeviceGuard = Registry.LocalMachine.OpenSubKey("System\\ControlSet001\\Control\\DeviceGuard", true);
-            controlDeviceGuard.DeleteValue("Locked", false);
-            controlDeviceGuard.DeleteValue("EnableVirtualizationBasedSecurity", false);
-
-            RegistryKey hypervisorEnforcedCodeIntegrity = Registry.LocalMachine.OpenSubKey("System\\ControlSet001\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity", true);
-            hypervisorEnforcedCodeIntegrity.DeleteValue("Locked", false);
-            hypervisorEnforcedCodeIntegrity.DeleteValue("HVCIMATRequired", false);
-            hypervisorEnforcedCodeIntegrity.DeleteValue("Enabled", false);
-
-            RegistryKey kernelShadowStacks = Registry.LocalMachine.OpenSubKey("System\\ControlSet001\\Control\\DeviceGuard\\Scenarios\\KernelShadowStacks", true);
-            kernelShadowStacks.DeleteValue("Enabled", false);
+            RegistryKey controlDeviceGuard = Registry.LocalMachine.OpenSubKey("System\\ControlSet001\\Control", true);
+            controlDeviceGuard?.DeleteSubKeyTree("DeviceGuard", false);
 
             Log.FastLog($"Removed VBS config values from the registry, a restart is needed to apply the changes. You may want check the status with msinfo32 | consider using 'bcdedit /set hypervisorlaunchtype off'", LogSeverity.Info, VBS_SOURCE);
 

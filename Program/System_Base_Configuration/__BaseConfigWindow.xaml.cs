@@ -40,6 +40,18 @@ namespace Stimulator.SubWindows
         {
             if ((Boolean)((ToggleButton)sender).IsChecked!)
             {
+                System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(
+                        $"Deactivating background apps will break Windows ViewPoint\nContinue?",
+                        "Background Apps",
+                        System.Windows.Forms.MessageBoxButtons.YesNo,
+                        System.Windows.Forms.MessageBoxIcon.Question);
+
+                if (result != System.Windows.Forms.DialogResult.Yes)
+                {
+                    ((ToggleButton)sender).IsChecked = false;
+                    return;
+                }
+
                 Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy", "LetAppsRunInBackground", 2, RegistryValueKind.DWord);
                 Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy", "LetAppsActivateWithVoice", 2, RegistryValueKind.DWord);
                 Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy", "LetAppsActivateWithVoiceAboveLock", 2, RegistryValueKind.DWord);

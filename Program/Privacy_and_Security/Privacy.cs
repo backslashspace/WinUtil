@@ -37,7 +37,8 @@ namespace Stimulator.SubWindows
                 new(true, false, "Deactivate cross device message and clipboard sync",                              null!),
                 new(true, false, "Deactivate Cortana",                                                              null!),
                 new(true, false, "Deactivate reports to SpyNet",                                                    null!),
-                new(true, false, "Don't remember recently opened files",                                            null!),
+                new(true, false, "*Don't remember and show recently opened files",                                  "WIN + R will not keep track of entered commands"),
+                new(true, false, "Deactivate Lock scree tips and tricks",                                           null!),
             ];
 
             OptionSelector optionSelector = new("Privacy", options, new(true, 0, "privacy.cfg"));
@@ -440,16 +441,16 @@ namespace Stimulator.SubWindows
                     {
                         Log.FastLog("[MACHINE][USER] Deactivating Cortana", LogSeverity.Info, PRIVACY_SOURCE);
 
-                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search", "AllowCortana ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search", "AllowCortanaAboveLock ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\InputPersonalization", "AllowInputPersonalization ", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search", "AllowCortana", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search", "AllowCortanaAboveLock", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\InputPersonalization", "AllowInputPersonalization", 0, RegistryValueKind.DWord);
 
-                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Windows Search", "CortanaConsent ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Personalization\Settings", "AcceptedPrivacyPolicy ", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Windows Search", "CortanaConsent", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Personalization\Settings", "AcceptedPrivacyPolicy", 0, RegistryValueKind.DWord);
 
-                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization", "RestrictImplicitTextCollection ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization", "RestrictImplicitInkCollection ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization\TrainedDataStore", "HarvestContacts ", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization", "RestrictImplicitTextCollection", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization", "RestrictImplicitInkCollection", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\InputPersonalization\TrainedDataStore", "HarvestContacts", 0, RegistryValueKind.DWord);
 
 
                     }
@@ -465,9 +466,9 @@ namespace Stimulator.SubWindows
                     {
                         Log.FastLog("[MACHINE] Deactivating reports to SpyNet", LogSeverity.Info, PRIVACY_SOURCE);
 
-                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows Defender\Spynet", "SubmitSamplesConsent ", 2, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows Defender\Spynet", "SpyNetReporting ", 0, RegistryValueKind.DWord);
-                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\MRT", "DontReportInfectionInformation ", 1, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows Defender\Spynet", "SubmitSamplesConsent", 2, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows Defender\Spynet", "SpyNetReporting", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\MRT", "DontReportInfectionInformation", 1, RegistryValueKind.DWord);
                     }
                 }
                 catch (Exception exception)
@@ -479,14 +480,38 @@ namespace Stimulator.SubWindows
                 {
                     if (optionSelector.Result.UserSelection[24])
                     {
-                        Log.FastLog("[USER] Don't remember recently opened files", LogSeverity.Info, PRIVACY_SOURCE);
+                        Log.FastLog("[USER] Don't remember and show recently opened files", LogSeverity.Info, PRIVACY_SOURCE);
 
-                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_TrackDocs ", 0, RegistryValueKind.DWord);
+                        RegistryKey key = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\RecentDocs", true);
+                        key?.DeleteValue("MRUListEx", false);
+
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "ShowFrequent", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "ShowRecent", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "ShowRecommendations", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer", "ShowCloudFilesInQuickAccess", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Start", "ShowRecentList", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_TrackDoc", 0, RegistryValueKind.DWord);
                     }
                 }
                 catch (Exception exception)
                 {
                     Log.FastLog("[USER] Don't remember recently opened files failed with: " + exception.Message, LogSeverity.Error, PRIVACY_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[25])
+                    {
+                        Log.FastLog("[USER] Disabling lock screen tips and tricks", LogSeverity.Info, PRIVACY_SOURCE);
+
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager", "SubscribedContent-338387Enabled", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager", "RotatingLockScreenOverlayEnabled", 0, RegistryValueKind.DWord);
+                        
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("[USER] Disabling lock screen tips and tricks failed with: " + exception.Message, LogSeverity.Error, PRIVACY_SOURCE);
                 }
 
                 Util.RestartExplorerForUser();

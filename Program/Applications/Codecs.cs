@@ -42,10 +42,17 @@ namespace Stimulator.SubWindows
 
                 for (Int32 i = 0; i < files.Length; ++i)
                 {
-                    Log.FastLog("Installing: " + files[i], LogSeverity.Info, CODECS_SOURCE);
-                    PowerShell.Create().AddCommand("Add-AppPackage")
-                                .AddParameter("-Path", files[i])
-                                .Invoke();
+                    try
+                    {
+                        Log.FastLog("Installing: " + files[i], LogSeverity.Info, CODECS_SOURCE);
+                        PowerShell.Create().AddCommand("Add-AppPackage")
+                                    .AddParameter("-Path", files[i])
+                                    .Invoke();
+                    }
+                    catch (Exception exception)
+                    {
+                        Log.FastLog($"Failed to install {files[i]}: " + exception.Message, LogSeverity.Warning, CODECS_SOURCE);
+                    }   
                 }
 
                 Log.FastLog("Done", LogSeverity.Info, CODECS_SOURCE);
