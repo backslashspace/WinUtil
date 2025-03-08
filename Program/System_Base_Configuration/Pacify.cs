@@ -40,9 +40,10 @@ namespace Stimulator.SubWindows
                 new(true, false, "Disable OneDrive Notifications in Explorer",                                              null!),
                 new(true, false, "Show more apps in the start menu",                                                        null!),
                 new(true, false, "Enable Numlock on start",                                                                 null!),
+                new(true, false, "*Don't automatically choose the appropriate folder type",                                 "This will speed up file explorer browsing in large directories, where normally it would first index all files and load all preview images of all videos"),
             ];
 
-            OptionSelector optionSelector = new("Streamline & Pacify", options, new(true, 0, "pacify.cfg"));
+            OptionSelector optionSelector = new("Streamline & Pacify", options, new(true, 1, "pacify.cfg"));
             optionSelector.ShowDialog();
 
             if (!optionSelector.Result.CommitSelection) return;
@@ -520,6 +521,24 @@ namespace Stimulator.SubWindows
                 catch (Exception exception)
                 {
                     Log.FastLog("[MACHINE] Enabling Numlock after boot failed with: " + exception.Message, LogSeverity.Error, PACIFY_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[27])
+                    {
+                        Log.FastLog("[User] Don't automatically choose the appropriate folder type", LogSeverity.Info, PACIFY_SOURCE);
+                        
+                        RegistryKey shell = Registry.CurrentUser.OpenSubKey("Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell", true);
+                        shell?.DeleteSubKeyTree("BagMRU", false);
+                        shell?.DeleteSubKeyTree("Bags", false);
+
+                        Registry.SetValue("HKEY_CURRENT_USER\\Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell\\Bags\\AllFolders\\Shell", "FolderType", "NotSpecified", RegistryValueKind.String);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("[User] Don't automatically choose the appropriate folder type failed with: " + exception.Message, LogSeverity.Error, PACIFY_SOURCE);
                 }
 
                 Util.RestartExplorerForUser();

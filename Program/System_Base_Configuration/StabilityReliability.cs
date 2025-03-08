@@ -26,10 +26,11 @@ namespace Stimulator.SubWindows
                 new(true, false, "*Remove dynamic user home directory links",    "By default, the documents, video and image folders are linked to each other,\nthis can lead to some unexpected behavior,\nlike copying the contents of all folders when only copying the documents folder."),
                 new(true, false, "*Use old boot policy",                         "Allows to enter the recovery menu during boot (F8)"),
                 new(true, false, "*Enable BSoD messages",                        "The old bluescreen of death | more crash information"),
+                new(true, false, "*Verbose System Status",                       "This is on by default on Windows Server | for example shows: Ending Services, Waiting for session manager etc instead of Shutting down"),
                 new(true, false, "*Show 'End Task' Button",                      "Allows you to end a task when right clicking an app in the task bar"),
             ];
 
-            OptionSelector optionSelector = new("Stability & Reliability", options, new(true, 0, "stability.cfg"));
+            OptionSelector optionSelector = new("Stability & Reliability", options, new(true, 1, "stability.cfg"));
             optionSelector.ShowDialog();
 
             if (!optionSelector.Result.CommitSelection) return;
@@ -203,6 +204,19 @@ namespace Stimulator.SubWindows
                 try
                 {
                     if (optionSelector.Result.UserSelection[10])
+                    {
+                        Log.FastLog("[MACHINE] Enabling Verbose System Status", LogSeverity.Info, STABILITY_RELIABILITY_SOURCE);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System", "VerboseStatus", 1, RegistryValueKind.DWord);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("[MACHINE] Enabling Verbose System Status failed with: " + exception.Message, LogSeverity.Error, STABILITY_RELIABILITY_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[11])
                     {
                         Log.FastLog("[USER] Enabling 'End Task' Button", LogSeverity.Info, STABILITY_RELIABILITY_SOURCE);
                         Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced\TaskbarDeveloperSettings", "TaskbarEndTask", 1, RegistryValueKind.DWord);

@@ -51,6 +51,7 @@ namespace Stimulator.SubWindows
                 Directory.CreateDirectory(RunContextInfo.Windows.UserHomePath + "\\AppData\\Local\\ImageGlass");
 
                 File.Copy(RunContextInfo.ExecutablePath + "\\assets\\ImageGlass\\igconfig.json", RunContextInfo.Windows.UserHomePath + "\\AppData\\Local\\ImageGlass\\igconfig.json");
+                File.Copy(RunContextInfo.ExecutablePath + "\\assets\\ImageGlass\\igconfig.json", "C:\\Program Files\\ImageGlass\\igconfig.json");
 
                 Log.FastLog("Done", LogSeverity.Info, IMAGEGLASS_SOURCE);
             }

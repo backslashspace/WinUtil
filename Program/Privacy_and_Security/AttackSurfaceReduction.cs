@@ -29,7 +29,7 @@ namespace Stimulator.SubWindows
             catch
             {
                 System.Windows.Forms.MessageBox.Show(
-                    "Unable to set asr rules, Windows Defender not installed or broken powershell integration.",
+                    "Unable to set ASR rules, Windows Defender not installed or broken powershell integration.",
                     "Not supported",
                     System.Windows.Forms.MessageBoxButtons.OK,
                     System.Windows.Forms.MessageBoxIcon.Error);
@@ -56,22 +56,22 @@ namespace Stimulator.SubWindows
 
             OptionSelector.Option[] options =
             [
-                new(false, false, "Block abuse of exploited vulnerable signed drivers",                                                  null!),
+                new(false, false, "*Block abuse of exploited vulnerable signed drivers",                                                  "breaks MSI Afterburner"),
                 new(false, false, "Block Adobe Reader from creating child processes",                                                    null!),
                 new(false, false, "Block all Office applications from creating child processes",                                         null!),
                 new(false, false, "Block credential stealing from the Windows local security authority subsystem (lsass.exe)",           null!),
                 new(false, false, "Block executable content from email client and webmail",                                              null!),
-                new(false, false, "Block executable files from running unless they meet a prevalence, age, or trusted list criterion",   null!),
+                new(false, false, "*Block executable files from running unless they meet a prevalence, age, or trusted list criterion",   "breaks things"),
                 new(false, false, "Block execution of potentially obfuscated scripts",                                                   null!),
                 new(false, false, "Block JavaScript or VBScript from launching downloaded executable content",                           null!),
                 new(false, false, "Block Office applications from creating executable content",                                          null!),
                 new(false, false, "Block Office applications from injecting code into other processes",                                  null!),
                 new(false, false, "Block Office communication application from creating child processes",                                null!),
                 new(false, false, "Block persistence through WMI event subscription. (file and folder exclusions not supported)",        null!),
-                new(false, false, "Block process creations originating from PSExec and WMI commands",                                    null!),
+                new(false, false, "*Block process creations originating from PSExec and WMI commands",                                    "breaks Windows Server Manager"),
                 new(false, false, "Block rebooting machine in Safe Mode (preview)",                                                      null!),
                 new(false, false, "Block untrusted and unsigned processes that run from USB",                                            null!),
-                new(false, false, "Block use of copied or impersonated system tools (preview)",                                          null!),
+                new(false, false, "*Block use of copied or impersonated system tools (preview)",                                         "breaks VeraCrypt"),
                 new(false, false, "Block Webshell creation for Servers",                                                                 null!),
                 new(false, false, "Block Win32 API calls from Office macros",                                                            null!),
                 new(false, false, "Use advanced protection against ransomware",                                                          null!),

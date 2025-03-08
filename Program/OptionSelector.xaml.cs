@@ -175,25 +175,25 @@ namespace Stimulator.SubWindows
         private unsafe void Save_Click(Object sender, RoutedEventArgs e)
         {
         redo:
-            OpenFileDialog openFileDialog = new();
-            openFileDialog.InitialDirectory = RunContextInfo.ExecutablePath;
-            openFileDialog.FileName = _configuration.Filename;
-            openFileDialog.CheckFileExists = false;
-            openFileDialog.Filter = "Configuration file (*.cfg)|*.cfg|All files (*.*)|*.*";
-            openFileDialog.FilterIndex = 1;
-            openFileDialog.Title = "Select " + Title + " file";
+            SaveFileDialog saveFileDialog = new();
+            saveFileDialog.InitialDirectory = RunContextInfo.ExecutablePath;
+            saveFileDialog.FileName = _configuration.Filename;
+            saveFileDialog.CheckFileExists = false;
+            saveFileDialog.Filter = "Configuration file (*.cfg)|*.cfg|All files (*.*)|*.*";
+            saveFileDialog.FilterIndex = 1;
+            saveFileDialog.Title = "Select " + Title + " file";
 
-            if (!(Boolean)openFileDialog.ShowDialog()!) return;
+            if (!(Boolean)saveFileDialog.ShowDialog()!) return;
 
             FileStream fileStream;
 
             try
             {
-                fileStream = new(openFileDialog.FileName, FileMode.Create, FileAccess.Write, FileShare.Read, 4096, false);
+                fileStream = new(saveFileDialog.FileName, FileMode.Create, FileAccess.Write, FileShare.Read, 4096, FileOptions.SequentialScan);
             }
             catch (Exception exception)
             {
-                Log.FastLog($"Failed to open '{openFileDialog.FileName}' in write mode: {exception.Message}", LogSeverity.Error, "SaveConfig");
+                Log.FastLog($"Failed to open '{saveFileDialog.FileName}' in write mode: {exception.Message}", LogSeverity.Error, "SaveConfig");
                 goto redo;
             }
 
@@ -207,7 +207,7 @@ namespace Stimulator.SubWindows
 
             fileStream.Flush(true);
 
-            Log.FastLog($"Wrote config for '{Title}' to {openFileDialog.FileName}", LogSeverity.Info, "SaveConfig");
+            Log.FastLog($"Wrote config for '{Title}' to {saveFileDialog.FileName}", LogSeverity.Info, "SaveConfig");
 
             fileStream.Close();
             fileStream.Dispose();
@@ -230,7 +230,7 @@ namespace Stimulator.SubWindows
 
             try
             {
-                fileStream = new(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, false);
+                fileStream = new(openFileDialog.FileName, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.SequentialScan);
             }
             catch (Exception exception)
             {
@@ -250,7 +250,11 @@ namespace Stimulator.SubWindows
 
             for (Int32 i = 0; i < _optionsLength; ++i)
             {
-                if (!_checkBoxes[i].IsEnabled) continue;
+                if (!_checkBoxes[i].IsEnabled)
+                {
+                    ++fileStream.Position;
+                    continue;
+                }
 
                 Byte isChecked = (Byte)fileStream.ReadByte();
                 _checkBoxes[i].IsChecked = *(Boolean*)&isChecked;

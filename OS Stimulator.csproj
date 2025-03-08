@@ -205,6 +205,9 @@
   <ItemGroup>
     <Resource Include="Program\Privacy_and_Security\_notes.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="notes.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>call ..\..\Build-Incrementor.exe ..\..\Properties\AssemblyInfo.cs</PostBuildEvent>
