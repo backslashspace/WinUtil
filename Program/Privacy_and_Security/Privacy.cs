@@ -1,4 +1,4 @@
-﻿using BSS.Logging;
+using BSS.Logging;
 using Microsoft.Win32;
 using System;
 using System.Threading.Tasks;
@@ -39,6 +39,9 @@ namespace Stimulator.SubWindows
                 new(true, false, "Deactivate reports to SpyNet",                                                    null!),
                 new(true, false, "*Don't remember and show recently opened files",                                  "WIN + R will not keep track of entered commands"),
                 new(true, false, "Deactivate Lock scree tips and tricks",                                           null!),
+                new(true, false, "Deactivate DiagTrack service",                                                    null!),
+                new(true, false, "Deactivate Windows Error Reporting",                                              null!),
+                new(true, false, "Deactivate Mobile Device Management (MDM) registration",                          null!),
             ];
 
             OptionSelector optionSelector = new("Privacy", options, new(true, 0, "privacy.cfg"));
@@ -259,6 +262,7 @@ namespace Stimulator.SubWindows
                         Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint", "DisableImageCreator", 1, RegistryValueKind.DWord);
                         Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI", "DisableAIDataAnalysis", 1, RegistryValueKind.DWord);
                         Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI", "AllowRecallEnablement", 0, RegistryValueKind.DWord);
+                        Registry.SetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI", "AllowRecallExport", 0, RegistryValueKind.DWord);
                     }
                 }
                 catch (Exception exception)
@@ -512,6 +516,52 @@ namespace Stimulator.SubWindows
                 catch (Exception exception)
                 {
                     Log.FastLog("[USER] Disabling lock screen tips and tricks failed with: " + exception.Message, LogSeverity.Error, PRIVACY_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[26])
+                    {
+                        Log.FastLog("[MACHINE] Disabling DiagTrack Service", LogSeverity.Info, PRIVACY_SOURCE);
+
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DiagTrack", "Start", 4, RegistryValueKind.DWord);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("[MACHINE] Disabling DiagTrack Service failed with: " + exception.Message, LogSeverity.Error, PRIVACY_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[27])
+                    {
+                        Log.FastLog("[MACHINE] Disabling Windows Error Reporting", LogSeverity.Info, PRIVACY_SOURCE);
+
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\WerSvc", "Start", 4, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting", "AutoApproveOSDumps", 0, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting", "Disabled", 1, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting", "DontSendAdditionalData", 1, RegistryValueKind.DWord);
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting\Consent", "DefaultOverrideBehavior", "0", RegistryValueKind.String);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("[MACHINE] Disabling Windows Error Reporting failed with: " + exception.Message, LogSeverity.Error, PRIVACY_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[28])
+                    {
+                        Log.FastLog("[MACHINE] Disabling Mobile Device Management (MDM) registration", LogSeverity.Info, PRIVACY_SOURCE);
+
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\MDM", "DisableRegistration", 1, RegistryValueKind.DWord);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("[MACHINE] Disabling Mobile Device Management (MDM) registration failed with: " + exception.Message, LogSeverity.Error, PRIVACY_SOURCE);
                 }
 
                 Util.RestartExplorerForUser();

@@ -1,4 +1,4 @@
-﻿using BSS.Logging;
+using BSS.Logging;
 using Microsoft.Win32;
 using System;
 using System.IO;
@@ -28,6 +28,7 @@ namespace Stimulator.SubWindows
 
                 Util.Execute.Process(new("c:\\windows\\system32\\taskkill.exe", "/f /im OneDriveSetup.exe", true, true, true));
                 Util.Execute.Process(new("c:\\windows\\system32\\taskkill.exe", "/f /im OneDrive.exe", true, true, true));
+                Util.Execute.Process(new("c:\\windows\\system32\\taskkill.exe", "/f /im FileCoAuth.exe", true, true, true));
 
                 if (File.Exists("C:\\Windows\\System32\\OneDriveSetup.exe"))
                 {
@@ -77,7 +78,7 @@ namespace Stimulator.SubWindows
                     {
                         Log.Debug("4", ONEDRIVE_SOURCE);
 
-                        Util.Execute.Process(new("C:\\Windows\\System32\\takeown.exe", $"/a /f /d:Y \"{directories[i]}\\OneDriveSetup.exe\"", true, true, true));
+                        Util.Execute.Process(new("C:\\Windows\\System32\\takeown.exe", $"/a /f \"{directories[i]}\\OneDriveSetup.exe\"", true, true, true));
                         Util.Execute.Process(new("C:\\Windows\\System32\\icacls.exe", $"\"{directories[i]}\\OneDriveSetup.exe\" /grant {RunContextInfo.Windows.AdministratorGroupName}:(F)", true, true, true));
                         File.Delete(directories[i] + "\\OneDriveSetup.exe");
 
@@ -94,6 +95,7 @@ namespace Stimulator.SubWindows
             catch (Exception exception)
             {
                 Log.FastLog("Failed to remove OneDrive: " + exception.Message, LogSeverity.Error, ONEDRIVE_SOURCE);
+                Util.RestartExplorerForUser();
             }
         });
     }

@@ -5,9 +5,9 @@ namespace Deregisterer
     internal static partial class Installer
     {
         internal const String EXECUTABLE_NAME_WITHOUT_EXTENSION = "HyperKey Deregisterer";
-        internal const String EXECUTABLE_NAME = $"{EXECUTABLE_NAME_WITHOUT_EXTENSION}.exe";
+        internal const String EXECUTABLE_NAME = $"{EXECUTABLE_NAME_WITHOUT_EXTENSION}.exe";                 // HyperKey Deregisterer.exe
         internal const String INSTALLATION_DIRECTORY_NAME = "HyperKey Deregisterer";
-        internal const String INSTALLATION_DIRECTORY_PATH = $"C:\\Program Files\\{INSTALLATION_DIRECTORY_NAME}\\";
+        internal const String INSTALLATION_DIRECTORY_PATH = $"C:\\Program Files\\{INSTALLATION_DIRECTORY_NAME}\\";      // C:\\Program Files\\HyperKey Deregisterer
 
         internal const String REGISTRY_APP_HIVE = "HKEY_LOCAL_MACHINE\\";
         internal const String REGISTRY_APP_TREE = $"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{EXECUTABLE_NAME_WITHOUT_EXTENSION}";

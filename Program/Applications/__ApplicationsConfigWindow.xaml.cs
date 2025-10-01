@@ -1,4 +1,4 @@
-﻿using BSS.Logging;
+using BSS.Logging;
 using System;
 using System.IO;
 using System.Windows;
@@ -115,6 +115,44 @@ namespace Stimulator.SubWindows
             ((Button)sender).IsEnabled = false;
             await ImageGlass().ConfigureAwait(true);
             ((Button)sender).IsEnabled = true;
+        }
+
+        private void XBoxButton_Click(Object sender, RoutedEventArgs e)
+        {
+            const String XBOX_SOURCE = "XBox-Services";
+
+            try
+            {
+                if (!Util.Execute.Process(new("c:\\windows\\system32\\sc.exe", "delete XboxGipSvc", true, true, true)).Success)
+                {
+                    Log.FastLog("XboxGipSvc->remove failed", LogSeverity.Error, XBOX_SOURCE);
+                }
+                else Log.FastLog("Removed XboxGipSvc", LogSeverity.Info, XBOX_SOURCE);
+
+                if (!Util.Execute.Process(new("c:\\windows\\system32\\sc.exe", "delete XblAuthManager", true, true, true)).Success)
+                {
+                    Log.FastLog("XblAuthManager->remove failed", LogSeverity.Error, XBOX_SOURCE);
+                }
+                else Log.FastLog("Removed XblAuthManager", LogSeverity.Info, XBOX_SOURCE);
+
+                if (!Util.Execute.Process(new("c:\\windows\\system32\\sc.exe", "delete XboxNetApiSvc", true, true, true)).Success)
+                {
+                    Log.FastLog("XboxNetApiSvc->remove failed", LogSeverity.Error, XBOX_SOURCE);
+                }
+                else Log.FastLog("Removed XboxNetApiSvc", LogSeverity.Info, XBOX_SOURCE);
+
+                if (!Util.Execute.Process(new("c:\\windows\\system32\\sc.exe", "delete XblGameSave", true, true, true)).Success)
+                {
+                    Log.FastLog("XblGameSave->remove failed", LogSeverity.Error, XBOX_SOURCE);
+                }
+                else Log.FastLog("Removed XblGameSave", LogSeverity.Info, XBOX_SOURCE);
+
+                Log.FastLog("Done", LogSeverity.Info, XBOX_SOURCE);
+            }
+            catch (Exception exception)
+            {
+                Log.FastLog("Unknown error: " + exception.Message, LogSeverity.Error, XBOX_SOURCE);
+            }
         }
     }
 }

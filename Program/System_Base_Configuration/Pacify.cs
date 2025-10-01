@@ -1,4 +1,4 @@
-﻿using BSS.Logging;
+using BSS.Logging;
 using Microsoft.Win32;
 using System;
 using System.Threading.Tasks;
@@ -271,7 +271,12 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[14])
                     {
                         Log.FastLog("[MACHINE][USER] Deactivating GameDVR", LogSeverity.Info, PACIFY_SOURCE);
-                       
+
+                        if (!Util.Execute.Process(new("c:\\windows\\system32\\sc.exe", "config BcastDVRUserService_656ab start=disabled", true, true, true)).Success)
+                        {
+                            Log.FastLog("BcastDVRUserService_656ab->disabled failed", LogSeverity.Error, PACIFY_SOURCE);
+                        }
+
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR", "AllowGameDVR", 0, RegistryValueKind.DWord);
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\GameDVR", "AllowGameDVR", 0, RegistryValueKind.DWord);
 

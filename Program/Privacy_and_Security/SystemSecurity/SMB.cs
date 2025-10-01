@@ -1,4 +1,4 @@
-﻿using BSS.Logging;
+using BSS.Logging;
 using Microsoft.Win32;
 using System;
 using System.Threading.Tasks;
@@ -24,6 +24,7 @@ namespace Stimulator.SubWindows
                new(true, false, "Enable encryption",                                 null!),
                new(true, false, "Require security signatures",                       null!),
                new(true, false, "Require encryption",                                null!),
+               new(true, false, "Harden UNC paths for current machine name",         "'\\\\" + RunContextInfo.Windows.HostName + "' value 'RequireMutualAuthentication=1, RequireIntegrity=1, RequirePrivacy=1'"),
             ];
 
             OptionSelector optionSelector = new("SMB Server Options", options, new(true, 0, "smb.cfg"));
@@ -184,6 +185,20 @@ namespace Stimulator.SubWindows
                         Log.FastLog("Rejecting unencrypted access", LogSeverity.Info, SMB_SOURCE);
 
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\LanmanServer\Parameters", "RejectUnencryptedAccess", 1, RegistryValueKind.DWord);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("Failed to set reject unencrypted access: " + exception.Message, LogSeverity.Error, SMB_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[11])
+                    {
+                        Log.FastLog("Hardening UNC paths for current machine name", LogSeverity.Info, SMB_SOURCE);
+
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths", "\\\\" + RunContextInfo.Windows.HostName, "RequireMutualAuthentication=1, RequireIntegrity=1, RequirePrivacy=1", RegistryValueKind.String);
                     }
                 }
                 catch (Exception exception)

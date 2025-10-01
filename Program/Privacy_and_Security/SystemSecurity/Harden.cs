@@ -1,4 +1,4 @@
-﻿using BSS.Logging;
+using BSS.Logging;
 using Microsoft.Win32;
 using System;
 using System.Management.Automation;
@@ -37,6 +37,9 @@ namespace Stimulator.SubWindows
                new(true, false, "Deactivate camera on locked screen",                               null!),
                new(true, false, "Deactivate app voice commands in locked state",                    null!),
                new(true, false, "Deactivate windows voice commands",                                null!),
+               new(true, false, "*Enable FIPS algorithm policy",                                    "Might prevent some apps from starting"),
+               new(true, false, "*Set Kernel-DMA Protection enumeration policy",                    "Only allow 'DMA-Protection' capable devices"),
+               new(true, false, "*Set custom SSL Ecc Curves",                                       "Prefer secP___r1 over nistP___"),
             ];
 
             OptionSelector optionSelector = new("Harden Options", options, new(true, 0, "harden.cfg"));
@@ -305,6 +308,59 @@ namespace Stimulator.SubWindows
                 catch (Exception exception)
                 {
                     Log.FastLog("Deactivating windows voice commands in locked state failed with: " + exception.Message, LogSeverity.Error, HARDEN_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[23])
+                    {
+                        Log.FastLog("Enabling FIPS algorithm policy", LogSeverity.Info, HARDEN_SOURCE);
+
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Lsa\FipsAlgorithmPolicy", "Enabled", 1, RegistryValueKind.DWord);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("Enabling FIPS algorithm policy failed with: " + exception.Message, LogSeverity.Error, HARDEN_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[24])
+                    {
+                        Log.FastLog("Setting Kernel-DMA Protection enumeration policy", LogSeverity.Info, HARDEN_SOURCE);
+
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Kernel DMA Protection", "DeviceEnumerationPolicy", 0, RegistryValueKind.DWord);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("Setting Kernel-DMA Protection enumeration policy failed with: " + exception.Message, LogSeverity.Error, HARDEN_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[25])
+                    {
+                        Log.FastLog("Setting custom SSL Ecc Curves", LogSeverity.Info, HARDEN_SOURCE);
+
+                        String[] eccCurves =
+                        [
+                            "curve25519",
+                            "secP384r1",
+                            "secP521r1",
+                            "secP256r1",
+                            "nistP384",
+                            "nistP521",
+                            "nistP256",
+                        ];
+
+                        Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Cryptography\Configuration\SSL\00010002", "EccCurves", eccCurves, RegistryValueKind.MultiString);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("Setting custom SSL Ecc Curves failed with: " + exception.Message, LogSeverity.Error, HARDEN_SOURCE);
                 }
             });
 

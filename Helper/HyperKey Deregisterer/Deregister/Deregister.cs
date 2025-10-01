@@ -54,7 +54,7 @@ namespace Deregisterer
             // widgets
             RegisterHotKey(IntPtr.Zero, 12, MOD_WIN | MOD_NOREPEAT, vKEY_W);
 
-            StartExplorer();
+            //StartExplorer();
 
             Thread.Sleep(1024);
 

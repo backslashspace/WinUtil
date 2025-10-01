@@ -1,5 +1,6 @@
-﻿using BSS.Logging;
+using BSS.Logging;
 using System;
+using System.IO;
 using System.Windows;
 
 namespace Stimulator
@@ -61,9 +62,19 @@ namespace Stimulator
 
         private void Debug_Click(Object sender, RoutedEventArgs e)
         {
-            SubWindows.SystemSecurity systemSecurity = new();
+            String[] directories = Directory.GetDirectories("C:\\Windows\\WinSxS");
 
-            systemSecurity.Show();
+            for (Int32 i = 0; i < directories.Length; ++i)
+            {
+                if (directories[i].Contains("microsoft-windows-onedrive-setup"))
+                {
+                    Util.Execute.Process(new("C:\\Windows\\System32\\takeown.exe", $"/a /f \"{directories[i]}\\OneDriveSetup.exe\"", true, true, true));
+                    Util.Execute.Process(new("C:\\Windows\\System32\\icacls.exe", $"\"{directories[i]}\\OneDriveSetup.exe\" /grant {RunContextInfo.Windows.AdministratorGroupName}:(F)", true, true, true));
+                    File.Delete(directories[i] + "\\OneDriveSetup.exe");
+
+                    break;
+                }
+            }
         }
     }
 }
