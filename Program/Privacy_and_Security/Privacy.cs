@@ -1,6 +1,7 @@
 ﻿using BSS.Logging;
 using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Stimulator.SubWindows
@@ -641,6 +642,28 @@ namespace Stimulator.SubWindows
                         Registry.SetValue("HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Memory Management\\PrefetchParameters", "EnableSuperfetch", 0, RegistryValueKind.DWord);
                         
                         Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\SysMain", "Start", 4, RegistryValueKind.DWord);
+
+                        try
+                        {
+                            if (!Util.Execute.Process(new("c:\\windows\\system32\\net.exe", "stop SysMain", true, true, true)).Success)
+                            {
+                                Log.FastLog("SysMain->stop failed", LogSeverity.Error, PRIVACY_SOURCE);
+                            }
+                            else Log.FastLog("Stopped SysMain", LogSeverity.Info, PRIVACY_SOURCE);
+                        }
+                        catch (Exception exception)
+                        {
+                            Log.FastLog("Failed to execute net.exe to stop SysMain", LogSeverity.Error, PRIVACY_SOURCE);
+                        }
+
+                        try
+                        {
+                            Directory.Delete("C:\\Windows\\Prefetch", true);
+                        }
+                        catch (DirectoryNotFoundException exception)
+                        {
+                            Log.FastLog("[MACHINE] Failed to clean up C:\\Windows\\Prefetch: " + exception.Message, LogSeverity.Info, PRIVACY_SOURCE);
+                        }
                     }
                 }
                 catch (Exception exception)

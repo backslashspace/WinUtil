@@ -3,6 +3,6 @@
 messy old C# code that uses WPF and sometimes async  
 it does its job tho
 
-i use this speed up my windows installs
+i use this to speed up my windows installs
 
 updated from time to time
