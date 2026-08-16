@@ -13,7 +13,7 @@ namespace Stimulator
 {
     internal static class Util
     {
-        internal static Boolean IsWindows10UI() => (RunContextInfo.Windows.IsServer && RunContextInfo.Windows.MajorVersion< 26100) || RunContextInfo.Windows.MajorVersion< 22000;
+        internal static Boolean IsWindows10UI() => (RunContextInfo.Windows.IsServer && RunContextInfo.Windows.MajorVersion < 26100) || RunContextInfo.Windows.MajorVersion < 22000;
 
         internal static Boolean UnlockRegistryKey(String keyPath, String user)
         {

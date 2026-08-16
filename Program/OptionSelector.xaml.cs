@@ -11,9 +11,9 @@ using System.Windows.Controls;
 
 namespace Stimulator.SubWindows
 {
-     // saved file layout = version | data
-     //                      ^^^^^
-     //                      Int32
+    // saved file layout = version | data
+    //                      ^^^^^
+    //                      Int32
 
     public sealed partial class OptionSelector : Window
     {
@@ -46,7 +46,7 @@ namespace Stimulator.SubWindows
         internal readonly struct Option
         {
             [Obsolete("Empty Constructor not supported.", true)]
-            public Option() {}
+            public Option() { }
 
             internal Option(Boolean defaultValue, Boolean readOnly, String fieldName, String tooltip)
             {
@@ -140,7 +140,7 @@ namespace Stimulator.SubWindows
         private void Commit_Click(Object sender, RoutedEventArgs e)
         {
             _result.UserSelection = new Boolean[_optionsLength];
-            
+
             for (Int32 i = 0; i < _optionsLength; ++i)
             {
                 _result.UserSelection[i] = (Boolean)_checkBoxes[i].IsChecked!;

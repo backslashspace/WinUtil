@@ -54,7 +54,7 @@ namespace Stimulator.SubWindows
             try
             {
                 Util.Execute.Result result = Util.Execute.Process(new(RunContextInfo.ExecutablePath + "\\assets\\SiSyPHuS_Win10_2022_Host_INIT.exe", "e22afd680ce7b8f23fad799fa3beef2dbce66e42e8877a9f2f0e3fd0b55619c9", true, true, true));
-            
+
                 if (!result.Success)
                 {
                     Log.FastLog($"Failed to launch BSI hosts file editor", LogSeverity.Error, "BSI-Hosts");

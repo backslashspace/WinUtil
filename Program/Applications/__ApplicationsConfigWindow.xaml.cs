@@ -17,7 +17,7 @@ namespace Stimulator.SubWindows
 
         private void EdgeButton_Click(Object sender, RoutedEventArgs e)
         {
-            System.Windows.Forms.DialogResult result =  System.Windows.Forms.MessageBox.Show(
+            System.Windows.Forms.DialogResult result = System.Windows.Forms.MessageBox.Show(
                     "Uninstall Edge and all associated files?",
                     "Edge Remove Script",
                     System.Windows.Forms.MessageBoxButtons.YesNo,

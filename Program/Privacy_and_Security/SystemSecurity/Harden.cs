@@ -236,7 +236,7 @@ namespace Stimulator.SubWindows
                     }
                 }
 
-                FWSKIP:
+            FWSKIP:
 
                 try
                 {

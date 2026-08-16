@@ -63,7 +63,7 @@ namespace Stimulator.SubWindows
                         Log.FastLog("Unsetting Windows Update options", LogSeverity.Info, WINUPDATE_SOURCE);
 
                         UnsetWindowsUpdate();
-              
+
                         Log.FastLog("Done, restart to apply all changes", LogSeverity.Info, WINUPDATE_SOURCE);
 
                         return;
@@ -236,10 +236,10 @@ namespace Stimulator.SubWindows
         {
             UnsetWindowsUpdate();
 
-            Util.Execute.Process(new(@"C:\Windows\System32\net.exe", "stop \"BITS\" /y", true, true,true));
-            Util.Execute.Process(new(@"C:\Windows\System32\net.exe", "stop \"wuauserv\" /y", true, true,true));
-            Util.Execute.Process(new(@"C:\Windows\System32\net.exe", "stop \"appidsvc\" /y", true, true,true));
-            Util.Execute.Process(new(@"C:\Windows\System32\net.exe", "stop \"cryptsvc\" /y", true, true,true));
+            Util.Execute.Process(new(@"C:\Windows\System32\net.exe", "stop \"BITS\" /y", true, true, true));
+            Util.Execute.Process(new(@"C:\Windows\System32\net.exe", "stop \"wuauserv\" /y", true, true, true));
+            Util.Execute.Process(new(@"C:\Windows\System32\net.exe", "stop \"appidsvc\" /y", true, true, true));
+            Util.Execute.Process(new(@"C:\Windows\System32\net.exe", "stop \"cryptsvc\" /y", true, true, true));
 
             if (Directory.Exists(@"C:\ProgramData\Application Data\Microsoft\Network\Downloader"))
             {
@@ -291,8 +291,8 @@ namespace Stimulator.SubWindows
             key?.DeleteValue("PingID", false);
             key?.DeleteValue("SusClientId", false);
 
-            Util.Execute.Process(new(@"C:\Windows\System32\netsh.exe", "winsock reset", true, true,true));
-            Util.Execute.Process(new(@"C:\Windows\System32\netsh.exe", "winhttp reset proxy", true, true,true));
+            Util.Execute.Process(new(@"C:\Windows\System32\netsh.exe", "winsock reset", true, true, true));
+            Util.Execute.Process(new(@"C:\Windows\System32\netsh.exe", "winhttp reset proxy", true, true, true));
 
             PowerShell.Create().AddScript("Get-BitsTransfer | Remove-BitsTransfer").Invoke();
 

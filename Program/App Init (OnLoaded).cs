@@ -3,8 +3,8 @@ using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Management.Automation;
 using System.Management;
+using System.Management.Automation;
 using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Security.Principal;
@@ -59,7 +59,7 @@ namespace Stimulator
             {
                 RunContextInfo.Windows.IsHomeEdition = (String)editionID == "Core";
             }
-            
+
             //
 
             Log.FastLog($"Hostname:     {RunContextInfo.Windows.HostName}", LogSeverity.Info, "Init");

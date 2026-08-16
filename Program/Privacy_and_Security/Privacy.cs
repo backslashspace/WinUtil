@@ -1,4 +1,4 @@
-using BSS.Logging;
+﻿using BSS.Logging;
 using Microsoft.Win32;
 using System;
 using System.Threading.Tasks;
@@ -42,6 +42,10 @@ namespace Stimulator.SubWindows
                 new(true, false, "Deactivate DiagTrack service",                                                    null!),
                 new(true, false, "Deactivate Windows Error Reporting",                                              null!),
                 new(true, false, "Deactivate Mobile Device Management (MDM) registration",                          null!),
+                new(true, false, "Deactivate CDP services*",                                                        "MS Global Device Identifier: https://github.com/SmtimesIWndr/gdid-reversal"),
+                new(true, false, "Try overwriting CDP IdentityCRL for all users*",                                  "MS Global Device Identifier: https://github.com/SmtimesIWndr/gdid-reversal"),
+                new(true, false, "Deactivate Cross Device Resume",                                                  null!),
+                new(true, false, "Deactivate Superfetch and its service",                                           null!),
             ];
 
             OptionSelector optionSelector = new("Privacy", options, new(true, 0, "privacy.cfg"));
@@ -50,7 +54,7 @@ namespace Stimulator.SubWindows
             if (!optionSelector.Result.CommitSelection) return;
 
             // # # # # # # # # # # # # # # # # # # # # # # # # #
-            
+
             await Task.Run(() =>
             {
                 try
@@ -510,7 +514,7 @@ namespace Stimulator.SubWindows
 
                         Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager", "SubscribedContent-338387Enabled", 0, RegistryValueKind.DWord);
                         Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager", "RotatingLockScreenOverlayEnabled", 0, RegistryValueKind.DWord);
-                        
+
                     }
                 }
                 catch (Exception exception)
@@ -555,13 +559,93 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[28])
                     {
                         Log.FastLog("[MACHINE] Disabling Mobile Device Management (MDM) registration", LogSeverity.Info, PRIVACY_SOURCE);
-
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\MDM", "DisableRegistration", 1, RegistryValueKind.DWord);
                     }
                 }
                 catch (Exception exception)
                 {
                     Log.FastLog("[MACHINE] Disabling Mobile Device Management (MDM) registration failed with: " + exception.Message, LogSeverity.Error, PRIVACY_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[29])
+                    {
+                        Log.FastLog("[MACHINE] Deactivating CDP services", LogSeverity.Info, PRIVACY_SOURCE);
+
+                        using RegistryKey serviceKey = Registry.LocalMachine.OpenSubKey("SYSTEM\\CurrentControlSet\\Services", false);
+
+                        foreach (String service in serviceKey.GetSubKeyNames())
+                        {
+                            if (!service.StartsWith("CDPSvc") && !service.StartsWith("CDPUserSvc")) continue;
+
+                            Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\" + service, "Start", 4, RegistryValueKind.DWord);
+                            Log.FastLog("[MACHINE] " + service, LogSeverity.Info, PRIVACY_SOURCE);
+                        }
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("[MACHINE] Deactivating CDP services failed with: " + exception.Message, LogSeverity.Error, PRIVACY_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[30])
+                    {
+                        Log.FastLog("[MACHINE][USER] Trying overwriting CDP IdentityCRL for all users", LogSeverity.Info, PRIVACY_SOURCE);
+
+                        using RegistryKey usersKey = Registry.Users.OpenSubKey("", false);
+
+                        foreach (String user in usersKey.GetSubKeyNames())
+                        {
+                            try
+                            {
+                                using RegistryKey identityCRL = Registry.Users.OpenSubKey(user + "\\Software\\Microsoft\\IdentityCRL\\ExtendedProperties", false);
+                            }
+                            catch
+                            {
+                                continue;
+                            }
+
+                            Registry.SetValue("HKEY_USERS\\" + user + "\\Software\\Microsoft\\IdentityCRL\\ExtendedProperties", "LID", "0000000000000000", RegistryValueKind.String);
+                            Log.FastLog("[MACHINE][USER] Set LID to 0000000000000000 for: " + user, LogSeverity.Info, PRIVACY_SOURCE);
+                        }
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("[MACHINE][USER] Trying overwriting CDP IdentityCRL for all users failed with: " + exception.Message, LogSeverity.Error, PRIVACY_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[31])
+                    {
+                        Log.FastLog("[USER] Disabling Cross Device Resume", LogSeverity.Info, PRIVACY_SOURCE);
+                        Registry.SetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\CrossDeviceResume\\Configuration", "IsResumeAllowed", 0, RegistryValueKind.DWord);
+                        Registry.SetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\CrossDeviceResume\\Configuration", "IsOneDriveResumeAllowed", 0, RegistryValueKind.DWord);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("[USER] Disabling Cross Device Resume failed with: " + exception.Message, LogSeverity.Error, PRIVACY_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[32])
+                    {
+                        Log.FastLog("[MACHINE] Disabling Superfetch and its service", LogSeverity.Info, PRIVACY_SOURCE);
+                        Registry.SetValue("HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Memory Management\\PrefetchParameters", "EnablePrefetcher", 0, RegistryValueKind.DWord);
+                        Registry.SetValue("HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\Memory Management\\PrefetchParameters", "EnableSuperfetch", 0, RegistryValueKind.DWord);
+                        
+                        Registry.SetValue("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Services\\SysMain", "Start", 4, RegistryValueKind.DWord);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("[MACHINE] Disabling Superfetch and its service failed with: " + exception.Message, LogSeverity.Error, PRIVACY_SOURCE);
                 }
 
                 Util.RestartExplorerForUser();

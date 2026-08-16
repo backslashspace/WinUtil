@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Text.RegularExpressions;
-using Microsoft.Win32;
 
 namespace Deregisterer
 {

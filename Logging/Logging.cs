@@ -21,7 +21,7 @@ namespace BSS.Logging
         private static readonly Object _fileLock = new();
 
         private static Options _configuration;
-  
+
         internal sealed class Options
         {
             internal const Int32 DEFAULT_PADDING_WIDTH = 52;

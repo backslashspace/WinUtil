@@ -153,7 +153,7 @@ namespace Stimulator.SubWindows
         {
             Boolean inactivityIsValid = UInt16.TryParse(SystemInactivityTextBox.Text, out UInt16 inactivity);
 
-            if (!inactivityIsValid || !(inactivity == 0 || (inactivity < 961 && inactivity >9)))
+            if (!inactivityIsValid || !(inactivity == 0 || (inactivity < 961 && inactivity > 9)))
             {
                 System.Windows.Forms.MessageBox.Show(
                     "System inactivity time was invalid, expected a '0' for off or any number between 10 to 960.\nInput was: " + SystemInactivityTextBox.Text,
@@ -231,7 +231,7 @@ namespace Stimulator.SubWindows
             catch (Exception exception)
             {
                 Log.FastLog($"Failed to launch OOSU10: " + exception.Message, LogSeverity.Error, "OOSU10");
-            }            
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-using BSS.Logging;
+﻿using BSS.Logging;
 using Microsoft.Win32;
 using System;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ namespace Stimulator.SubWindows
                 new(true, false, "Disable 'No Microsoft Account Connected' Message in start menu",                          null!),
                 new(true, false, "Deactivate narrator hotkey",                                                              null!),
                 new(true, false, "Show Start menu Settings, Network and Explorer integration in start menu",                null!),
-                new(true, false, "*Install HyperKey Deregisterer",                                                          "Starts right after the user initialization during logon and deregisters all hotkeys for a newly created shell process.\nThis process is not visible to the user and does not keep running in the background after initialization.\n\nExample: WIN+C\nSTRG+SHIFT+ALT+SPACE\nWIN+W\n etc"),
+                new(false, false, "*Install HyperKey Deregisterer",                                                          "Starts right after the user initialization during logon and deregisters all hotkeys for a newly created shell process.\nThis process is not visible to the user and does not keep running in the background after initialization.\n\nExample: WIN+C\nSTRG+SHIFT+ALT+SPACE\nWIN+W\n etc"),
                 new(true, false, "Disable Cortana",                                                                         null!),
                 new(true, false, "*Disable GameDVR",                                                                        "Disables game bar."),
                 new(true, false, "Deactivate StickyKeys",                                                                   null!),
@@ -36,11 +36,12 @@ namespace Stimulator.SubWindows
                 new(true, false, "Turn off auto installation of Microsoft Teams in the taskbar",                            null!),
                 new(true, false, "Disable Windows Defender reminder to sign into a MS account",                             null!),
                 new(true, false, "Disable Windows Defender reminder to turn on Edge SmartScreen filter",                    null!),
-                new(true, false, "Disable News and Interest in taskbar",                                                    null!),
+                new(true, false, "Disable News and Interest in taskbar*",                                                   "Can only be removed when the user choice protection driver was removed via 'sc.exe delete UCPD' (requires a reboot) - also remove the scheduled installation task.."!),
                 new(true, false, "Disable OneDrive Notifications in Explorer",                                              null!),
                 new(true, false, "Show more apps in the start menu",                                                        null!),
                 new(true, false, "Enable Numlock on start",                                                                 null!),
                 new(true, false, "*Don't automatically choose the appropriate folder type",                                 "This will speed up file explorer browsing in large directories, where normally it would first index all files and load all preview images of all videos"),
+                new(true, false, "*Remove UCPD (user choice protection driver and its scheduled task)",                     "Required to edit some settings in windows"),
             ];
 
             OptionSelector optionSelector = new("Streamline & Pacify", options, new(true, 1, "pacify.cfg"));
@@ -57,7 +58,7 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[0])
                     {
                         Log.FastLog("[USER] Showing file extensions", LogSeverity.Info, PACIFY_SOURCE);
-                        
+
                         Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "HideFileExt", 0, RegistryValueKind.DWord);
                     }
                 }
@@ -71,7 +72,7 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[1])
                     {
                         Log.FastLog("[USER] Set default explorer page to \"This PC\"", LogSeverity.Info, PACIFY_SOURCE);
-                        
+
                         Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "LaunchTo", 1, RegistryValueKind.DWord);
                     }
                 }
@@ -85,7 +86,7 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[2])
                     {
                         Log.FastLog("[USER] Marking encrypted/compressed NTFS files/folders with colors", LogSeverity.Info, PACIFY_SOURCE);
-                        
+
                         Registry.SetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "ShowEncryptCompressedColor", 1, RegistryValueKind.DWord);
                     }
                 }
@@ -99,7 +100,7 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[3])
                     {
                         Log.FastLog("[USER] Activating explorer compact mode", LogSeverity.Info, PACIFY_SOURCE);
-                        
+
                         Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "UseCompactMode", 1, RegistryValueKind.DWord);
                     }
                 }
@@ -113,7 +114,7 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[4])
                     {
                         Log.FastLog("[USER] Explorer don't pretty path", LogSeverity.Info, PACIFY_SOURCE);
-                        
+
                         Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "DontPrettyPath", 1, RegistryValueKind.DWord);
                         Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\CabinetState", "FullPath", 1, RegistryValueKind.DWord);
                     }
@@ -128,7 +129,7 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[5])
                     {
                         Log.FastLog("[USER] Showing file operations details", LogSeverity.Info, PACIFY_SOURCE);
-                        
+
                         Registry.SetValue(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\OperationStatusManager", "EnthusiastMode", 1, RegistryValueKind.DWord);
                     }
                 }
@@ -142,7 +143,7 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[6])
                     {
                         Log.FastLog("[USER][Machine] Deactivating search bar web search", LogSeverity.Info, PACIFY_SOURCE);
-                        
+
                         Registry.SetValue(@"HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer", "DisableSearchBoxSuggestions", 1, RegistryValueKind.DWord);
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search", "DisableWebSearch", 1, RegistryValueKind.DWord);
                         Registry.SetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\Windows Search", "AllowCloudSearch", 0, RegistryValueKind.DWord);
@@ -162,7 +163,7 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[7])
                     {
                         Log.FastLog("[USER] Disabling safe search", LogSeverity.Info, PACIFY_SOURCE);
-                        
+
                         Registry.SetValue("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SearchSettings", "SafeSearchMode", 0, RegistryValueKind.DWord);
                     }
                 }
@@ -176,7 +177,7 @@ namespace Stimulator.SubWindows
                     if (RunContextInfo.Windows.IsServer && optionSelector.Result.UserSelection[8])
                     {
                         Log.FastLog("[USER] Enabling disk performance counter", LogSeverity.Info, PACIFY_SOURCE);
-                        
+
                         Util.Execute.Process(new(@"C:\Windows\System32\diskperf.exe", "-Y", true, true, true));
                     }
                 }
@@ -190,7 +191,7 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[9])
                     {
                         Log.FastLog("[USER] Disabling reminder to add Microsoft Account", LogSeverity.Info, PACIFY_SOURCE);
-                        
+
                         Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced", "Start_AccountNotifications", 0, RegistryValueKind.DWord);
                     }
                 }
@@ -204,7 +205,7 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[10])
                     {
                         Log.FastLog("[USER] Deactivating narrator hotkey", LogSeverity.Info, PACIFY_SOURCE);
-                        
+
                         Registry.SetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Narrator\NoRoam", "WinEnterLaunchEnabled", 0, RegistryValueKind.DWord);
                     }
                 }
@@ -301,7 +302,7 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[15])
                     {
                         Log.FastLog("[USER] Deactivating StickyKeys", LogSeverity.Info, PACIFY_SOURCE);
-                        
+
                         Registry.SetValue("HKEY_CURRENT_USER\\Control Panel\\Accessibility", "Sound on Activation", 0, RegistryValueKind.DWord);
                         Registry.SetValue("HKEY_CURRENT_USER\\Control Panel\\Accessibility", "Warning Sounds", 0, RegistryValueKind.DWord);
                         Registry.SetValue("HKEY_CURRENT_USER\\Control Panel\\Accessibility\\Keyboard Response", "Flags", "2", RegistryValueKind.String);
@@ -319,7 +320,7 @@ namespace Stimulator.SubWindows
                     if (optionSelector.Result.UserSelection[16])
                     {
                         Log.FastLog("[MACHINE][USER] Deactivating system ads / suggestions & auto app installation", LogSeverity.Info, PACIFY_SOURCE);
-                        
+
                         Registry.SetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "Start_IrisRecommendations", 0, RegistryValueKind.DWord);
 
                         Registry.SetValue("HKEY_LOCAL_MACHINE\\Software\\Policies\\Microsoft\\Windows\\CloudContent", "DisableSoftLanding", 1, RegistryValueKind.DWord);
@@ -483,7 +484,7 @@ namespace Stimulator.SubWindows
                 }
                 catch (Exception exception)
                 {
-                    Log.FastLog("[USER] Disabling News and Interest in taskbar failed with: " + exception.Message, LogSeverity.Warning, PACIFY_SOURCE);
+                    Log.FastLog("[USER] Disabling News and Interest in taskbar failed with: " + exception.Message + " - It is required to remove the UCPD driver to access this registry key", LogSeverity.Warning, PACIFY_SOURCE);
                 }
 
                 try
@@ -532,8 +533,8 @@ namespace Stimulator.SubWindows
                 {
                     if (optionSelector.Result.UserSelection[27])
                     {
-                        Log.FastLog("[User] Don't automatically choose the appropriate folder type", LogSeverity.Info, PACIFY_SOURCE);
-                        
+                        Log.FastLog("[USER] Don't automatically choose the appropriate folder type", LogSeverity.Info, PACIFY_SOURCE);
+
                         RegistryKey shell = Registry.CurrentUser.OpenSubKey("Software\\Classes\\Local Settings\\Software\\Microsoft\\Windows\\Shell", true);
                         shell?.DeleteSubKeyTree("BagMRU", false);
                         shell?.DeleteSubKeyTree("Bags", false);
@@ -543,7 +544,31 @@ namespace Stimulator.SubWindows
                 }
                 catch (Exception exception)
                 {
-                    Log.FastLog("[User] Don't automatically choose the appropriate folder type failed with: " + exception.Message, LogSeverity.Error, PACIFY_SOURCE);
+                    Log.FastLog("[USER] Don't automatically choose the appropriate folder type failed with: " + exception.Message, LogSeverity.Error, PACIFY_SOURCE);
+                }
+
+                try
+                {
+                    if (optionSelector.Result.UserSelection[28])
+                    {
+                        Log.FastLog("[MACHINE] Deleting UCPD (user choice protection driver and its scheduled task)", LogSeverity.Info, PACIFY_SOURCE);
+
+                        if (!Util.Execute.Process(new("c:\\windows\\system32\\sc.exe", "delete UCPD", true, true, true)).Success)
+                        {
+                            Log.FastLog("UCPD->remove failed", LogSeverity.Error, PACIFY_SOURCE);
+                        }
+                        else Log.FastLog("Removed UCPD", LogSeverity.Info, PACIFY_SOURCE);
+
+                        if (!Util.Execute.Process(new("c:\\windows\\system32\\schtasks.exe", "/Delete /TN \"\\Microsoft\\Windows\\AppxDeploymentClient\\UCPD velocity\" /F", true, true, true)).Success)
+                        {
+                            Log.FastLog("Removing the 'UCPD velocity' task failed", LogSeverity.Error, PACIFY_SOURCE);
+                        }
+                        else Log.FastLog("Removed the 'UCPD velocity' task", LogSeverity.Info, PACIFY_SOURCE);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    Log.FastLog("[MACHINE] Deleting UCPD (user choice protection driver and its scheduled task) failed with: " + exception.Message, LogSeverity.Error, PACIFY_SOURCE);
                 }
 
                 Util.RestartExplorerForUser();

@@ -1,13 +1,10 @@
+using System.Windows;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Windows;
 
 [assembly: AssemblyTitle("OS Stimulator")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("OS Stimulator")]
-[assembly: AssemblyCopyright("Copyright ©  2024")]
+[assembly: AssemblyCopyright("Copyright © 2026 backslashspace. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -22,6 +19,6 @@ using System.Windows;
                                               // designspezifischen Ressourcenwörterbuch nicht gefunden werden kann.)
 )]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.814")]
-[assembly: AssemblyInformationalVersion("api testing")]
+[assembly: AssemblyVersion("1.4.0.0")]
+[assembly: AssemblyFileVersion("1.4.0.837")]
+[assembly: AssemblyInformationalVersion("impl. collection")]
