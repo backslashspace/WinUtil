@@ -7,7 +7,7 @@
     <ProjectGuid>{97C0E43F-9AB3-47E6-A3CD-C975E4E45C2F}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Stimulator</RootNamespace>
-    <AssemblyName>SinUtil-API-Preview</AssemblyName>
+    <AssemblyName>SinUtil</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <NoWarn>CS0618</NoWarn>
     <LangVersion>12.0</LangVersion>
@@ -29,6 +29,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -40,15 +41,16 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>App\moricons_58.ico</ApplicationIcon>
+    <ApplicationIcon>app\moricons_58.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>Stimulator.Entry</StartupObject>
+    <StartupObject>Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationManifest>App\app.manifest</ApplicationManifest>
+    <ApplicationManifest>app\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -76,140 +78,113 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App\App.xaml">
+    <ApplicationDefinition Include="app\app.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Program\Appearance\Terminal.cs" />
-    <Compile Include="Program\Appearance\__AppearanceConfigWindow.xaml.cs">
-      <DependentUpon>__AppearanceConfigWindow.xaml</DependentUpon>
+    <Compile Include="source\appearance\terminal.cs" />
+    <Compile Include="source\appearance\appearance_window.xaml.cs">
+      <DependentUpon>appearance_window.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Program\Applications\Codecs.cs" />
-    <Compile Include="Program\Applications\ImageGlass.cs" />
-    <Compile Include="Program\Applications\Notepad++.cs" />
-    <Compile Include="Program\Applications\OneDrive.cs" />
-    <Compile Include="Program\Applications\__ApplicationsConfigWindow.xaml.cs">
-      <DependentUpon>__ApplicationsConfigWindow.xaml</DependentUpon>
+    <Compile Include="source\applications\codecs.cs" />
+    <Compile Include="source\applications\imageglass.cs" />
+    <Compile Include="source\applications\notepad++.cs" />
+    <Compile Include="source\applications\onedrive.cs" />
+    <Compile Include="source\applications\applications_window.xaml.cs">
+      <DependentUpon>applications_window.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Program\Miscellaneous\NGEN.cs" />
-    <Compile Include="Program\Miscellaneous\__MiscellaneousConfigWindow.xaml.cs">
-      <DependentUpon>__MiscellaneousConfigWindow.xaml</DependentUpon>
+    <Compile Include="source\miscellaneous\ngen.cs" />
+    <Compile Include="source\miscellaneous\miscellaneous_window.xaml.cs">
+      <DependentUpon>miscellaneous_window.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Program\App Init %28OnLoaded%29.cs" />
-    <Compile Include="Program\OptionSelector.xaml.cs">
-      <DependentUpon>OptionSelector.xaml</DependentUpon>
+    <Compile Include="source\main_window\on_loaded.cs" />
+    <Compile Include="source\option_selector.xaml.cs">
+      <DependentUpon>option_selector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Program\Privacy_and_Security\AttackSurfaceReduction.cs" />
-    <Compile Include="Program\Privacy_and_Security\Privacy.cs" />
-    <Compile Include="Program\Privacy_and_Security\SystemSecurity\Harden.cs" />
-    <Compile Include="Program\Privacy_and_Security\SystemSecurity\Pagefile.cs" />
-    <Compile Include="Program\Privacy_and_Security\SystemSecurity\VBS.cs" />
-    <Compile Include="Program\Privacy_and_Security\SystemSecurity\SMB.cs" />
-    <Compile Include="Program\Privacy_and_Security\__SecurityConfigWindow.xaml.cs">
-      <DependentUpon>__SecurityConfigWindow.xaml</DependentUpon>
+    <Compile Include="source\privacy_security\attack_surface_reduction.cs" />
+    <Compile Include="source\privacy_security\privacy.cs" />
+    <Compile Include="source\privacy_security\system_security\harden.cs" />
+    <Compile Include="source\privacy_security\system_security\page_file.cs" />
+    <Compile Include="source\privacy_security\system_security\vbs.cs" />
+    <Compile Include="source\privacy_security\system_security\smb.cs" />
+    <Compile Include="source\privacy_security\security_window.xaml.cs">
+      <DependentUpon>security_window.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Program\Privacy_and_Security\SystemSecurity\SystemSecurity.xaml.cs">
-      <DependentUpon>SystemSecurity.xaml</DependentUpon>
+    <Compile Include="source\privacy_security\system_security\system_security_window.xaml.cs">
+      <DependentUpon>system_security_window.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Program\System_Base_Configuration\WindowsUpdate.cs" />
-    <Compile Include="Program\System_Base_Configuration\TCP.cs" />
-    <Compile Include="Program\System_Base_Configuration\__BaseConfigWindow.xaml.cs">
-      <DependentUpon>__BaseConfigWindow.xaml</DependentUpon>
+    <Compile Include="source\base_configuration\windows_update.cs" />
+    <Compile Include="source\base_configuration\tcp.cs" />
+    <Compile Include="source\base_configuration\base_configuration_window.xaml.cs">
+      <DependentUpon>base_configuration_window.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Program\System_Base_Configuration\Pacify.cs" />
-    <Compile Include="Program\System_Base_Configuration\StabilityReliability.cs" />
-    <Compile Include="Util.cs" />
-    <Page Include="Program\Appearance\__AppearanceConfigWindow.xaml">
+    <Compile Include="source\base_configuration\pacify.cs" />
+    <Compile Include="source\base_configuration\stability_reliability.cs" />
+    <Compile Include="source\utility.cs" />
+    <Page Include="source\appearance\appearance_window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Program\Applications\__ApplicationsConfigWindow.xaml">
+    <Page Include="source\applications\applications_window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Program\MainWindow.xaml">
+    <Page Include="source\main_window\main_window.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="App\App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
+    <Compile Include="app\app.xaml.cs">
+      <DependentUpon>app.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Main.cs" />
-    <Compile Include="state_global.cs" />
-    <Compile Include="Logging\Logging.cs" />
-    <Compile Include="Logging\LogMessage.cs" />
-    <Compile Include="Logging\LogSeverity.cs" />
-    <Compile Include="Program\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="source\main.cs" />
+    <Compile Include="source\global_state.cs" />
+    <Compile Include="source\logging\logging.cs" />
+    <Compile Include="source\logging\log_message.cs" />
+    <Compile Include="source\logging\log_severity.cs" />
+    <Compile Include="source\main_window\main_window.xaml.cs">
+      <DependentUpon>main_window.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Program\Miscellaneous\__MiscellaneousConfigWindow.xaml">
+    <Page Include="source\miscellaneous\miscellaneous_window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Program\OptionSelector.xaml">
+    <Page Include="source\option_selector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Program\Privacy_and_Security\__SecurityConfigWindow.xaml">
+    <Page Include="source\privacy_security\security_window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Program\Privacy_and_Security\SystemSecurity\SystemSecurity.xaml">
+    <Page Include="source\privacy_security\system_security\system_security_window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Program\System_Base_Configuration\__BaseConfigWindow.xaml">
+    <Page Include="source\base_configuration\base_configuration_window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
+    <Compile Include="Properties\assembly_info.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="App\app.manifest" />
+    <None Include="app\app.manifest" />
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App\App.config" />
+    <None Include="app\app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="App\moricons_58.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Program\System_Base_Configuration\_notes.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Program\Miscellaneous\_notes.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Program\Privacy_and_Security\_notes.txt" />
+    <Resource Include="app\moricons_58.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="notes.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>call ..\..\Build-Incrementor.exe ..\..\Properties\AssemblyInfo.cs</PostBuildEvent>
+    <PostBuildEvent>call ..\..\Build-Incrementor.exe ..\..\Properties\assembly_info.cs</PostBuildEvent>
   </PropertyGroup>
 </Project>
